@@ -16,8 +16,7 @@ import io.reactivex.subjects.PublishSubject
 import java.lang.IllegalArgumentException
 
 
-@Singleton
-class FirebaseAuthProvider @Inject constructor() : AuthProvider {
+@Singleton class FirebaseAuthProvider @Inject constructor() : AuthProvider {
 
     private val loginSubject: PublishSubject<Boolean> = PublishSubject.create()
     private val authUserModelSubject: PublishSubject<AuthUserModel> = PublishSubject.create()

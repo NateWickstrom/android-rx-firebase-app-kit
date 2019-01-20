@@ -2,7 +2,7 @@ package media.pixi.rx.firebase.auth.kit.data
 
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
+
 
 interface AuthProvider {
 

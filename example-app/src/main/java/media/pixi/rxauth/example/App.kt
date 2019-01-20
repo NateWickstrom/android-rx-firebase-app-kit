@@ -5,12 +5,13 @@ import dagger.android.DaggerApplication
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rxauth.example.di.DaggerAppComponent
 import timber.log.Timber
+
 import javax.inject.Inject
 
 class App : DaggerApplication() {
 
-    @Inject
-    internal var authProvider: AuthProvider? = null
+    var authProvider: AuthProvider? = null
+        @Inject set
 
     override fun onCreate() {
         super.onCreate()
@@ -35,6 +36,6 @@ class App : DaggerApplication() {
     }
 
     private fun onLogout() {
-        //tasksRepository.deleteAllTasks()
+
     }
 }
