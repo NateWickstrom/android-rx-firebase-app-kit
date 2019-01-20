@@ -1,2 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="media.pixi.rx.firebase.auth.kit"/>
+          package="media.pixi.rx.firebase.auth.kit">
+
+    <application>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".ui.account.AccountActivity"/>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".ui.signin.SigninActivity"/>
+
+    </application>
+
+</manifest>

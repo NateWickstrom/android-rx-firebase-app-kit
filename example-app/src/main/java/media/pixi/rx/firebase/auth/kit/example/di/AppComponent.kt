@@ -5,17 +5,24 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import media.pixi.rx.firebase.auth.kit.data.AuthKitDataModule
+import media.pixi.rx.firebase.auth.kit.data.AuthProvider
+import media.pixi.rx.firebase.auth.kit.di.AuthKitActivityBindingModule
 import media.pixi.rx.firebase.auth.kit.example.App
 
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(DataModule::class, AppModule::class, AndroidSupportInjectionModule::class))
+@Component(modules = [
+    AppModule::class,
+    AuthKitDataModule::class,
+    ActivityBindingModule::class,
+    AuthKitActivityBindingModule::class,
+    AndroidSupportInjectionModule::class])
 interface AppComponent : AndroidInjector<App> {
 
-    // Gives us syntactic sugar. we can then do DaggerAppComponent.builder().application(this).build().inject(this);
-    // never having to instantiate any modules or say which module we are passing the application to.
-    // Application will just be provided into our app graph now.
+    fun getAuthProvider(): AuthProvider
+
     @Component.Builder
     interface Builder {
 

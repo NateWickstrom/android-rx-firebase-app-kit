@@ -1,15 +1,13 @@
-package media.pixi.rx.firebase.auth.kit.example.di
+package media.pixi.rx.firebase.auth.kit.data
 
 
 import javax.inject.Singleton
 
 import dagger.Binds
 import dagger.Module
-import media.pixi.rx.firebase.auth.kit.data.AuthProvider
-import media.pixi.rx.firebase.auth.kit.data.FirebaseAuthProvider
 
 @Module
-abstract class DataModule {
+abstract class AuthKitDataModule {
 
     @Singleton
     @Binds

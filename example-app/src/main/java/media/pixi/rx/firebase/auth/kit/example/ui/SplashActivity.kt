@@ -1,9 +1,11 @@
 package media.pixi.rx.firebase.auth.kit.example.ui
 
+import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
-import media.pixi.rx.firebase.auth.kit.example.R
+import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
+import media.pixi.rx.firebase.auth.kit.ui.signin.SigninActivity
 import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity() {
@@ -13,6 +15,25 @@ class SplashActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        if (authProvider!!.isSignedIn()) {
+            onSignedIn()
+        } else {
+            onSignedOut()
+        }
+    }
+
+    private fun onSignedOut() {
+        val intent = Intent(this, SigninActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun onSignedIn() {
+        val intent = Intent(this, AccountActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
     }
 }
