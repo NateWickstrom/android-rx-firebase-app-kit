@@ -66,3 +66,5 @@ dependencies {
     androidTestImplementation deps.support.app_compat
     androidTestImplementation deps.support.design
 }
+
+apply plugin: 'com.google.gms.google-services'

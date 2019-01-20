@@ -1,5 +1,6 @@
 package media.pixi.rx.firebase.auth.kit.example
 
+import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
@@ -15,6 +16,7 @@ class App : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        FirebaseApp.initializeApp(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

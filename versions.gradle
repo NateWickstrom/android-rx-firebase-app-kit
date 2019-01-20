@@ -24,6 +24,7 @@ versions.chuck = "1.1.0"
 versions.constraint_layout = "1.0.2"
 versions.leakcanary = "1.6.1"
 versions.google_auth = "16.0.0"
+versions.google_services = "4.0.1"
 versions.firebase = "16.0.3"
 versions.firebase_beta = "17.1.0"
 versions.firebase_ui = "4.1.0"
@@ -31,6 +32,8 @@ versions.firebase_perf = "16.1.0"
 versions.firebase_plugin = "1.1.5"
 
 deps.google_auth = "com.google.android.gms:play-services-auth:$versions.google_auth"
+deps.google_services = "com.google.gms:google-services:$versions.google_services"
+
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
 deps.rx_android = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
@@ -39,6 +42,7 @@ deps.hamcrest = "org.hamcrest:hamcrest-all:$versions.hamcrest"
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
 deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
 deps.dexmaker = "com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker"
+
 
 def build_versions = [:]
 build_versions.min_sdk = 21
