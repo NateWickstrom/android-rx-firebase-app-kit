@@ -36,6 +36,12 @@ dependencies {
     implementation deps.dagger.android
     implementation deps.dagger.android_support
 
+    // Firebase
+    //implementation deps.google_auth
+    implementation deps.firebase.firebase_core
+    implementation deps.firebase.firebase_auth
+    implementation 'com.github.FrangSierra:RxFirebase:1.5.0'
+
     // reactiveX
     implementation deps.rxjava2
     implementation deps.rx_android
