@@ -1,9 +1,9 @@
-package media.pixi.rxauth.example
+package media.pixi.rx.firebase.auth.kit.example
 
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
-import media.pixi.rxauth.example.di.DaggerAppComponent
+import media.pixi.rx.firebase.auth.kit.example.di.DaggerAppComponent
 import timber.log.Timber
 
 import javax.inject.Inject

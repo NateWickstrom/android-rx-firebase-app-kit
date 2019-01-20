@@ -1,4 +1,4 @@
-package media.pixi.rxauth.example.di
+package media.pixi.rx.firebase.auth.kit.example.di
 
 import android.app.Application
 import android.content.Context

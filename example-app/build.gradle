@@ -9,7 +9,7 @@ android {
     compileSdkVersion build_versions.target_sdk
 
     defaultConfig {
-        applicationId "media.pixi.rxauth.example"
+        applicationId "media.pixi.rx.firebase.auth.kit.example"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1

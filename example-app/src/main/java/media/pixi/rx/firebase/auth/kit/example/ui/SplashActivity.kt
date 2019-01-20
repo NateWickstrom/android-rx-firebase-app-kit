@@ -1,8 +1,8 @@
-package media.pixi.rxauth.example.ui
+package media.pixi.rx.firebase.auth.kit.example.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import media.pixi.rxauth.example.R
+import media.pixi.rx.firebase.auth.kit.example.R
 
 class SplashActivity : AppCompatActivity() {
 

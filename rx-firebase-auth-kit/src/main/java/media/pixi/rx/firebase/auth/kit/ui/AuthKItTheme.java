@@ -1,4 +1,0 @@
-package media.pixi.rx.firebase.auth.kit.ui;
-
-public class AuthKItTheme {
-}

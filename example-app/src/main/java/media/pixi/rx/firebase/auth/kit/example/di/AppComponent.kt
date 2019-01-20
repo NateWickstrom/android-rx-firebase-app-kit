@@ -1,11 +1,11 @@
-package media.pixi.rxauth.example.di
+package media.pixi.rx.firebase.auth.kit.example.di
 
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import media.pixi.rxauth.example.App
+import media.pixi.rx.firebase.auth.kit.example.App
 
 import javax.inject.Singleton
 
@@ -20,7 +20,7 @@ interface AppComponent : AndroidInjector<App> {
     interface Builder {
 
         @BindsInstance
-        fun application(application: Application): AppComponent.Builder
+        fun application(application: Application): Builder
 
         fun build(): AppComponent
     }
