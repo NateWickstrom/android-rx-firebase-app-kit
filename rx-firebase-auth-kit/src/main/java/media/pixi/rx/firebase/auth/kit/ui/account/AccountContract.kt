@@ -1,4 +1,4 @@
-package media.pixi.rx.firebase.auth.kit.example.ui.account
+package media.pixi.rx.firebase.auth.kit.ui.account
 
 interface AccountContract {
 
