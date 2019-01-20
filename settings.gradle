@@ -1,0 +1,1 @@
+include ':example-app', ':rx-firebase-auth-kit'
