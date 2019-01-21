@@ -4,12 +4,9 @@ import android.app.Activity
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import javax.inject.Inject
 
-class SigninPresenter @Inject constructor(): SigninContract.Presenter {
-
-    lateinit var authProvider: AuthProvider
-        @Inject set
-    lateinit var signinNavigator: SigninNavigator
-        @Inject set
+class SigninPresenter @Inject constructor(
+    private var authProvider: AuthProvider,
+    private var signinNavigator: SigninContract.Navigator): SigninContract.Presenter {
 
     override fun takeView(veiew: SigninContract.View) {
     }

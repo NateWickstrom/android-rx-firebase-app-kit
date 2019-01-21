@@ -2,7 +2,7 @@ package media.pixi.rx.firebase.auth.kit.ui.passwordupdate
 
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_signin.*
+import kotlinx.android.synthetic.main.appbar.*
 import media.pixi.rx.firebase.auth.kit.R
 import media.pixi.rx.firebase.auth.kit.ui.ActivityUtils
 import javax.inject.Inject

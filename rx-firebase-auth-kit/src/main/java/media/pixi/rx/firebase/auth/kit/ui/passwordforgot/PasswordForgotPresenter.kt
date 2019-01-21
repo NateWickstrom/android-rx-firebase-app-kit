@@ -1,15 +1,20 @@
 package media.pixi.rx.firebase.auth.kit.ui.passwordforgot
 
+import android.app.Activity
 import javax.inject.Inject
 
-class PasswordForgotPresenter @Inject constructor(): PasswordForgotContract.Presenter {
+class PasswordForgotPresenter @Inject constructor(
+    private var signinNavigator: PasswordForgotContract.Navigator): PasswordForgotContract.Presenter {
 
-    override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun takeView(view: PasswordForgotContract.View?) {
+
     }
 
-    override fun stop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun dropView() {
+
     }
 
+    override fun onSendClicked(activity: Activity) {
+        signinNavigator.onExit(activity)
+    }
 }
