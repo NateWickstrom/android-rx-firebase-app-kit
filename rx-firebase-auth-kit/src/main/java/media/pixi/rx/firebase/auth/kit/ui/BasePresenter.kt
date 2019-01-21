@@ -1,17 +1,17 @@
-package media.pixi.rx.firebase.auth.kit.ui;
+package media.pixi.rx.firebase.auth.kit.ui
 
-public interface BasePresenter<T> {
+interface BasePresenter<T> {
 
     /**
      * Binds presenter with a view when resumed. The Presenter will perform initialization here.
      *
      * @param view the view associated with this presenter
      */
-    void takeView(T view);
+    fun takeView(view: T)
 
     /**
      * Drops the reference to the view when destroyed
      */
-    void dropView();
+    fun dropView()
 
 }
