@@ -8,9 +8,9 @@ import dagger.android.support.DaggerFragment
 import media.pixi.rx.firebase.auth.kit.R
 import javax.inject.Inject
 
-class SignupFragment @Inject constructor(): DaggerFragment(), SignupContract.View {
+class SignUpFragment @Inject constructor(): DaggerFragment(), SignUpContract.View {
 
-    lateinit var presenter: SignupContract.Presenter
+    lateinit var presenter: SignUpContract.Presenter
         @Inject set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

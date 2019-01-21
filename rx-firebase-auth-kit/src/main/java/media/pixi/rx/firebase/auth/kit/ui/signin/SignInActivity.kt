@@ -8,9 +8,9 @@ import media.pixi.rx.firebase.auth.kit.ui.ActivityUtils
 import javax.inject.Inject
 
 
-class SigninActivity : DaggerAppCompatActivity() {
+class SignInActivity : DaggerAppCompatActivity() {
 
-    lateinit var fragment: SigninFragment
+    lateinit var fragment: SignInFragment
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -19,8 +19,6 @@ public class ActivityUtils {
      */
     public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
                                               @NonNull Fragment fragment, int frameId) {
-        //checkNotNull(fragmentManager);
-        //checkNotNull(fragment);
 
         if (fragmentManager.findFragmentById(frameId) == null) {
             // Get the fragment from the subclass

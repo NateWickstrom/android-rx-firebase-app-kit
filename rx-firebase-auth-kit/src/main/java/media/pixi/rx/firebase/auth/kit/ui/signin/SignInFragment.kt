@@ -8,9 +8,9 @@ import kotlinx.android.synthetic.main.fragment_signin.view.*
 import media.pixi.rx.firebase.auth.kit.R
 
 
-class SigninFragment @Inject constructor(): DaggerFragment(), SigninContract.View {
+class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.View {
 
-    lateinit var presenter: SigninContract.Presenter
+    lateinit var presenter: SignInContract.Presenter
         @Inject set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

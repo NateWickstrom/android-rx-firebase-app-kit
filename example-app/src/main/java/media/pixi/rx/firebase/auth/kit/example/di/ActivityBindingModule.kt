@@ -8,8 +8,8 @@ import media.pixi.rx.firebase.auth.kit.example.ui.SplashActivity
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateActivity
-import media.pixi.rx.firebase.auth.kit.ui.signin.SigninActivity
-import media.pixi.rx.firebase.auth.kit.ui.signup.SignupActivity
+import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
+import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpActivity
 
 @Module
 abstract class ActivityBindingModule {
@@ -31,10 +31,10 @@ abstract class ActivityBindingModule {
     internal abstract fun passwordUpdateActivity(): PasswordUpdateActivity
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [SigninModule::class])
-    internal abstract fun signinActivity(): SigninActivity
+    @ContributesAndroidInjector(modules = [SignInModule::class])
+    internal abstract fun signinActivity(): SignInActivity
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [SignupModule::class])
-    internal abstract fun signupActivity(): SignupActivity
+    @ContributesAndroidInjector(modules = [SignUpModule::class])
+    internal abstract fun signupActivity(): SignUpActivity
 }

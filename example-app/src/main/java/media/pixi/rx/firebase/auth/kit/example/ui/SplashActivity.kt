@@ -5,7 +5,6 @@ import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
-import media.pixi.rx.firebase.auth.kit.ui.signin.SigninActivity
 import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity() {
@@ -19,7 +18,7 @@ class SplashActivity : DaggerAppCompatActivity() {
         //if (authProvider.isSignedIn())
             launch(AccountActivity::class.java)
         //else
-        //    launch(SigninActivity::class.java)
+        //    launch(SignInActivity::class.java)
     }
 
     private fun launch(clazz: Class<*>) {

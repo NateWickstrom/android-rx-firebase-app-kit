@@ -4,21 +4,21 @@ import android.app.Activity
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import javax.inject.Inject
 
-class SigninPresenter @Inject constructor(
+class SignInPresenter @Inject constructor(
     private var authProvider: AuthProvider,
-    private var signinNavigator: SigninContract.Navigator): SigninContract.Presenter {
+    private var signInNavigator: SignInContract.Navigator): SignInContract.Presenter {
 
-    override fun takeView(veiew: SigninContract.View) {
+    override fun takeView(veiew: SignInContract.View) {
     }
 
     override fun dropView() {
     }
 
     override fun onForgotPasswordClicked(activity: Activity) {
-        signinNavigator.showForgotPasswordScreen(activity)
+        signInNavigator.showForgotPasswordScreen(activity)
     }
 
     override fun onSignUpClicked(activity: Activity) {
-        signinNavigator.showSignUpScreen(activity)
+        signInNavigator.showSignUpScreen(activity)
     }
 }
