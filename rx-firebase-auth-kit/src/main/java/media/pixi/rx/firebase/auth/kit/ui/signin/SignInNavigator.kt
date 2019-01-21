@@ -8,6 +8,10 @@ import javax.inject.Inject
 
 class SignInNavigator @Inject constructor(): SignInContract.Navigator {
 
+    override fun onExit(activity: Activity) {
+        activity.finish()
+    }
+
     override fun showForgotPasswordScreen(activity: Activity) {
         val intent = Intent(activity, PasswordForgotActivity::class.java)
         activity.startActivity(intent)

@@ -12,7 +12,7 @@ interface SignInContract {
 
     interface Presenter: BasePresenter<View> {
         fun onEmailTextChanged(email: String)
-        fun onPasswordTextChanged(email: String)
+        fun onPasswordTextChanged(password: String)
         fun onForgotPasswordClicked(activity: Activity)
         fun onSignInClicked(activity: Activity)
         fun onSignUpClicked(activity: Activity)
@@ -21,5 +21,6 @@ interface SignInContract {
     interface Navigator {
         fun showForgotPasswordScreen(activity: Activity)
         fun showSignUpScreen(activity: Activity)
+        fun onExit(activity: Activity)
     }
 }
