@@ -1,8 +1,12 @@
 package media.pixi.rx.firebase.auth.kit.example.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
+import media.pixi.rx.firebase.auth.kit.AUTH_RESPONSE
+import media.pixi.rx.firebase.auth.kit.AuthErrorCodes
+import media.pixi.rx.firebase.auth.kit.AuthResponse
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
@@ -17,15 +21,56 @@ class SplashActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (authProvider.isSignedIn())
-            launch(AccountActivity::class.java)
+            onSignInComplete()
         else
-            launch(SignInActivity::class.java)
+            launchSignIn()
     }
 
-    private fun launch(clazz: Class<*>) {
-        val intent = Intent(this, clazz)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Successfully signed in
+                onSignInComplete()
+            } else {
+                val response = fromResultIntent(data)
+
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    finish()
+                    return
+                }
+
+                if (response.errorCode == AuthErrorCodes.NO_NETWORK) {
+                    // show no network frag
+                    return
+                }
+
+                // show unknown sign in error
+            }
+        }
+    }
+
+    private fun onSignInComplete() {
+        val intent = Intent(this, AccountActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
         finish()
+    }
+
+    private fun launchSignIn() {
+        val intent = Intent(this, SignInActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    companion object {
+        const val REQUEST_CODE = 100
+
+        fun fromResultIntent(resultIntent: Intent?): AuthResponse? {
+            return resultIntent?.getParcelableExtra(AUTH_RESPONSE)
+        }
     }
 }

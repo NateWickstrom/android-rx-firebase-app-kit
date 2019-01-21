@@ -1,9 +1,11 @@
 package media.pixi.rx.firebase.auth.kit.ui.account
 
 import android.app.Activity
+import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
+    private var authProvider: AuthProvider,
     private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
     override fun takeView(view: AccountContract.View) {
@@ -12,6 +14,11 @@ class AccountPresenter @Inject constructor(
 
     override fun dropView() {
 
+    }
+
+    override fun onSignOutClicked(activity: Activity) {
+        authProvider.signOut()
+        navigator.onExit(activity)
     }
 
     override fun onSaveClicked(activity: Activity) {

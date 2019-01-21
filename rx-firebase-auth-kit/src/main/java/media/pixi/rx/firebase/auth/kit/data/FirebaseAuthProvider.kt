@@ -42,7 +42,9 @@ import java.lang.IllegalArgumentException
     }
 
     override fun signOut() {
+        user = null
         FirebaseAuth.getInstance().signOut()
+        this.loginSubject.onNext(false)
     }
 
     override fun observerAuthState(): Observable<Boolean> {

@@ -12,6 +12,7 @@ interface AccountContract {
 
     interface Presenter: BasePresenter<View> {
         fun onSaveClicked(activity: Activity)
+        fun onSignOutClicked(activity: Activity)
         fun onResetClicked(activity: Activity)
         fun onUpdatePasswordClicked(activity: Activity)
         fun onVerifyEmailClicked(activity: Activity)
@@ -19,5 +20,6 @@ interface AccountContract {
 
     interface Navigator {
         fun showUpdatePasswordScreen(activity: Activity)
+        fun onExit(activity: Activity)
     }
 }

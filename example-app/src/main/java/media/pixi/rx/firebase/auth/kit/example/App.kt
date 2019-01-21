@@ -1,11 +1,13 @@
 package media.pixi.rx.firebase.auth.kit.example
 
+import android.content.Intent
 import android.widget.Toast
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.example.di.DaggerAppComponent
+import media.pixi.rx.firebase.auth.kit.example.ui.SplashActivity
 import timber.log.Timber
 
 import javax.inject.Inject

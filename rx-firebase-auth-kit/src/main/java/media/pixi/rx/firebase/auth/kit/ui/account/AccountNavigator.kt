@@ -7,6 +7,10 @@ import javax.inject.Inject
 
 class AccountNavigator @Inject constructor(): AccountContract.Navigator {
 
+    override fun onExit(activity: Activity) {
+        activity.finish()
+    }
+
     override fun showUpdatePasswordScreen(activity: Activity) {
         val intent = Intent(activity, PasswordUpdateActivity::class.java)
         activity.startActivity(intent)

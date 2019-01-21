@@ -1,9 +1,7 @@
 package media.pixi.rx.firebase.auth.kit.ui.account
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.error.view.*
 import kotlinx.android.synthetic.main.fragment_account.view.*
@@ -42,12 +40,24 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
         return viewOfLayout
     }
 
-    private fun updateError(error: String) {
-        if (error.isNotBlank()) {
-            viewOfLayout.error.visibility = View.INVISIBLE
-        } else {
-            viewOfLayout.error.visibility = View.VISIBLE
-            viewOfLayout.error_massage.text = error
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.account_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_sign_out -> {
+                presenter.onSignOutClicked(activity!!)
+                return true
+            }
         }
+
+        return false
     }
 }
