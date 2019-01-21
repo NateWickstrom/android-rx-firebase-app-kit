@@ -8,7 +8,7 @@ class SignInPresenter @Inject constructor(
     private var authProvider: AuthProvider,
     private var signInNavigator: SignInContract.Navigator): SignInContract.Presenter {
 
-    override fun takeView(veiew: SignInContract.View) {
+    override fun takeView(view: SignInContract.View) {
     }
 
     override fun dropView() {

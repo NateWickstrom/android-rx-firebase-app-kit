@@ -6,7 +6,7 @@ import javax.inject.Inject
 class AccountPresenter @Inject constructor(
     private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
-    override fun takeView(view: AccountContract.View?) {
+    override fun takeView(view: AccountContract.View) {
 
     }
 

@@ -6,7 +6,7 @@ import javax.inject.Inject
 class PasswordUpdatePresenter @Inject constructor(
     private var navigator: PasswordUpdateContract.Navigator): PasswordUpdateContract.Presenter {
 
-    override fun takeView(view: PasswordUpdateContract.View?) {
+    override fun takeView(view: PasswordUpdateContract.View) {
 
     }
 
