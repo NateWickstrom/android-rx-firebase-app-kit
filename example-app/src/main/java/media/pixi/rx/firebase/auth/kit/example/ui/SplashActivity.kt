@@ -16,10 +16,10 @@ class SplashActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (authProvider.isSignedIn())
+        //if (authProvider.isSignedIn())
             launch(AccountActivity::class.java)
-        else
-            launch(SigninActivity::class.java)
+        //else
+        //    launch(SigninActivity::class.java)
     }
 
     private fun launch(clazz: Class<*>) {

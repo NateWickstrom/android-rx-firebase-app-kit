@@ -4,4 +4,72 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+        <EditText
+                android:id="@+id/input_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Username"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+        <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email Address"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_update_password"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Password"
+            android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reset"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Reset"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Save"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_verify_email"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify Email"
+            android:layout_marginTop="20dp"/>
+
 </LinearLayout>

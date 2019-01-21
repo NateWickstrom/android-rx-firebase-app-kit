@@ -23,6 +23,6 @@ abstract class PasswordForgotModule {
 
     @ActivityScoped
     @Binds
-    internal abstract fun passwordForgotNavigator(presenter: PasswordForgotNavigator): PasswordForgotContract.Navigator
+    internal abstract fun passwordForgotNavigator(navigator: PasswordForgotNavigator): PasswordForgotContract.Navigator
 
 }

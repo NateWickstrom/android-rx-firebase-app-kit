@@ -23,5 +23,5 @@ abstract class SigninModule {
 
     @ActivityScoped
     @Binds
-    internal abstract fun signinNavigator(presenter: SigninNavigator): SigninContract.Navigator
+    internal abstract fun signinNavigator(navigator: SigninNavigator): SigninContract.Navigator
 }

@@ -1,15 +1,32 @@
 package media.pixi.rx.firebase.auth.kit.ui.account
 
+import android.app.Activity
 import javax.inject.Inject
 
-class AccountPresenter @Inject constructor(): AccountContract.Presenter {
+class AccountPresenter @Inject constructor(
+    private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
-    override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun takeView(view: AccountContract.View?) {
+
     }
 
-    override fun stop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun dropView() {
+
     }
 
+    override fun onSaveClicked(activity: Activity) {
+
+    }
+
+    override fun onResetClicked(activity: Activity) {
+
+    }
+
+    override fun onUpdatePasswordClicked(activity: Activity) {
+        navigator.showUpdatePasswordScreen(activity)
+    }
+
+    override fun onVerifyEmailClicked(activity: Activity) {
+
+    }
 }
