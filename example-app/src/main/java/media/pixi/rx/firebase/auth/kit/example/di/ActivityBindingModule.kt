@@ -32,9 +32,9 @@ abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [SignInModule::class])
-    internal abstract fun signinActivity(): SignInActivity
+    internal abstract fun signInActivity(): SignInActivity
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [SignUpModule::class])
-    internal abstract fun signupActivity(): SignUpActivity
+    internal abstract fun signUpActivity(): SignUpActivity
 }

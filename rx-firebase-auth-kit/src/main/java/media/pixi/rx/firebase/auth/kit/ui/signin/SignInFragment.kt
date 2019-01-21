@@ -6,6 +6,7 @@ import javax.inject.Inject
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_signin.view.*
 import media.pixi.rx.firebase.auth.kit.R
+import media.pixi.rx.firebase.auth.kit.ui.TextChangeWatcher
 
 
 class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.View {
@@ -19,7 +20,10 @@ class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.Vie
 
         presenter.takeView(this)
 
-        root.btn_forgot_password.setOnClickListener { presenter.onForgotPasswordClicked(activity!!) }
+        root.email.addTextChangedListener(TextChangeWatcher { presenter.onEmailTextChanged(it) })
+        root.password.addTextChangedListener(TextChangeWatcher { presenter.onPasswordTextChanged(it) })
+        root.sign_in.setOnClickListener { presenter.onSignInClicked(activity!!) }
+        root.forgot_password.setOnClickListener { presenter.onForgotPasswordClicked(activity!!) }
 
         return root
     }

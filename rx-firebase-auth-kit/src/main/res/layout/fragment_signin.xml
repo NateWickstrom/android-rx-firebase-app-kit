@@ -5,67 +5,52 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="60dp">
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <EditText
-                android:id="@+id/input_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:hint="hint_name"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <EditText
-                android:id="@+id/input_email"
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="hint_email"/>
+                android:hint="@string/email"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <EditText
-                android:id="@+id/input_password"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="hint_password"/>
+                android:hint="@string/password"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_signup"
+            android:id="@+id/sign_in"
             android:layout_width="fill_parent"
+            android:minHeight="56dp"
             android:layout_height="wrap_content"
-            android:text="Sign up"
+            android:text="@string/sign_in"
             android:layout_marginTop="40dp"/>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_forgot_password"
+            android:id="@+id/forgot_password"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="fill_parent"
+            android:minHeight="56dp"
             android:layout_height="wrap_content"
-            android:text="Forgot password"
-            android:layout_marginTop="40dp"/>
+            android:text="@string/forgot_password"
+            android:layout_marginTop="8dp"/>
 
 </LinearLayout>

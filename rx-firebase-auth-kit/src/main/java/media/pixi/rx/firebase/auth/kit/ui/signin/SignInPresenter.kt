@@ -14,6 +14,15 @@ class SignInPresenter @Inject constructor(
     override fun dropView() {
     }
 
+    override fun onEmailTextChanged(email: String) {
+    }
+
+    override fun onPasswordTextChanged(email: String) {
+    }
+
+    override fun onSignInClicked(activity: Activity) {
+    }
+
     override fun onForgotPasswordClicked(activity: Activity) {
         signInNavigator.showForgotPasswordScreen(activity)
     }
