@@ -16,6 +16,7 @@ class PasswordForgotActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
