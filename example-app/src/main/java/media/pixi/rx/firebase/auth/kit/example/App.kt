@@ -1,5 +1,6 @@
 package media.pixi.rx.firebase.auth.kit.example
 
+import android.widget.Toast
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -38,6 +39,6 @@ class App : DaggerApplication() {
     }
 
     private fun onLogout() {
-
+        Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
     }
 }

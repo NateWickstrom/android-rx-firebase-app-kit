@@ -10,28 +10,20 @@ import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity() {
 
-    var authProvider: AuthProvider? = null
+    lateinit var authProvider: AuthProvider
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (authProvider!!.isSignedIn()) {
-            onSignedIn()
-        } else {
-            onSignedOut()
-        }
+        if (authProvider.isSignedIn())
+            launch(AccountActivity::class.java)
+        else
+            launch(SigninActivity::class.java)
     }
 
-    private fun onSignedOut() {
-        val intent = Intent(this, SigninActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun onSignedIn() {
-        val intent = Intent(this, AccountActivity::class.java)
+    private fun launch(clazz: Class<*>) {
+        val intent = Intent(this, clazz)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
         finish()

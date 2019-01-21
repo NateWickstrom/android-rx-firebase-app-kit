@@ -6,7 +6,7 @@ import dagger.android.ContributesAndroidInjector
 import media.pixi.rx.firebase.auth.kit.example.di.feature.PasswordForgotModule
 import media.pixi.rx.firebase.auth.kit.example.di.feature.SigninModule
 import media.pixi.rx.firebase.auth.kit.example.ui.SplashActivity
-import media.pixi.rx.firebase.auth.kit.example.ui.SplashModule
+import media.pixi.rx.firebase.auth.kit.example.di.feature.SplashModule
 import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SigninActivity
 
