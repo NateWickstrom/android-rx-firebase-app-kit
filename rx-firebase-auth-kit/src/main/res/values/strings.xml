@@ -4,6 +4,8 @@
     <string name="sign_in">Sign in</string>
 
     <string name="sign_up">sign up</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="update_password">Update Password</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>

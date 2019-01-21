@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class PasswordUpdateFragment @Inject constructor(): DaggerFragment(), PasswordUpdateContract.View {
 
-    var presenter: PasswordUpdateContract.Presenter? = null
+    lateinit var presenter: PasswordUpdateContract.Presenter
         @Inject set
 
 }

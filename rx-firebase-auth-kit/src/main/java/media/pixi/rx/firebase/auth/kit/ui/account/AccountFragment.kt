@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.View {
 
-    var presenter: AccountContract.Presenter? = null
+    lateinit var presenter: AccountContract.Presenter
         @Inject set
 }

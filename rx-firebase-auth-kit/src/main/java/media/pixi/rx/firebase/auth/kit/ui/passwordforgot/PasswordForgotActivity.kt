@@ -9,22 +9,17 @@ import javax.inject.Inject
 
 class PasswordForgotActivity : DaggerAppCompatActivity() {
 
-    var accountFragment: PasswordForgotFragment? = null
+    lateinit var fragment: PasswordForgotFragment
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account)
+        setContentView(R.layout.activity)
         setSupportActionBar(toolbar)
 
-        val fragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
-
-        if (fragment == null) {
-            // Get the fragment from the subclass
-            ActivityUtils.addFragmentToActivity(
-                supportFragmentManager, accountFragment!!, R.id.contentFrame
-            )
-        }
+        ActivityUtils.addFragmentToActivity(
+            supportFragmentManager, fragment, R.id.contentFrame
+        )
     }
 
 }

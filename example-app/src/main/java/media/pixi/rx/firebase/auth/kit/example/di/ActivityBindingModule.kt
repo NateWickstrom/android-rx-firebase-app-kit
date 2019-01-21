@@ -3,12 +3,13 @@ package media.pixi.rx.firebase.auth.kit.example.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import media.pixi.rx.firebase.auth.kit.example.di.feature.PasswordForgotModule
-import media.pixi.rx.firebase.auth.kit.example.di.feature.SigninModule
+import media.pixi.rx.firebase.auth.kit.example.di.feature.*
 import media.pixi.rx.firebase.auth.kit.example.ui.SplashActivity
-import media.pixi.rx.firebase.auth.kit.example.di.feature.SplashModule
+import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity
+import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SigninActivity
+import media.pixi.rx.firebase.auth.kit.ui.signup.SignupActivity
 
 @Module
 abstract class ActivityBindingModule {
@@ -18,10 +19,22 @@ abstract class ActivityBindingModule {
     internal abstract fun splashActivity(): SplashActivity
 
     @ActivityScoped
+    @ContributesAndroidInjector(modules = [AccountModule::class])
+    internal abstract fun accountActivity(): AccountActivity
+
+    @ActivityScoped
     @ContributesAndroidInjector(modules = [PasswordForgotModule::class])
-    internal abstract fun accountActivity(): PasswordForgotActivity
+    internal abstract fun passwordForgotActivity(): PasswordForgotActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [PasswordUpdateModule::class])
+    internal abstract fun passwordUpdateActivity(): PasswordUpdateActivity
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [SigninModule::class])
     internal abstract fun signinActivity(): SigninActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [SignupModule::class])
+    internal abstract fun signupActivity(): SignupActivity
 }

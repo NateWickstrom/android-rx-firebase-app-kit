@@ -9,22 +9,16 @@ import javax.inject.Inject
 
 class SignupActivity : DaggerAppCompatActivity() {
 
-    var signupFragment: SignupFragment? = null
+    lateinit var fragment: SignupFragment
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account)
+        setContentView(R.layout.activity)
         setSupportActionBar(toolbar)
-
-        val fragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
-
-        if (fragment == null) {
-            // Get the fragment from the subclass
-            ActivityUtils.addFragmentToActivity(
-                supportFragmentManager, signupFragment!!, R.id.contentFrame
-            )
-        }
+        ActivityUtils.addFragmentToActivity(
+            supportFragmentManager, fragment, R.id.contentFrame
+        )
     }
 
 }

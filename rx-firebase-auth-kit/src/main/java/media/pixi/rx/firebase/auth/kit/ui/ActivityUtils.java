@@ -21,9 +21,13 @@ public class ActivityUtils {
                                               @NonNull Fragment fragment, int frameId) {
         //checkNotNull(fragmentManager);
         //checkNotNull(fragment);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(frameId, fragment);
-        transaction.commit();
+
+        if (fragmentManager.findFragmentById(frameId) == null) {
+            // Get the fragment from the subclass
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(frameId, fragment);
+            transaction.commit();
+        }
     }
 
 }

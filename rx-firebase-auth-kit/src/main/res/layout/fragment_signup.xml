@@ -60,12 +60,4 @@
             android:text="Sign up"
             android:layout_marginTop="40dp"/>
 
-    <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_forgot_password"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Forgot password"
-            android:layout_marginTop="40dp"/>
-
 </LinearLayout>
