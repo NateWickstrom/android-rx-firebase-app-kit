@@ -1,4 +1,4 @@
-package media.pixi.rx.firebase.auth.kit
+package media.pixi.rx.firebase.auth.kit.ui
 
 object AuthErrorCodes {
 

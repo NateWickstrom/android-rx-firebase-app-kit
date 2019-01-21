@@ -17,6 +17,6 @@ interface SignUpContract {
     }
 
     interface Navigator {
-        fun onExit(activity: Activity)
+        fun onLoggedInSuccessfully(activity: Activity)
     }
 }

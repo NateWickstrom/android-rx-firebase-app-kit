@@ -1,6 +1,7 @@
 package media.pixi.rx.firebase.auth.kit.ui.signin
 
 import android.app.Activity
+import android.content.Intent
 import media.pixi.rx.firebase.auth.kit.ui.BasePresenter
 import media.pixi.rx.firebase.auth.kit.ui.BaseView
 
@@ -21,6 +22,7 @@ interface SignInContract {
     interface Navigator {
         fun showForgotPasswordScreen(activity: Activity)
         fun showSignUpScreen(activity: Activity)
-        fun onExit(activity: Activity)
+        fun onLoggedInSuccessfully(activity: Activity)
+        fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?)
     }
 }

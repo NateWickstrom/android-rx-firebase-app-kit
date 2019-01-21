@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
-import media.pixi.rx.firebase.auth.kit.AUTH_RESPONSE
-import media.pixi.rx.firebase.auth.kit.AuthErrorCodes
-import media.pixi.rx.firebase.auth.kit.AuthResponse
+import media.pixi.rx.firebase.auth.kit.ui.AUTH_RESPONSE
+import media.pixi.rx.firebase.auth.kit.ui.AuthErrorCodes
+import media.pixi.rx.firebase.auth.kit.ui.AuthResponse
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity

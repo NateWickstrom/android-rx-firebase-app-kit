@@ -37,7 +37,7 @@ class SignInPresenter @Inject constructor(
         disposable?.dispose()
         disposable = authProvider.signIn(email, password)
             .subscribe(
-                { signInNavigator.onExit(activity) },
+                { signInNavigator.onLoggedInSuccessfully(activity) },
                 { onError(it) }
             )
     }

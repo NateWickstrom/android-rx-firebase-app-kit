@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class SignInNavigator @Inject constructor(): SignInContract.Navigator {
 
-    override fun onExit(activity: Activity) {
+    override fun onLoggedInSuccessfully(activity: Activity) {
         val data = Intent()
         activity.setResult(RESULT_OK, data)
         activity.finish()
@@ -22,6 +22,21 @@ class SignInNavigator @Inject constructor(): SignInContract.Navigator {
 
     override fun showSignUpScreen(activity: Activity) {
         val intent = Intent(activity, SignUpActivity::class.java)
-        activity.startActivity(intent)
+        activity.startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SignInNavigator.REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Successfully signed in
+                onLoggedInSuccessfully(activity)
+            } else {
+                // User pressed back button/home
+            }
+        }
+    }
+
+    companion object {
+        const val REQUEST_CODE = 99
     }
 }
