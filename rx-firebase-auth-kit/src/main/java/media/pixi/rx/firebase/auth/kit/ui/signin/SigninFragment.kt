@@ -5,6 +5,7 @@ import javax.inject.Inject
 
 class SigninFragment @Inject constructor(): DaggerFragment(), SigninContract.View {
 
-    @Inject var presenter: SigninContract.Presenter? = null
+    var presenter: SigninContract.Presenter? = null
+        @Inject set
 
 }

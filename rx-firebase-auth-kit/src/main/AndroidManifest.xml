@@ -6,7 +6,7 @@
         <activity
                 android:label="@string/account"
                 android:theme="@style/AuthKitAppTheme.NoActionBar"
-                android:name=".ui.account.PasswordForgotActivity"/>
+                android:name=".ui.account.AccountActivity"/>
 
         <activity
                 android:label="@string/sign_in"

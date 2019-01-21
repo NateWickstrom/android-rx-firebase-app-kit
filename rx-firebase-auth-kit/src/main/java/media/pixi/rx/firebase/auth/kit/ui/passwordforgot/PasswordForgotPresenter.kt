@@ -1,4 +1,4 @@
-package media.pixi.rx.firebase.auth.kit.ui.account
+package media.pixi.rx.firebase.auth.kit.ui.passwordforgot
 
 import javax.inject.Inject
 

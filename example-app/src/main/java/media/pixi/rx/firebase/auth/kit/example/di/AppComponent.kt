@@ -7,7 +7,6 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import media.pixi.rx.firebase.auth.kit.data.AuthKitDataModule
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
-import media.pixi.rx.firebase.auth.kit.di.AuthKitActivityBindingModule
 import media.pixi.rx.firebase.auth.kit.example.App
 
 import javax.inject.Singleton
@@ -17,7 +16,6 @@ import javax.inject.Singleton
     AppModule::class,
     AuthKitDataModule::class,
     ActivityBindingModule::class,
-    AuthKitActivityBindingModule::class,
     AndroidSupportInjectionModule::class])
 interface AppComponent : AndroidInjector<App> {
 
