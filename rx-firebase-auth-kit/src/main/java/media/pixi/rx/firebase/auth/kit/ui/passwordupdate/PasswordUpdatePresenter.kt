@@ -1,14 +1,20 @@
 package media.pixi.rx.firebase.auth.kit.ui.passwordupdate
 
+import android.app.Activity
 import javax.inject.Inject
 
-class PasswordUpdatePresenter @Inject constructor(): PasswordUpdateContract.Presenter {
+class PasswordUpdatePresenter @Inject constructor(
+    private var navigator: PasswordUpdateContract.Navigator): PasswordUpdateContract.Presenter {
 
-    override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun takeView(view: PasswordUpdateContract.View?) {
+
     }
 
-    override fun stop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun dropView() {
+
+    }
+
+    override fun onUpdateClicked(activity: Activity) {
+        navigator.onExit(activity)
     }
 }
