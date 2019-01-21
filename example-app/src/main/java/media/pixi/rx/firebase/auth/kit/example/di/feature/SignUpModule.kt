@@ -7,6 +7,7 @@ import media.pixi.rx.firebase.auth.kit.example.di.ActivityScoped
 import media.pixi.rx.firebase.auth.kit.example.di.FragmentScoped
 import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpContract
 import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpFragment
+import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpNavigator
 import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpPresenter
 
 @Module
@@ -19,4 +20,9 @@ abstract class SignUpModule {
     @ActivityScoped
     @Binds
     internal abstract fun signUpPresenter(presenter: SignUpPresenter): SignUpContract.Presenter
+
+    @ActivityScoped
+    @Binds
+    internal abstract fun signUpNavigator(navigator: SignUpNavigator): SignUpContract.Navigator
+
 }

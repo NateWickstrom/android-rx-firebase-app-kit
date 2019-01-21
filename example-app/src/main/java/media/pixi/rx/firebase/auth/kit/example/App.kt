@@ -29,7 +29,7 @@ class App : DaggerApplication() {
         authProvider!!.observerAuthState()
             .filter { result -> result }
             .subscribe(
-                { t -> onLogout() },
+                { onAuthStateChange(it) },
                 { Timber.e(it) }
             )
     }
@@ -38,7 +38,7 @@ class App : DaggerApplication() {
         return DaggerAppComponent.builder().application(this).build()
     }
 
-    private fun onLogout() {
-        Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
+    private fun onAuthStateChange(isLoggedIn: Boolean) {
+        Toast.makeText(this, "Logged in: $isLoggedIn", Toast.LENGTH_SHORT).show()
     }
 }

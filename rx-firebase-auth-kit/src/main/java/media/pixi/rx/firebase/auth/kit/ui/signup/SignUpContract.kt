@@ -12,7 +12,11 @@ interface SignUpContract {
 
     interface Presenter: BasePresenter<View> {
         fun onEmailTextChanged(email: String)
-        fun onPasswordTextChanged(email: String)
+        fun onPasswordTextChanged(password: String)
         fun onSignUpClicked(activity: Activity)
+    }
+
+    interface Navigator {
+        fun onExit(activity: Activity)
     }
 }
