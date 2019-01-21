@@ -13,6 +13,8 @@ class SigninActivity : DaggerAppCompatActivity() {
 
     var authProvider: AuthProvider? = null
         @Inject set
+    var signinFragment: SigninFragment? = null
+        @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class SigninActivity : DaggerAppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_signin -> {
-                //presenter.onLogout()
+                //presenter.singUpClicked()
                 return true
             }
         }

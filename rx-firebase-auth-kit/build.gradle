@@ -30,6 +30,8 @@ dependencies {
 
     implementation deps.kotlin.stdlib
 
+    implementation "com.google.guava:guava:26.0-android"
+
     // Dagger dependencies
     kapt deps.dagger.android_support_compiler
     kapt deps.dagger.compiler

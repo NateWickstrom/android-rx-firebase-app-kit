@@ -1,8 +1,6 @@
-package media.pixi.rx.firebase.auth.kit.ui.account
+package media.pixi.rx.firebase.auth.kit.ui.signin
 
-import javax.inject.Inject
-
-internal class AccountPresenter @Inject constructor(): AccountContract.Presenter {
+class SigninPresenter: SigninContract.Presenter {
 
     override fun start() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -11,5 +9,4 @@ internal class AccountPresenter @Inject constructor(): AccountContract.Presenter
     override fun stop() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }

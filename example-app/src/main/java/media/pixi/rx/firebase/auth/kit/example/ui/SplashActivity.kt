@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
-import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
+import media.pixi.rx.firebase.auth.kit.ui.account.PasswordForgotActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SigninActivity
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ class SplashActivity : DaggerAppCompatActivity() {
     }
 
     private fun onSignedIn() {
-        val intent = Intent(this, AccountActivity::class.java)
+        val intent = Intent(this, PasswordForgotActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
         finish()

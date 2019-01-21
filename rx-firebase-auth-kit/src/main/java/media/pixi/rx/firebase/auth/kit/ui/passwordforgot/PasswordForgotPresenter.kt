@@ -2,7 +2,7 @@ package media.pixi.rx.firebase.auth.kit.ui.account
 
 import javax.inject.Inject
 
-internal class AccountPresenter @Inject constructor(): AccountContract.Presenter {
+class PasswordForgotPresenter @Inject constructor(): PasswordForgotContract.Presenter {
 
     override fun start() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

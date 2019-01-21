@@ -4,15 +4,12 @@ import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_signin.*
 import media.pixi.rx.firebase.auth.kit.R
-import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.ui.ActivityUtils
 import javax.inject.Inject
 
-class AccountActivity : DaggerAppCompatActivity() {
+class PasswordForgotActivity : DaggerAppCompatActivity() {
 
-    var authProvider: AuthProvider? = null
-        @Inject set
-    var accountFragment: AccountFragment? = null
+    var accountFragment: PasswordForgotFragment? = null
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package media.pixi.rx.firebase.auth.kit.ui.signin
+package media.pixi.rx.firebase.auth.kit.ui.account
 
 import dagger.Binds
 import dagger.Module
@@ -7,14 +7,14 @@ import media.pixi.rx.firebase.auth.kit.di.AuthKitActivityScoped
 import media.pixi.rx.firebase.auth.kit.di.AuthKitFragmentScoped
 
 @Module
-abstract class SigninModule {
+abstract class PasswordForgotModule {
 
     @AuthKitFragmentScoped
     @ContributesAndroidInjector
-    internal abstract fun signinFragment(): SigninFragment
+    internal abstract fun passwordForgotFragment(): PasswordForgotFragment
 
     @AuthKitActivityScoped
     @Binds
-    internal abstract fun signinPresenter(presenter: SigninPresenter): SigninContract.Presenter
+    internal abstract fun passwordForgotPresenter(presenter: PasswordForgotPresenter): PasswordForgotContract.Presenter
 
 }
