@@ -1,0 +1,1 @@
+Work in progress for building a bunch of reusable app components for working with Firebase.

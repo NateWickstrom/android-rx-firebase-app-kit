@@ -3,6 +3,7 @@ package media.pixi.rx.firebase.auth.kit.example
 import android.content.Intent
 import android.widget.Toast
 import com.google.firebase.FirebaseApp
+import com.jakewharton.processphoenix.ProcessPhoenix
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
@@ -44,7 +45,7 @@ class App : DaggerApplication() {
         Toast.makeText(this, "Logged in: $isLoggedIn", Toast.LENGTH_SHORT).show()
 
         if (!isLoggedIn) {
-            // todo relaunch app
+            //ProcessPhoenix.triggerRebirth(this)
         }
     }
 }
