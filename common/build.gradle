@@ -27,27 +27,11 @@ android {
     androidExtensions {
         experimental = true
     }
-
 }
 
 dependencies {
-
-    implementation project(":rx-firebase-auth-kit")
-    implementation project(":common")
-
-    implementation deps.kotlin.stdlib
-
     // Dagger dependencies
     api deps.dagger.android_support
-
-    // AndroidX
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
-
-    // Firebase
-    implementation deps.firebase.firebase_storage
-
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     testImplementation 'junit:junit:4.12'
 

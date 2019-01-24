@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appbar.*
+import media.pixi.common.ActivityUtils
 import media.pixi.rx.firebase.auth.kit.R
-import media.pixi.rx.firebase.auth.kit.ui.ActivityUtils
 import javax.inject.Inject
 
 

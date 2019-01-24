@@ -25,8 +25,10 @@ versions.constraint_layout = "1.0.2"
 versions.leakcanary = "1.6.1"
 versions.google_auth = "16.0.0"
 versions.google_services = "4.0.1"
-versions.firebase = "16.0.3"
-versions.firebase_beta = "17.1.0"
+versions.firebase_core = "16.0.6"
+versions.firebase_auth = "16.1.0"
+versions.firebase_storage = "16.0.5"
+versions.firebase_firestore = "17.1.5"
 versions.firebase_ui = "4.1.0"
 versions.firebase_perf = "16.1.0"
 versions.firebase_plugin = "1.1.5"
@@ -118,13 +120,11 @@ atsl.rules = "com.android.support.test:rules:$versions.atsl_runner"
 deps.atsl = atsl
 
 def firebase = [:]
-firebase.firebase_core =        "com.google.firebase:firebase-core:$versions.firebase"
-firebase.firebase_firestore =   "com.google.firebase:firebase-firestore:$versions.firebase_beta"
-firebase.firebase_auth =        "com.google.firebase:firebase-auth:$versions.firebase"
+firebase.firebase_core =        "com.google.firebase:firebase-core:$versions.firebase_core"
+firebase.firebase_firestore =   "com.google.firebase:firebase-firestore:$versions.firebase_firestore"
+firebase.firebase_auth =        "com.google.firebase:firebase-auth:$versions.firebase_auth"
+firebase.firebase_storage =   "com.google.firebase:firebase-storage:$versions.firebase_storage"
 firebase.firebase_pref =        "com.google.firebase:firebase-perf:$versions.firebase_perf"
-
-firebase.firebase_ui_firestore ="com.firebaseui:firebase-ui-firestore:$versions.firebase_ui"
-firebase.firebase_ui_auth =     "com.firebaseui:firebase-ui-auth:$versions.firebase_ui"
 
 firebase.firebase_plugin =     "com.google.firebase:firebase-plugins:$versions.firebase_plugin"
 

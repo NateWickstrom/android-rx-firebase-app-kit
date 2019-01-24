@@ -1,4 +1,4 @@
-package media.pixi.rx.firebase.auth.kit.ui
+package media.pixi.common
 
 
 import androidx.fragment.app.Fragment

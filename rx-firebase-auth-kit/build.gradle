@@ -33,6 +33,8 @@ dependencies {
 
     implementation deps.kotlin.stdlib
 
+    implementation project(":common")
+
     // Dagger dependencies
     api deps.dagger.android_support
 
