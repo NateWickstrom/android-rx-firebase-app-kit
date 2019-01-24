@@ -1,1 +1,3 @@
-include ':example-app', ':rx-firebase-auth-kit'
+include ':example-app'
+include ':rx-firebase-auth-kit'
+include ':rx-firebase-profile-kit'
