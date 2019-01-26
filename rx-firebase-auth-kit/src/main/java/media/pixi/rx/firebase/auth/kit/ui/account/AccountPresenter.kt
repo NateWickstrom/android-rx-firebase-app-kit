@@ -9,6 +9,10 @@ class AccountPresenter @Inject constructor(
     private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
     override fun takeView(view: AccountContract.View) {
+        val user = authProvider.getUser()
+
+        view.username = user?.username ?: ""
+        view.email = user?.email ?: ""
 
     }
 

@@ -7,7 +7,8 @@ import media.pixi.rx.firebase.auth.kit.ui.BaseView
 interface AccountContract {
 
     interface View: BaseView<Presenter> {
-
+        var username: String
+        var email: String
     }
 
     interface Presenter: BasePresenter<View> {

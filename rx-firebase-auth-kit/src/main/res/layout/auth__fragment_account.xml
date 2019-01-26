@@ -14,7 +14,7 @@
             android:layout_height="wrap_content">
 
         <EditText
-                android:id="@+id/input_username"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"

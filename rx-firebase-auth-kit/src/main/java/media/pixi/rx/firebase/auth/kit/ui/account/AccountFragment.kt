@@ -10,6 +10,14 @@ import javax.inject.Inject
 
 class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.View {
 
+    override var username: String
+        get() = viewOfLayout.username.text.toString()
+        set(value) { viewOfLayout.username.setText(value) }
+
+    override var email: String
+        get() = viewOfLayout.email.text.toString()
+        set(value) { viewOfLayout.email.setText(value) }
+
     override var error: String
         get() = viewOfLayout.error_massage.text.toString()
         set(value) {
