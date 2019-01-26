@@ -27,10 +27,12 @@ import java.lang.IllegalArgumentException
     override fun getUser(): AuthUserModel? {
         val firebaseUser = FirebaseAuth.getInstance().currentUser ?: return null
 
+        val username = getUsername(firebaseUser)
+
         return AuthUserModel(
             firebaseUser.uid,
             firebaseUser.email ?: "",
-            firebaseUser.displayName ?: "",
+            username,
             firebaseUser.photoUrl?.toString() ?: "",
             firebaseUser.phoneNumber ?: "",
             firebaseUser.isEmailVerified)
@@ -115,6 +117,14 @@ import java.lang.IllegalArgumentException
     override fun deleteAccount(password: String): Completable {
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, user!!.email, password)
             .flatMapCompletable { RxFirebaseUser.delete(it.user) }
+    }
+
+    private fun getUsername(firebaseUser: FirebaseUser): String {
+        if (!firebaseUser.displayName.isNullOrBlank()) return firebaseUser.displayName!!
+
+        if (!firebaseUser.email.isNullOrBlank()) return firebaseUser.email!!.substringBefore("@")
+
+        return ""
     }
 
     private fun toUserModel(firebaseUser: FirebaseUser): AuthUserModel {

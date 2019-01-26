@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.rx.firebase.auth.kit.example.di.ActivityScoped
 import media.pixi.rx.firebase.auth.kit.example.di.FragmentScoped
+import media.pixi.rx.firebase.auth.kit.example.ui.AppNavigator
 import media.pixi.rx.firebase.profile.kit.ui.profile.*
 
 @Module
@@ -20,6 +21,6 @@ abstract class ProfileModule {
 
     @ActivityScoped
     @Binds
-    internal abstract fun profileNavigator(navigator: ProfileNavigator): ProfileContract.Navigator
+    internal abstract fun profileNavigator(navigator: AppNavigator): ProfileContract.Navigator
 
 }

@@ -50,20 +50,20 @@
                             android:orientation="vertical">
 
                         <TextView
+                                android:id="@+id/profile_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="bottom|center"
-                                android:text="Grumpy Cat"
                                 android:textColor="@android:color/white"
                                 android:textSize="25sp" />
 
                         <TextView
+                                android:id="@+id/profile_subtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="4dp"
-                                android:text="The famous meme"
                                 android:textColor="@android:color/white" />
 
                     </LinearLayout>
@@ -105,12 +105,11 @@
                         android:layout_height="@dimen/image_small_width" />
 
                 <TextView
-                        android:id="@+id/textview_title"
+                        android:id="@+id/collapsed_title"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
                         android:gravity="center_vertical"
-                        android:text="Grumpy Cat information"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
                         android:visibility="invisible"/>
@@ -126,6 +125,15 @@
                 app:placeholderImage="@drawable/profile__ic_default_profile_image"
                 app:layout_behavior="media.pixi.rx.firebase.profile.kit.ui.ImageBehavior"
                 fresco:roundAsCircle="true" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                app:layout_anchor="@id/appbar"
+                app:layout_anchorGravity="bottom|right|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_edit_white_24px"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>
