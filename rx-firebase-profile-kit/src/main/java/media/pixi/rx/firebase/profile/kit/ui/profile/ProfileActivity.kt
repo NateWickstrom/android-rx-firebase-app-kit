@@ -3,12 +3,13 @@ package media.pixi.rx.firebase.profile.kit.ui.profile
 import android.os.Bundle
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity.*
+import kotlinx.android.synthetic.main.profile__activity.*
 import media.pixi.common.ActivityUtils
 import media.pixi.rx.firebase.profile.kit.R
 import javax.inject.Inject
 import android.view.animation.AlphaAnimation
 import android.view.View
+import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 
 
 class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
@@ -16,18 +17,26 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
     lateinit var fragment: ProfileFragment
         @Inject set
 
+    lateinit var authProvider: AuthProvider
+        @Inject set
+
     private var mIsTheTitleVisible = false
     private var mIsTheTitleContainerVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity)
+        setContentView(R.layout.auth__activity)
 
         appbar.addOnOffsetChangedListener(this)
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
         )
+
+        val user = authProvider.getUser()
+        if (user != null) {
+            avatar.setImageURI(user.imageUrl)
+        }
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {

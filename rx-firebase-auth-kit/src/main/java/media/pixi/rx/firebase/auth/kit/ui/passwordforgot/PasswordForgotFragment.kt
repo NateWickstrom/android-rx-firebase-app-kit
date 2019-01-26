@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.error.view.*
-import kotlinx.android.synthetic.main.fragment_password_forgot.view.*
-import kotlinx.android.synthetic.main.fragment_signin.view.*
+import kotlinx.android.synthetic.main.auth__error.view.*
+import kotlinx.android.synthetic.main.auth__fragment_password_forgot.view.*
 import media.pixi.rx.firebase.auth.kit.R
 import javax.inject.Inject
 
@@ -31,7 +30,7 @@ class PasswordForgotFragment @Inject constructor(): DaggerFragment(), PasswordFo
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewOfLayout = inflater.inflate(R.layout.fragment_password_forgot, container, false)
+        viewOfLayout = inflater.inflate(R.layout.auth__fragment_password_forgot, container, false)
 
         presenter.takeView(this)
 

@@ -51,6 +51,6 @@ class SignInPresenter @Inject constructor(
     }
 
     private fun onError(error: Throwable) {
-        view?.error = error.message ?: "Unknown error occurred"
+        view?.error = error.message ?: "Unknown auth__error occurred"
     }
 }

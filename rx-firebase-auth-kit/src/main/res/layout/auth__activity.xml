@@ -8,7 +8,7 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include layout="@layout/appbar"/>
+    <include layout="@layout/auth__appbar"/>
 
     <FrameLayout
             android:id="@+id/contentFrame"

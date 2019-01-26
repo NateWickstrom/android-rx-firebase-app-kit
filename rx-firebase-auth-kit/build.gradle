@@ -5,6 +5,8 @@ apply plugin: 'kotlin-kapt'
 
 android {
 
+    resourcePrefix 'auth__'
+
     compileSdkVersion build_versions.target_sdk
 
     defaultConfig {

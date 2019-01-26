@@ -4,8 +4,8 @@ import android.os.Bundle
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import android.view.*
-import kotlinx.android.synthetic.main.error.view.*
-import kotlinx.android.synthetic.main.fragment_signin.view.*
+import kotlinx.android.synthetic.main.auth__error.view.*
+import kotlinx.android.synthetic.main.auth__fragment_signin.view.*
 import media.pixi.rx.firebase.auth.kit.R
 import media.pixi.rx.firebase.auth.kit.ui.TextChangeWatcher
 
@@ -30,7 +30,7 @@ class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.Vie
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewOfLayout = inflater.inflate(R.layout.fragment_signin, container, false)
+        viewOfLayout = inflater.inflate(R.layout.auth__fragment_signin, container, false)
 
         presenter.takeView(this)
 
@@ -49,7 +49,7 @@ class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.Vie
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.signin_menu, menu)
+        inflater.inflate(R.menu.auth__signin_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

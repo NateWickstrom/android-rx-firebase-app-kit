@@ -15,7 +15,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="8dp"
-            android:src="@drawable/ic_baseline_error_24px"
+            android:src="@drawable/auth__ic_baseline_error_24px"
             android:tint="@color/red"/>
 
     <TextView

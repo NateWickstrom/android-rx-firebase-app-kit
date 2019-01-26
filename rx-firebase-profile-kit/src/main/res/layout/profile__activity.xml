@@ -123,7 +123,7 @@
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_width"
                 android:layout_gravity="center"
-                app:placeholderImage="@drawable/ic_default_profile_image"
+                app:placeholderImage="@drawable/profile__ic_default_profile_image"
                 app:layout_behavior="media.pixi.rx.firebase.profile.kit.ui.ImageBehavior"
                 fresco:roundAsCircle="true" />
 

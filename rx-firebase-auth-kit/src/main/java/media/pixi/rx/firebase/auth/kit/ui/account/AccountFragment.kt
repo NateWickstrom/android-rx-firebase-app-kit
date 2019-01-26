@@ -3,8 +3,8 @@ package media.pixi.rx.firebase.auth.kit.ui.account
 import android.os.Bundle
 import android.view.*
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.error.view.*
-import kotlinx.android.synthetic.main.fragment_account.view.*
+import kotlinx.android.synthetic.main.auth__error.view.*
+import kotlinx.android.synthetic.main.auth__fragment_account.view.*
 import media.pixi.rx.firebase.auth.kit.R
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewOfLayout = inflater.inflate(R.layout.fragment_account, container, false)
+        viewOfLayout = inflater.inflate(R.layout.auth__fragment_account, container, false)
 
         presenter.takeView(this)
 
@@ -47,7 +47,7 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.account_menu, menu)
+        inflater.inflate(R.menu.auth__account_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

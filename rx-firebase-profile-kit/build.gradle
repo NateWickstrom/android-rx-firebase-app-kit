@@ -5,6 +5,8 @@ apply plugin: 'kotlin-kapt'
 
 android {
 
+    resourcePrefix 'profile__'
+
     compileSdkVersion build_versions.target_sdk
 
     defaultConfig {

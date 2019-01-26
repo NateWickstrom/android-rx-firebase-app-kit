@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.error.view.*
-import kotlinx.android.synthetic.main.fragment_password_update.view.*
+import kotlinx.android.synthetic.main.auth__error.view.*
+import kotlinx.android.synthetic.main.auth__fragment_password_update.view.*
 import media.pixi.rx.firebase.auth.kit.R
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ class PasswordUpdateFragment @Inject constructor(): DaggerFragment(), PasswordUp
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewOfLayout = inflater.inflate(R.layout.fragment_password_update, container, false)
+        viewOfLayout = inflater.inflate(R.layout.auth__fragment_password_update, container, false)
 
         presenter.takeView(this)
 

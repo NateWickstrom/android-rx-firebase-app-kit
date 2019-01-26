@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.error.view.*
-import kotlinx.android.synthetic.main.fragment_signup.view.*
+import kotlinx.android.synthetic.main.auth__error.view.*
+import kotlinx.android.synthetic.main.auth__fragment_signup.view.*
 import media.pixi.rx.firebase.auth.kit.R
 import media.pixi.rx.firebase.auth.kit.ui.TextChangeWatcher
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class SignUpFragment @Inject constructor(): DaggerFragment(), SignUpContract.Vie
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewOfLayout = inflater.inflate(R.layout.fragment_signup, container, false)
+        viewOfLayout = inflater.inflate(R.layout.auth__fragment_signup, container, false)
 
         presenter.takeView(this)
 
