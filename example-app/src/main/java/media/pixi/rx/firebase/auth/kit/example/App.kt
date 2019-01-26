@@ -2,6 +2,7 @@ package media.pixi.rx.firebase.auth.kit.example
 
 import android.content.Intent
 import android.widget.Toast
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.firebase.FirebaseApp
 import com.jakewharton.processphoenix.ProcessPhoenix
 import dagger.android.AndroidInjector
@@ -21,6 +22,7 @@ class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
+        Fresco.initialize(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

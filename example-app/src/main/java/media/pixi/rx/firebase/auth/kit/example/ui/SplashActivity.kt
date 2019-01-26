@@ -10,6 +10,7 @@ import media.pixi.rx.firebase.auth.kit.ui.AuthResponse
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
+import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
 import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity() {
@@ -20,10 +21,15 @@ class SplashActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (authProvider.isSignedIn())
-            onSignInComplete()
-        else
-            launchSignIn()
+//        if (authProvider.isSignedIn())
+//            onSignInComplete()
+//        else
+//            launchSignIn()
+
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

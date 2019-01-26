@@ -10,6 +10,7 @@ import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
 import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpActivity
+import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
 
 @Module
 abstract class ActivityBindingModule {
@@ -37,4 +38,8 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [SignUpModule::class])
     internal abstract fun signUpActivity(): SignUpActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [ProfileModule::class])
+    internal abstract fun profileActivity(): ProfileActivity
 }
