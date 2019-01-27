@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="media.pixi.rx.firebase.auth.kit.example">
 
     <application
@@ -9,7 +10,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:name="media.pixi.rx.firebase.auth.kit.example.App"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,6 +23,26 @@
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name=".ui.home.HomeActivity"/>
+
+        <activity
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:name="media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity"/>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.rx.firebase.auth.kit.ui.signup.SignUpActivity"/>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity"/>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity"/>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity"/>
 
     </application>
 

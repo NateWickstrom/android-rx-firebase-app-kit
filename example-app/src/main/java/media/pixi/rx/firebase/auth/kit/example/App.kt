@@ -41,7 +41,7 @@ class App : DaggerApplication() {
     }
 
     private fun onAuthStateChange(isLoggedIn: Boolean) {
-        Toast.makeText(this, "Logged in: $isLoggedIn", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Logged in: $isLoggedIn", Toast.LENGTH_SHORT).show()
 
         if (!isLoggedIn) {
             //ProcessPhoenix.triggerRebirth(this)

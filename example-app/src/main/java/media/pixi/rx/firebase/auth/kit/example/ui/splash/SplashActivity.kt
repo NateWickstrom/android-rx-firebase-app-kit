@@ -10,7 +10,6 @@ import media.pixi.rx.firebase.auth.kit.ui.AuthResponse
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.example.ui.home.HomeActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
-import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
 import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity() {

@@ -3,9 +3,7 @@
 
     <application>
 
-        <activity
-                android:theme="@style/ProfileKitAppTheme.NoActionBar"
-                android:name=".ui.profile.ProfileActivity"/>
+        <activity android:name=".ui.profile.ProfileActivity"/>
 
     </application>
 
