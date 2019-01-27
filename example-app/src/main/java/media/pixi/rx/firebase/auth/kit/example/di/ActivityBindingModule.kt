@@ -17,7 +17,7 @@ import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
 abstract class ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [SplashModule::class])
     internal abstract fun splashActivity(): SplashActivity
 
     @ActivityScoped
