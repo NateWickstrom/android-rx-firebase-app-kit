@@ -21,7 +21,7 @@ abstract class ActivityBindingModule {
     internal abstract fun splashActivity(): SplashActivity
 
     @ActivityScoped
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [HomeModule::class])
     internal abstract fun homeActivity(): HomeActivity
 
     @ActivityScoped
