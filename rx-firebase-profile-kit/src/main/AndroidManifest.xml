@@ -4,7 +4,7 @@
     <application>
 
         <activity
-                android:theme="@style/AuthKitAppTheme.NoActionBar"
+                android:theme="@style/ProfileKitAppTheme.NoActionBar"
                 android:name=".ui.profile.ProfileActivity"/>
 
     </application>

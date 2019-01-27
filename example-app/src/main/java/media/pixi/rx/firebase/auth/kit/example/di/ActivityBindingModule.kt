@@ -4,7 +4,8 @@ package media.pixi.rx.firebase.auth.kit.example.di
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.rx.firebase.auth.kit.example.di.feature.*
-import media.pixi.rx.firebase.auth.kit.example.ui.SplashActivity
+import media.pixi.rx.firebase.auth.kit.example.ui.home.HomeActivity
+import media.pixi.rx.firebase.auth.kit.example.ui.splash.SplashActivity
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateActivity
@@ -16,8 +17,12 @@ import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
 abstract class ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [SplashModule::class])
+    @ContributesAndroidInjector
     internal abstract fun splashActivity(): SplashActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    internal abstract fun homeActivity(): HomeActivity
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [AccountModule::class])

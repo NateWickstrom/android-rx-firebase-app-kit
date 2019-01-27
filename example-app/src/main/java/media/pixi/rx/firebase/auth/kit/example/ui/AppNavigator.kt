@@ -2,6 +2,7 @@ package media.pixi.rx.firebase.auth.kit.example.ui
 
 import android.app.Activity
 import android.content.Intent
+import media.pixi.rx.firebase.auth.kit.example.ui.splash.SplashActivity
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountContract
 import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateActivity

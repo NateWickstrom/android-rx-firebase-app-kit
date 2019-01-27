@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
-    <style name="AuthKitAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="ProfileKitAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,13 +10,13 @@
         <item name="android:listDivider">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AuthKitAppTheme.NoActionBar">
+    <style name="ProfileKitAppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AuthKitAppTheme.AppBarOverlay" parent="Theme.MaterialComponents.Light.DarkActionBar" />
+    <style name="ProfileKitAppTheme.AppBarOverlay" parent="Theme.MaterialComponents.Light.DarkActionBar" />
 
-    <style name="AuthKitAppTheme.PopupOverlay" parent="Theme.MaterialComponents.Light" />
+    <style name="ProfileKitAppTheme.PopupOverlay" parent="Theme.MaterialComponents.Light" />
 
 </resources>

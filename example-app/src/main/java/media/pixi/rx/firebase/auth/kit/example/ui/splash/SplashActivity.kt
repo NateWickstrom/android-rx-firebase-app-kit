@@ -1,4 +1,4 @@
-package media.pixi.rx.firebase.auth.kit.example.ui
+package media.pixi.rx.firebase.auth.kit.example.ui.splash
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,7 @@ import media.pixi.rx.firebase.auth.kit.ui.AUTH_RESPONSE
 import media.pixi.rx.firebase.auth.kit.ui.AuthErrorCodes
 import media.pixi.rx.firebase.auth.kit.ui.AuthResponse
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
-import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
+import media.pixi.rx.firebase.auth.kit.example.ui.home.HomeActivity
 import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
 import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
 import javax.inject.Inject
@@ -35,7 +35,8 @@ class SplashActivity : DaggerAppCompatActivity() {
                 // Successfully signed in
                 onSignInComplete()
             } else {
-                val response = fromResultIntent(data)
+                val response =
+                    fromResultIntent(data)
 
                 // Sign in failed
                 if (response == null) {
@@ -55,7 +56,7 @@ class SplashActivity : DaggerAppCompatActivity() {
     }
 
     private fun onSignInComplete() {
-        val intent = Intent(this, ProfileActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
         finish()
@@ -64,7 +65,9 @@ class SplashActivity : DaggerAppCompatActivity() {
     private fun launchSignIn() {
         val intent = Intent(this, SignInActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivityForResult(intent, REQUEST_CODE)
+        startActivityForResult(intent,
+            REQUEST_CODE
+        )
     }
 
     companion object {
