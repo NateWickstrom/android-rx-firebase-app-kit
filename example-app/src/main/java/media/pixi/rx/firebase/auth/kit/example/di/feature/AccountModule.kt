@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.rx.firebase.auth.kit.example.di.ActivityScoped
 import media.pixi.rx.firebase.auth.kit.example.di.FragmentScoped
+import media.pixi.rx.firebase.auth.kit.example.ui.AppNavigator
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountContract
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountFragment
 import media.pixi.rx.firebase.auth.kit.ui.account.AccountNavigator
@@ -23,6 +24,6 @@ abstract class AccountModule {
 
     @ActivityScoped
     @Binds
-    internal abstract fun accountNavigator(navigator: AccountNavigator): AccountContract.Navigator
+    internal abstract fun accountNavigator(navigator: AppNavigator): AccountContract.Navigator
 
 }

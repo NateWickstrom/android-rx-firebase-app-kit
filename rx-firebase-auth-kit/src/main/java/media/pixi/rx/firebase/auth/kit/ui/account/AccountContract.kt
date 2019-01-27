@@ -21,6 +21,6 @@ interface AccountContract {
 
     interface Navigator {
         fun showUpdatePasswordScreen(activity: Activity)
-        fun onExit(activity: Activity)
+        fun showSignInScreen(activity: Activity)
     }
 }

@@ -21,15 +21,10 @@ class SplashActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        if (authProvider.isSignedIn())
-//            onSignInComplete()
-//        else
-//            launchSignIn()
-
-        val intent = Intent(this, ProfileActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivity(intent)
-        finish()
+        if (authProvider.isSignedIn())
+            onSignInComplete()
+        else
+            launchSignIn()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -60,7 +55,7 @@ class SplashActivity : DaggerAppCompatActivity() {
     }
 
     private fun onSignInComplete() {
-        val intent = Intent(this, AccountActivity::class.java)
+        val intent = Intent(this, ProfileActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
         finish()

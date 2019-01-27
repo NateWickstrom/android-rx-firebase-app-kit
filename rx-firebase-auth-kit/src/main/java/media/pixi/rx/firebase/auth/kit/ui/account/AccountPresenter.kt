@@ -22,7 +22,7 @@ class AccountPresenter @Inject constructor(
 
     override fun onSignOutClicked(activity: Activity) {
         authProvider.signOut()
-        //navigator.onExit(auth__activity)
+        navigator.showSignInScreen(activity)
     }
 
     override fun onSaveClicked(activity: Activity) {
