@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    resourcePrefix 'search__'
+    resourcePrefix 'config__'
 
     compileSdkVersion build_versions.target_sdk
 
@@ -25,26 +25,17 @@ android {
         }
     }
 
-    dataBinding.enabled true
-
 }
 
 dependencies {
 
     implementation deps.kotlin.stdlib
 
-    implementation project(":common")
-    implementation project(':rx-firebase-config')
-
-    // Algolia
-    implementation 'com.algolia:instantsearch-android:1.15.1'
-
-    // AndroidX
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
-
     // Dagger dependencies
     api deps.dagger.android_support
+
+    implementation deps.firebase.rx_firebase
+    implementation deps.firebase.firebase_config
 
     testImplementation 'junit:junit:4.12'
 

@@ -1,19 +1,21 @@
 package media.pixi.rx.firebase.auth.kit.example
 
-import android.widget.Toast
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.example.di.DaggerAppComponent
+import media.pixi.rx.firebase.remote.config.ConfigProvider
 import timber.log.Timber
 
 import javax.inject.Inject
 
 class App : DaggerApplication() {
 
-    var authProvider: AuthProvider? = null
+    lateinit var authProvider: AuthProvider
+        @Inject set
+    lateinit var configProvider: ConfigProvider
         @Inject set
 
     override fun onCreate() {
@@ -28,12 +30,19 @@ class App : DaggerApplication() {
             // TODO Timber.plant(new CrashlyticsTree());
         }
 
-        authProvider!!.observerAuthState()
+        authProvider.observerAuthState()
             .filter { result -> result }
             .subscribe(
                 { onAuthStateChange(it) },
-                { Timber.e(it) }
+                { Timber.e(it.message, it) }
             )
+
+        configProvider.sync()
+            .subscribe(
+                { Timber.v("Config Sink Complete") },
+                { Timber.e(it.message, it) }
+            )
+
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

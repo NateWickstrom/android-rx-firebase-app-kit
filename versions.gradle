@@ -29,9 +29,12 @@ versions.firebase_core = "16.0.6"
 versions.firebase_auth = "16.1.0"
 versions.firebase_storage = "16.0.5"
 versions.firebase_firestore = "17.1.5"
+versions.firebase_config = "16.1.3"
 versions.firebase_ui = "4.1.0"
 versions.firebase_perf = "16.1.0"
 versions.firebase_plugin = "1.1.5"
+versions.firebase_plugin = "1.1.5"
+versions.rx_firebase = "1.5.6"
 
 deps.google_auth = "com.google.android.gms:play-services-auth:$versions.google_auth"
 deps.google_services = "com.google.gms:google-services:$versions.google_services"
@@ -125,6 +128,8 @@ firebase.firebase_firestore =   "com.google.firebase:firebase-firestore:$version
 firebase.firebase_auth =        "com.google.firebase:firebase-auth:$versions.firebase_auth"
 firebase.firebase_storage =   "com.google.firebase:firebase-storage:$versions.firebase_storage"
 firebase.firebase_pref =        "com.google.firebase:firebase-perf:$versions.firebase_perf"
+firebase.firebase_config =        "com.google.firebase:firebase-config:$versions.firebase_config"
+firebase.rx_firebase =        "com.github.FrangSierra:RxFirebase:$versions.rx_firebase"
 
 firebase.firebase_plugin =     "com.google.firebase:firebase-plugins:$versions.firebase_plugin"
 

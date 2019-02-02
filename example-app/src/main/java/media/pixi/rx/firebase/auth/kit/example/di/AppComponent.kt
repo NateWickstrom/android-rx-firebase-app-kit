@@ -5,15 +5,19 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import media.pixi.rx.algolia.search.data.SearchDataModule
 import media.pixi.rx.firebase.auth.kit.data.AuthKitDataModule
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.example.App
+import media.pixi.rx.firebase.remote.config.ConfigDataModule
 
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
     AppModule::class,
+    ConfigDataModule::class,
+    SearchDataModule::class,
     AuthKitDataModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class])
