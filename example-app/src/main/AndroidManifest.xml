@@ -44,6 +44,10 @@
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity"/>
 
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.rx.algolia.search.ui.search.SearchActivity"/>
+
     </application>
 
 </manifest>

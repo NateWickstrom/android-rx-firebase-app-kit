@@ -28,6 +28,7 @@ dependencies {
 
     implementation project(":rx-firebase-auth-kit")
     implementation project(":rx-firebase-profile-kit")
+    implementation project(":rx-algolia-search-kit")
 
     implementation deps.kotlin.stdlib
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'

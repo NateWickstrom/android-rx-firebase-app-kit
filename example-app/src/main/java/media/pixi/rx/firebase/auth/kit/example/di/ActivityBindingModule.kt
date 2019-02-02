@@ -3,6 +3,7 @@ package media.pixi.rx.firebase.auth.kit.example.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import media.pixi.rx.algolia.search.ui.search.SearchActivity
 import media.pixi.rx.firebase.auth.kit.example.di.feature.*
 import media.pixi.rx.firebase.auth.kit.example.ui.home.HomeActivity
 import media.pixi.rx.firebase.auth.kit.example.ui.splash.SplashActivity
@@ -47,4 +48,9 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [ProfileModule::class])
     internal abstract fun profileActivity(): ProfileActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [SearchModule::class])
+    internal abstract fun searchActivity(): SearchActivity
+
 }

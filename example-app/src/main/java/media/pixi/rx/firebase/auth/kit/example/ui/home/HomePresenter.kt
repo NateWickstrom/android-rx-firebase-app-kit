@@ -9,4 +9,7 @@ class HomePresenter @Inject constructor(private val navigator: HomeNavigator): H
         navigator.showUserProfile(activity)
     }
 
+    override fun onSearchClicked(activity: Activity) {
+        navigator.showSearch(activity)
+    }
 }

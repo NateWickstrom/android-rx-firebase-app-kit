@@ -1,3 +1,3 @@
-include ':example-app', ':common'
+include ':example-app', ':common', ':rx-algolia-search-kit'
 include ':rx-firebase-auth-kit'
 include ':rx-firebase-profile-kit'

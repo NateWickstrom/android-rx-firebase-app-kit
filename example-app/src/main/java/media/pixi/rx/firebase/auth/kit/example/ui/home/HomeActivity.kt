@@ -15,6 +15,7 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        search.setOnClickListener { presenter.onSearchClicked(this) }
         profile.setOnClickListener { presenter.onProfileClicked(this) }
     }
 }

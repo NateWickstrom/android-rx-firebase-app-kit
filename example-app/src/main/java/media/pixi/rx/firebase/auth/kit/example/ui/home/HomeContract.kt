@@ -10,9 +10,11 @@ interface HomeContract {
 
     interface Presenter {
         fun onProfileClicked(activity: Activity)
+        fun onSearchClicked(activity: Activity)
     }
 
     interface Navigator {
         fun showUserProfile(activity: Activity)
+        fun showSearch(activity: Activity)
     }
 }
