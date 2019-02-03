@@ -50,9 +50,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
             collapsed_title.text = user.username
         }
 
-        fab.setOnClickListener({ view ->
-            navigator.showAccountScreen(this)
-        })
+        fab.setOnClickListener { navigator.showAccountScreen(this) }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
