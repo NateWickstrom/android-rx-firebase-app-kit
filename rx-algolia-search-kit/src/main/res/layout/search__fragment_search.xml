@@ -1,6 +1,5 @@
 <androidx.constraintlayout.widget.ConstraintLayout
          android:id="@+id/constraintLayout"
-         xmlns:algolia="http://schemas.android.com/apk/res-auto"
          xmlns:android="http://schemas.android.com/apk/res/android"
          xmlns:app="http://schemas.android.com/apk/res-auto"
          xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +7,7 @@
          android:layout_height="match_parent"
          tools:context="media.pixi.rx.algolia.search.ui.search.SearchFragment">
 
-    <com.algolia.instantsearch.ui.views.Hits
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hits_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,7 +15,6 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            algolia:itemLayout="@layout/search__item_contact"
             android:overScrollMode="always"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout"

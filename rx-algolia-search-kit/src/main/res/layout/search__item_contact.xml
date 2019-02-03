@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:algolia="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="64dp">
 
-    <LinearLayout
-          android:orientation="vertical"
-          android:layout_width="match_parent"
-          android:gravity="center_vertical"
-          android:layout_height="64dp">
+    <TextView
+            android:id="@+id/contactName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            tools:text="Micheal Jackson"/>
 
-        <TextView
-                android:id="@+id/contactName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                algolia:attribute='@{"name"}'
-                algolia:variant='@{"contacts"}'
-                tools:text="Micheal Jackson"/>
-
-    </LinearLayout>
-</layout>
+</LinearLayout>

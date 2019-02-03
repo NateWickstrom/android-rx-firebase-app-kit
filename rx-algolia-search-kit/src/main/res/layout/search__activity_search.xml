@@ -21,8 +21,6 @@
                 android:layout_weight="1"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-            <include layout="@layout/search__searchbox" android:id="@+id/include_searchbox"/>
-
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
