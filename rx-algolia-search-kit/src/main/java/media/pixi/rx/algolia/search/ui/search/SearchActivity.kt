@@ -1,6 +1,7 @@
 package media.pixi.rx.algolia.search.ui.search
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.algolia.instantsearch.core.helpers.Searcher
 import com.algolia.instantsearch.ui.helpers.InstantSearch
 import com.algolia.instantsearch.ui.viewmodels.SearchBoxViewModel
@@ -19,8 +20,6 @@ class SearchActivity: DaggerAppCompatActivity() {
     lateinit var searchProvider: SearchProvider
         @Inject set
 
-    private var searchBoxViewModel: SearchBoxViewModel? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search__activity_search)
@@ -32,13 +31,5 @@ class SearchActivity: DaggerAppCompatActivity() {
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
         )
-
-//        if (searchBoxViewModel == null) {
-//            searchBoxViewModel = SearchBoxViewModel(searchBox)
-//        }
-//
-//        // link the Searcher to the Fragment's UI
-//        InstantSearch(this, searchProvider.createUserSearch(), fragment)
-//            .registerSearchView(this, searchBoxViewModel)
     }
 }

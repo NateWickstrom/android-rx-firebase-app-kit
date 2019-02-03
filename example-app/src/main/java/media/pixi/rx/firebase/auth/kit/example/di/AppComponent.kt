@@ -10,6 +10,7 @@ import media.pixi.rx.firebase.auth.kit.data.AuthKitDataModule
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import media.pixi.rx.firebase.auth.kit.example.App
 import media.pixi.rx.firebase.remote.config.ConfigDataModule
+import media.pixi.rx.firebase.remote.config.ConfigProvider
 
 import javax.inject.Singleton
 
@@ -24,6 +25,7 @@ import javax.inject.Singleton
 interface AppComponent : AndroidInjector<App> {
 
     fun getAuthProvider(): AuthProvider
+    fun getConfigProvider(): ConfigProvider
 
     @Component.Builder
     interface Builder {

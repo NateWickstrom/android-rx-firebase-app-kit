@@ -1,4 +1,6 @@
 package media.pixi.rx.algolia.search.ui.search
 
-class SearchNavigator: SearchContract.Navigater {
+import javax.inject.Inject
+
+class SearchNavigator @Inject constructor(): SearchContract.Navigator {
 }
