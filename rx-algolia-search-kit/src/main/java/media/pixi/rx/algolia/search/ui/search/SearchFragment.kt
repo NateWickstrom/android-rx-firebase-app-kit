@@ -11,7 +11,6 @@ import javax.inject.Inject
 class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.View {
 
     lateinit var presenter: SearchContract.Presenter
-        @Inject set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

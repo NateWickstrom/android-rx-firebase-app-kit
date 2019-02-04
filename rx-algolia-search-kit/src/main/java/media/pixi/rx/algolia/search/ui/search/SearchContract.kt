@@ -18,6 +18,8 @@ interface SearchContract {
          * Drops the reference to the view when destroyed
          */
         fun dropView()
+
+        fun search(query: String)
     }
 
     interface Navigator {

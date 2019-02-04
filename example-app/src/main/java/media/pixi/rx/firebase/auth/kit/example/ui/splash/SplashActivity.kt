@@ -3,6 +3,8 @@ package media.pixi.rx.firebase.auth.kit.example.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
+import media.pixi.rx.firebase.remote.config.ConfigProvider
+import timber.log.Timber
 import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity(), SplashContract.View {

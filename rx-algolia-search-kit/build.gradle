@@ -3,6 +3,18 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+def getAlgoliaAppId() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("ALGOLIA_APP_ID")
+}
+
+def getAlgoliaApiKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("ALGOLIA_API_KEY")
+}
+
 android {
     resourcePrefix 'search__'
 
@@ -16,6 +28,8 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "ALGOLIA_APP_ID", "\""+getAlgoliaAppId()+"\""
+        buildConfigField "String", "ALGOLIA_API_KEY", "\""+getAlgoliaApiKey()+"\""
     }
 
     buildTypes {
@@ -33,6 +47,8 @@ dependencies {
     implementation project(":common")
     implementation project(':rx-firebase-config')
 
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     // Algolia
     implementation 'com.algolia:instantsearch-androidx:1.15.0'
 
@@ -40,6 +56,16 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha02'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // reactiveX
+    implementation deps.rxjava2
+    implementation deps.rx_android
+
+    implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
+
+    // logging with Timber
+    implementation deps.timber
 
     // Dagger dependencies
     api deps.dagger.android_support

@@ -20,6 +20,9 @@ import javax.inject.Singleton
 
     override fun sync(): Completable {
         return RxFirebaseRemote.fetch(firebaseRemoteConfig)
+            .andThen(Completable.create {
+                firebaseRemoteConfig.activateFetched()
+            })
     }
 
     override fun getSearchApiKey(): String {

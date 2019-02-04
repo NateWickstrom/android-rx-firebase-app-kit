@@ -15,8 +15,6 @@ class App : DaggerApplication() {
 
     lateinit var authProvider: AuthProvider
         @Inject set
-    lateinit var configProvider: ConfigProvider
-        @Inject set
 
     override fun onCreate() {
         super.onCreate()
@@ -36,13 +34,6 @@ class App : DaggerApplication() {
                 { onAuthStateChange(it) },
                 { Timber.e(it.message, it) }
             )
-
-        configProvider.sync()
-            .subscribe(
-                { Timber.v("Config Sink Complete") },
-                { Timber.e(it.message, it) }
-            )
-
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

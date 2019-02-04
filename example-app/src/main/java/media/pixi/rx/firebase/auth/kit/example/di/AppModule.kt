@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import media.pixi.rx.algolia.search.data.AlgoliaSearchDataSource
+import media.pixi.rx.algolia.search.data.SearchProvider
+import javax.inject.Singleton
 
 @Module
 abstract class AppModule {
@@ -12,4 +16,16 @@ abstract class AppModule {
     @Binds
     internal abstract fun bindContext(application: Application): Context
 
+    @Binds
+    internal abstract fun provideSearchProvider(dataSource: AlgoliaSearchDataSource): SearchProvider
+
+    @Module
+    companion object {
+//        @Singleton
+//        @Provides
+//        @JvmStatic
+//        fun searchDataSource(): SearchProvider {
+//            return AlgoliaSearchDataSource()
+//        }
+    }
 }

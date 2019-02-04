@@ -1,9 +1,13 @@
 package media.pixi.rx.algolia.search.data
 
-import com.algolia.instantsearch.core.helpers.Searcher
+import io.reactivex.Observable
 
 interface SearchProvider {
 
-    fun createUserSearch(): Searcher
+    fun search(query: String)
+
+    fun loadMore()
+
+    fun people(): Observable<PeopleSearchResult>
 
 }
