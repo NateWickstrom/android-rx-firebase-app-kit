@@ -8,3 +8,4 @@ TODOs:
 - search on clicks shows users profile
 (social/friends)
 - qr code profile lookup
+(messaging)

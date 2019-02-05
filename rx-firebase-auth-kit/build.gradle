@@ -50,6 +50,12 @@ dependencies {
     implementation deps.firebase.firebase_core
     implementation deps.firebase.firebase_auth
 
+    // logging with Timber
+    implementation deps.timber
+
+    implementation deps.glide
+    implementation deps.image_cropper
+
     // reactiveX
     implementation deps.rxjava2
     implementation deps.rx_android

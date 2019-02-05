@@ -1,6 +1,7 @@
 package media.pixi.rx.firebase.auth.kit.ui.account
 
 import android.app.Activity
+import android.widget.Toast
 import media.pixi.rx.firebase.auth.kit.data.AuthProvider
 import javax.inject.Inject
 
@@ -11,13 +12,17 @@ class AccountPresenter @Inject constructor(
     override fun takeView(view: AccountContract.View) {
         val user = authProvider.getUser()
 
+        view.userImageUrl = user?.imageUrl ?: ""
         view.username = user?.username ?: ""
         view.email = user?.email ?: ""
-
     }
 
     override fun dropView() {
 
+    }
+
+    override fun onUserImageClicked(activity: Activity) {
+        navigator.showImageFetcher(activity)
     }
 
     override fun onSignOutClicked(activity: Activity) {

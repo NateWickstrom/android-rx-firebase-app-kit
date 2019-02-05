@@ -2,13 +2,27 @@ package media.pixi.rx.firebase.auth.kit.ui.account
 
 import android.os.Bundle
 import android.view.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.auth__error.view.*
+import kotlinx.android.synthetic.main.auth__fragment_account.*
 import kotlinx.android.synthetic.main.auth__fragment_account.view.*
 import media.pixi.rx.firebase.auth.kit.R
+import java.io.File
 import javax.inject.Inject
 
 class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.View {
+
+    override var userImageUrl: String
+        get() = ""
+        set(value) { if (value.isNotEmpty()) {
+            Glide.with(context!!)
+                .load(value)
+                .apply(RequestOptions.circleCropTransform())
+                .into(user_image)
+            }
+        }
 
     override var username: String
         get() = viewOfLayout.username.text.toString()
@@ -37,15 +51,23 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         viewOfLayout = inflater.inflate(R.layout.auth__fragment_account, container, false)
-
-        presenter.takeView(this)
-
         viewOfLayout.btn_update_password.setOnClickListener { presenter.onUpdatePasswordClicked(activity!!) }
         viewOfLayout.btn_reset.setOnClickListener { presenter.onResetClicked(activity!!) }
         viewOfLayout.btn_save.setOnClickListener { presenter.onSaveClicked(activity!!) }
         viewOfLayout.btn_verify_email.setOnClickListener { presenter.onVerifyEmailClicked(activity!!) }
+        viewOfLayout.user_image.setOnClickListener { presenter.onUserImageClicked(activity!!) }
 
         return viewOfLayout
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.takeView(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.dropView()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,5 +89,12 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
         }
 
         return false
+    }
+
+    fun setImage(file: File) {
+        Glide.with(context!!)
+            .load(file)
+            .apply(RequestOptions.circleCropTransform())
+            .into(user_image)
     }
 }

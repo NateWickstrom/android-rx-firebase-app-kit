@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="media.pixi.rx.firebase.auth.kit">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application>
 
         <activity
@@ -25,6 +28,8 @@
                 android:label="@string/update_password"
                 android:parentActivityName=".ui.account.AccountActivity"
                 android:name=".ui.passwordupdate.PasswordUpdateActivity"/>
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
 
     </application>
 
