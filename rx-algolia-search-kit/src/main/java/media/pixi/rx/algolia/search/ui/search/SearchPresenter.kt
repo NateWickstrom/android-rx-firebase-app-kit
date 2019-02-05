@@ -33,16 +33,19 @@ class SearchPresenter @Inject constructor(private val searchProvider: SearchProv
         if (query.isBlank()) {
             view?.clear(true)
         } else {
+            view?.loading = true
             searchProvider.search(query)
         }
     }
 
     private fun onResult(result: PeopleSearchResult) {
+        view?.loading = searchProvider.hasPendingRequests()
         view?.addHits(result)
         lastResult = result.query
     }
 
     private fun onError(error: Throwable) {
+        view?.loading = searchProvider.hasPendingRequests()
         Timber.e(error.message, error)
     }
 

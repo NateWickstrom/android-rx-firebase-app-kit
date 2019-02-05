@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.search__fragment_search.*
 import kotlinx.android.synthetic.main.search__fragment_search.view.*
 import media.pixi.rx.algolia.search.R
 import media.pixi.rx.algolia.search.data.PeopleSearchResult
 import javax.inject.Inject
 
 class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.View {
+
+    override var loading: Boolean
+        get() = progress_bar.visibility == View.INVISIBLE
+        set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     private val adapter = SearchAdapter()
 
@@ -39,4 +44,15 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
         adapter.addHits(results)
     }
 
+    override fun showNoResults(query: String) {
+
+    }
+
+    override fun showEmptyState() {
+
+    }
+
+    override fun showResults() {
+
+    }
 }

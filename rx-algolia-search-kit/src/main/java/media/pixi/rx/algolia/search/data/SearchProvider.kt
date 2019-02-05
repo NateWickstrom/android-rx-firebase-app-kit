@@ -12,4 +12,5 @@ interface SearchProvider {
 
     fun people(): Observable<PeopleSearchResult>
 
+    fun hasPendingRequests(): Boolean
 }

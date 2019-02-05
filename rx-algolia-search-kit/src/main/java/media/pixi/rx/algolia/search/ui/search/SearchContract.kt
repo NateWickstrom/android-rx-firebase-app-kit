@@ -5,8 +5,13 @@ import media.pixi.rx.algolia.search.data.PeopleSearchResult
 interface SearchContract {
 
     interface View {
+        var loading: Boolean
+
         fun addHits(results: PeopleSearchResult)
         fun clear(shouldNotify: Boolean)
+        fun showNoResults(query: String)
+        fun showEmptyState()
+        fun showResults()
     }
 
     interface Presenter {

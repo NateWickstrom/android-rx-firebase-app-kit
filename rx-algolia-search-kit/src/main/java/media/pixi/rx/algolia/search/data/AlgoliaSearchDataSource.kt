@@ -40,6 +40,10 @@ class AlgoliaSearchDataSource @Inject constructor(): SearchProvider {
         return myListener.subject.toSerialized()
     }
 
+    override fun hasPendingRequests(): Boolean {
+        return searcher?.hasPendingRequests() ?: false
+    }
+
     private fun initSearch() {
         val appId = BuildConfig.ALGOLIA_APP_ID
         val apiKey = BuildConfig.ALGOLIA_API_KEY
