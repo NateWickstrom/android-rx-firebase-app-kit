@@ -9,9 +9,9 @@ interface SearchContract {
 
         fun addHits(results: PeopleSearchResult)
         fun clear(shouldNotify: Boolean)
-        fun showNoResults(query: String)
-        fun showEmptyState()
-        fun showResults()
+        fun showNoResults(show: Boolean)
+        fun showEmptyState(show: Boolean)
+        fun showResults(show: Boolean)
     }
 
     interface Presenter {

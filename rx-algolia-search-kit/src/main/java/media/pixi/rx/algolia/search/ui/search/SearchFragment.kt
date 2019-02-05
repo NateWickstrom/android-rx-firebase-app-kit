@@ -44,15 +44,15 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
         adapter.addHits(results)
     }
 
-    override fun showNoResults(query: String) {
+    override fun showNoResults(show: Boolean) {
+        no_result.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun showEmptyState(show: Boolean) {
 
     }
 
-    override fun showEmptyState() {
-
-    }
-
-    override fun showResults() {
+    override fun showResults(show: Boolean) {
 
     }
 }

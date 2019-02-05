@@ -41,6 +41,9 @@ class SearchPresenter @Inject constructor(private val searchProvider: SearchProv
     private fun onResult(result: PeopleSearchResult) {
         view?.loading = searchProvider.hasPendingRequests()
         view?.addHits(result)
+
+        view?.showNoResults(result.nbHits == 0)
+
         lastResult = result.query
     }
 
