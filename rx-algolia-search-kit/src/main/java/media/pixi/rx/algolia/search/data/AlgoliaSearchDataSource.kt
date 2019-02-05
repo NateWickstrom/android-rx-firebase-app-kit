@@ -28,6 +28,10 @@ class AlgoliaSearchDataSource @Inject constructor(): SearchProvider {
         searcher?.search(query)
     }
 
+    override fun hasMoreHits(): Boolean {
+        return searcher?.hasMoreHits() ?: false
+    }
+
     override fun loadMore() {
         searcher?.loadMore()
     }

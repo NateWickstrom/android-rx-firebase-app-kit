@@ -53,13 +53,16 @@ class SearchActivity: DaggerAppCompatActivity() {
         searchBox.isIconified = false
         searchBox.queryTextChanges()
             .map { it.toString() }
-            .filter { it.isNotBlank() }
-            .debounce(300, TimeUnit.MILLISECONDS)
+            //.debounce(DEBOUNCE_MILLISECONDS, TimeUnit.MILLISECONDS)
             .subscribe(
                 { searchPresenter.search(it) },
                 { Timber.e(it.message, it) }
             )
 
         return true
+    }
+
+    companion object {
+        private const val DEBOUNCE_MILLISECONDS = 300L
     }
 }

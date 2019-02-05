@@ -1,9 +1,12 @@
 package media.pixi.rx.algolia.search.ui.search
 
+import media.pixi.rx.algolia.search.data.PeopleSearchResult
+
 interface SearchContract {
 
     interface View {
-
+        fun addHits(results: PeopleSearchResult)
+        fun clear(shouldNotify: Boolean)
     }
 
     interface Presenter {

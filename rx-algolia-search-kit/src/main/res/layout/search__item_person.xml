@@ -9,7 +9,7 @@
         android:layout_height="64dp">
 
     <TextView
-            android:id="@+id/contactName"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="12dp"
