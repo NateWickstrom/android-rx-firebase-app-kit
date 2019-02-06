@@ -4,9 +4,10 @@ import android.app.Application
 import android.content.Context
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import media.pixi.rx.algolia.search.data.AlgoliaSearchDataSource
 import media.pixi.rx.algolia.search.data.SearchProvider
+import media.pixi.rx.google.cloud.storage.data.CloudStorageRepo
+import media.pixi.rx.google.cloud.storage.data.GoogleCloudStorageDataSource
 import javax.inject.Singleton
 
 @Module
@@ -18,6 +19,10 @@ abstract class AppModule {
 
     @Binds
     internal abstract fun provideSearchProvider(dataSource: AlgoliaSearchDataSource): SearchProvider
+
+    @Singleton
+    @Binds
+    internal abstract fun provideCloudStorageRepo(dataSource: GoogleCloudStorageDataSource): CloudStorageRepo
 
     @Module
     companion object {
