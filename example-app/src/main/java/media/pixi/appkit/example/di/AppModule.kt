@@ -4,10 +4,12 @@ import android.app.Application
 import android.content.Context
 import dagger.Binds
 import dagger.Module
-import media.pixi.rx.algolia.search.data.AlgoliaSearchDataSource
-import media.pixi.rx.algolia.search.data.SearchProvider
-import media.pixi.rx.google.cloud.storage.data.CloudStorageRepo
-import media.pixi.rx.google.cloud.storage.data.GoogleCloudStorageDataSource
+import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.data.auth.FirebaseAuthProvider
+import media.pixi.appkit.data.search.AlgoliaSearchDataSource
+import media.pixi.appkit.data.search.SearchProvider
+import media.pixi.appkit.data.storage.CloudStorageRepo
+import media.pixi.appkit.data.storage.GoogleCloudStorageDataSource
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +25,10 @@ abstract class AppModule {
     @Singleton
     @Binds
     internal abstract fun provideCloudStorageRepo(dataSource: GoogleCloudStorageDataSource): CloudStorageRepo
+
+    @Singleton
+    @Binds
+    internal abstract fun provideAuthProvider(dataSource: FirebaseAuthProvider): AuthProvider
 
     @Module
     companion object {

@@ -28,27 +28,27 @@
 
         <activity
                   android:theme="@style/AppTheme.NoActionBar"
-                  android:name="media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity"/>
+                  android:name="media.pixi.appkit.ui.account.AccountActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.rx.firebase.auth.kit.ui.signup.SignUpActivity"/>
+                android:name="media.pixi.appkit.ui.signup.SignUpActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity"/>
+                android:name="media.pixi.appkit.ui.signin.SignInActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity"/>
+                android:name="media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity"/>
+                android:name="media.pixi.appkit.ui.profile.ProfileActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.rx.algolia.search.ui.search.SearchActivity"/>
+                android:name="media.pixi.appkit.ui.search.SearchActivity"/>
 
     </application>
 

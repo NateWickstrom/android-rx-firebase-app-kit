@@ -5,10 +5,10 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
-import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotContract
-import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotFragment
-import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotNavigator
-import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotPresenter
+import media.pixi.appkit.ui.passwordforgot.PasswordForgotContract
+import media.pixi.appkit.ui.passwordforgot.PasswordForgotFragment
+import media.pixi.appkit.ui.passwordforgot.PasswordForgotNavigator
+import media.pixi.appkit.ui.passwordforgot.PasswordForgotPresenter
 
 @Module
 abstract class PasswordForgotModule {

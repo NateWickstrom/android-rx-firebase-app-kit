@@ -5,10 +5,10 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
-import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateContract
-import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateFragment
-import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateNavigator
-import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdatePresenter
+import media.pixi.appkit.ui.passwordupdate.PasswordUpdateContract
+import media.pixi.appkit.ui.passwordupdate.PasswordUpdateFragment
+import media.pixi.appkit.ui.passwordupdate.PasswordUpdateNavigator
+import media.pixi.appkit.ui.passwordupdate.PasswordUpdatePresenter
 
 @Module
 abstract class PasswordUpdateModule {

@@ -5,12 +5,12 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import media.pixi.rx.algolia.search.data.SearchProvider
-import media.pixi.rx.firebase.auth.kit.data.AuthKitDataModule
-import media.pixi.rx.firebase.auth.kit.data.AuthProvider
+import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.data.config.ConfigDataModule
+import media.pixi.appkit.data.config.ConfigProvider
+import media.pixi.appkit.data.search.SearchProvider
+import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.example.App
-import media.pixi.rx.firebase.remote.config.ConfigDataModule
-import media.pixi.rx.firebase.remote.config.ConfigProvider
 
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ import javax.inject.Singleton
     AppModule::class,
     ConfigDataModule::class,
     //SearchDataModule::class,
-    AuthKitDataModule::class,
+    //AuthKitDataModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class])
 interface AppComponent : AndroidInjector<App> {
@@ -27,6 +27,7 @@ interface AppComponent : AndroidInjector<App> {
     fun getAuthProvider(): AuthProvider
     fun getConfigProvider(): ConfigProvider
     fun getSearchProvider(): SearchProvider
+    fun getCloudStorageRepo(): CloudStorageRepo
 
     @Component.Builder
     interface Builder {

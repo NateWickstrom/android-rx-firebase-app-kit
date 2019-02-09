@@ -6,7 +6,9 @@ import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
 import media.pixi.appkit.example.ui.AppNavigator
-import media.pixi.rx.firebase.profile.kit.ui.profile.*
+import media.pixi.appkit.ui.profile.ProfileContract
+import media.pixi.appkit.ui.profile.ProfileFragment
+import media.pixi.appkit.ui.profile.ProfilePresenter
 
 @Module
 abstract class ProfileModule {

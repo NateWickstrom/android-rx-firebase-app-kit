@@ -4,15 +4,15 @@ package media.pixi.appkit.example.di
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.feature.*
-import media.pixi.rx.algolia.search.ui.search.SearchActivity
 import media.pixi.appkit.example.ui.home.HomeActivity
 import media.pixi.appkit.example.ui.splash.SplashActivity
-import media.pixi.rx.firebase.auth.kit.ui.account.AccountActivity
-import media.pixi.rx.firebase.auth.kit.ui.passwordforgot.PasswordForgotActivity
-import media.pixi.rx.firebase.auth.kit.ui.passwordupdate.PasswordUpdateActivity
-import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
-import media.pixi.rx.firebase.auth.kit.ui.signup.SignUpActivity
-import media.pixi.rx.firebase.profile.kit.ui.profile.ProfileActivity
+import media.pixi.appkit.ui.account.AccountActivity
+import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
+import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
+import media.pixi.appkit.ui.profile.ProfileActivity
+import media.pixi.appkit.ui.search.SearchActivity
+import media.pixi.appkit.ui.signin.SignInActivity
+import media.pixi.appkit.ui.signup.SignUpActivity
 
 @Module
 abstract class ActivityBindingModule {

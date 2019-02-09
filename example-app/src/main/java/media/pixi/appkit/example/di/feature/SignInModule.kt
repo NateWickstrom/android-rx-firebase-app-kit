@@ -5,10 +5,10 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
-import media.pixi.rx.firebase.auth.kit.ui.signin.SignInContract
-import media.pixi.rx.firebase.auth.kit.ui.signin.SignInFragment
-import media.pixi.rx.firebase.auth.kit.ui.signin.SignInNavigator
-import media.pixi.rx.firebase.auth.kit.ui.signin.SignInPresenter
+import media.pixi.appkit.ui.signin.SignInContract
+import media.pixi.appkit.ui.signin.SignInFragment
+import media.pixi.appkit.ui.signin.SignInNavigator
+import media.pixi.appkit.ui.signin.SignInPresenter
 
 @Module
 abstract class SignInModule {

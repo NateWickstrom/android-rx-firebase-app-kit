@@ -1,7 +1,1 @@
-include ':example-app'
-include ':common'
-include ':rx-algolia-search-kit'
-include ':rx-firebase-config'
-include ':rx-google-cloud-storage'
-include ':rx-firebase-auth-kit'
-include ':rx-firebase-profile-kit'
+include ':example-app', ':app-kit'

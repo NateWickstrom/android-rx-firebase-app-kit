@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import media.pixi.appkit.example.ui.home.HomeActivity
 import media.pixi.appkit.example.ui.splash.SplashContract.Companion.REQUEST_CODE
-import media.pixi.rx.firebase.auth.kit.ui.signin.SignInActivity
+import media.pixi.appkit.ui.signin.SignInActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 

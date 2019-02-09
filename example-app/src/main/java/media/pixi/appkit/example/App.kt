@@ -4,7 +4,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import media.pixi.rx.firebase.auth.kit.data.AuthProvider
+import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.example.di.DaggerAppComponent
 import timber.log.Timber
 

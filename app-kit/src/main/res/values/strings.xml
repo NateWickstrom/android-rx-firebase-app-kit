@@ -1,0 +1,30 @@
+<resources>
+    <string name="search__hint">search</string>
+    <string name="search__no_results">Sorry, no results found.</string>
+
+    <string name="account">Account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_out">Sign Out</string>
+
+    <string name="forgot_password">Forgot Password</string>
+    <string name="update_password">Update Password</string>
+
+    <string name="username">Username</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="send">Send</string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="verify_password">Verify Password</string>
+
+    <string name="update">Update</string>
+    <string name="verify_email">Verify Email</string>
+
+    <string name="password_reset_message">Enter you account\'s email and a email for resetting you password will be send to the address if it exists</string>
+    <string name="profile">Profile</string>
+
+</resources>
