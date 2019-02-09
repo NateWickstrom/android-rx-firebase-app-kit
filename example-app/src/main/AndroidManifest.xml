@@ -50,6 +50,8 @@
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.search.SearchActivity"/>
 
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
+
     </application>
 
 </manifest>

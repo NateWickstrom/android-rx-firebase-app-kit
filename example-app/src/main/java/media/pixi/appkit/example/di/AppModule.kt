@@ -6,6 +6,8 @@ import dagger.Binds
 import dagger.Module
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
+import media.pixi.appkit.data.config.ConfigProvider
+import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.search.AlgoliaSearchDataSource
 import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
@@ -29,6 +31,10 @@ abstract class AppModule {
     @Singleton
     @Binds
     internal abstract fun provideAuthProvider(dataSource: FirebaseAuthProvider): AuthProvider
+
+    @Singleton
+    @Binds
+    internal abstract fun provideConfigProvider(dataSource: FirebaseConfigDataSource): ConfigProvider
 
     @Module
     companion object {

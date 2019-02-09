@@ -7,6 +7,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import durdinapps.rxfirebase2.RxFirebaseStorage
+import io.reactivex.Maybe
 import io.reactivex.Single
 import java.lang.Exception
 import javax.inject.Inject
@@ -27,11 +28,11 @@ class GoogleCloudStorageDataSource @Inject constructor(): CloudStorageRepo {
         } ?: return Single.error(Exception("No user found!"))
     }
 
-    override fun getUserProfileImageReference(): StorageReference? {
+    override fun getUserProfileImageReference(): Maybe<Uri> {
         auth.currentUser?.uid?.let {
-            return storage.reference.child(USER_PROFILE).child(it)
+            return RxFirebaseStorage.getDownloadUrl(storage.reference.child(USER_PROFILE).child(it))
         }
-        return null
+        throw Exception("No user found!")
     }
 
     companion object {

@@ -43,7 +43,10 @@ class AccountActivity : DaggerAppCompatActivity() {
             BitmapUtils.saveFile(bitmap, file)
             fragment.setImage(file)
             cloudStorageRepo.setUserProfileImage(file)
-                .flatMapCompletable { authProvider.updateProfileImage(it.uploadSessionUri.toString()) }
+                .flatMapMaybe {
+                    cloudStorageRepo.getUserProfileImageReference() }
+                .flatMapCompletable {
+                    authProvider.updateProfileImage(it.toString()) }
                 .subscribe(
                     {
                         Timber.d( "Upload complete") },

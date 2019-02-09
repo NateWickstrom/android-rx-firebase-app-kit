@@ -6,7 +6,6 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import media.pixi.appkit.data.auth.AuthProvider
-import media.pixi.appkit.data.config.ConfigDataModule
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
@@ -17,9 +16,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AppModule::class,
-    ConfigDataModule::class,
-    //SearchDataModule::class,
-    //AuthKitDataModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class])
 interface AppComponent : AndroidInjector<App> {
