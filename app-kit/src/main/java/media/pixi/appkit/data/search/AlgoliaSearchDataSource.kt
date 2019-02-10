@@ -71,6 +71,6 @@ class AlgoliaSearchDataSource @Inject constructor(): SearchProvider {
     }
 
     companion object {
-        private const val CONTACTS = "contacts"
+        private const val CONTACTS = "people"
     }
 }

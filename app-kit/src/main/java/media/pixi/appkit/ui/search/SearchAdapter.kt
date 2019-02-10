@@ -4,11 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.appkit__item_person.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.search.PeopleSearchResult
 import media.pixi.appkit.data.search.PersonSearchResult
 import java.util.ArrayList
+
+
 
 class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
@@ -78,7 +82,18 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: PersonSearchResult) = with(itemView) {
-            name.text = item.name
+            val options = RequestOptions()
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.ic_default_profile_image)
+                .error(R.drawable.ic_default_profile_image)
+            Glide.with(context)
+                .load(item.imageUrl)
+                .apply(options)
+                .into(user_image)
+
+            username.text = item.username
+            name.text = itemView.context.getString(R.string.appkit__username, item.firstname, item.lastname)
+
             //itemImage.loadUrl(item.url)
         }
     }
