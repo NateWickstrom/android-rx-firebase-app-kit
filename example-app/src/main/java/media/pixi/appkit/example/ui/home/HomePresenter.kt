@@ -6,6 +6,10 @@ import javax.inject.Inject
 class HomePresenter @Inject constructor(private val navigator: HomeNavigator):
     HomeContract.Presenter {
 
+    override fun onSettingsClicked(activity: Activity) {
+        navigator.showSettings(activity)
+    }
+
     override fun onProfileClicked(activity: Activity) {
         navigator.showUserProfile(activity)
     }

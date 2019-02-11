@@ -17,5 +17,7 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
 
         search.setOnClickListener { presenter.onSearchClicked(this) }
         profile.setOnClickListener { presenter.onProfileClicked(this) }
+        settings.setOnClickListener { presenter.onSettingsClicked(this) }
+
     }
 }
