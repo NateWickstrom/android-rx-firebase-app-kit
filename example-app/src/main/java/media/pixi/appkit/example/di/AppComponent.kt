@@ -7,7 +7,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.config.ConfigProvider
-import media.pixi.appkit.data.profile.CurrentUserProfileProvider
+import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.example.App
@@ -25,7 +25,7 @@ interface AppComponent : AndroidInjector<App> {
     fun getConfigProvider(): ConfigProvider
     fun getSearchProvider(): SearchProvider
     fun getCloudStorageRepo(): CloudStorageRepo
-    fun getCurrentUserProfileProvider(): CurrentUserProfileProvider
+    fun getCurrentUserProfileProvider(): UserProfileProvider
 
     @Component.Builder
     interface Builder {

@@ -10,7 +10,7 @@ import android.view.animation.AlphaAnimation
 import android.view.View
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.R
-import media.pixi.appkit.data.profile.CurrentUserProfileProvider
+import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.data.profile.UserProfile
 import timber.log.Timber
 
@@ -20,7 +20,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
     lateinit var fragment: ProfileFragment
         @Inject set
 
-    lateinit var currentUserProfileProvider: CurrentUserProfileProvider
+    lateinit var userProfileProvider: UserProfileProvider
         @Inject set
 
     lateinit var navigator: ProfileContract.Navigator
@@ -44,7 +44,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
         )
 
         disposable?.dispose()
-        disposable = currentUserProfileProvider.observerProfile()
+        disposable = userProfileProvider.observerProfile()
             .subscribe(
                 { updateUser(it) },
                 { Timber.e(it.message, it) }

@@ -9,8 +9,8 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
-import media.pixi.appkit.data.profile.CurrentUserProfileProvider
-import media.pixi.appkit.data.profile.FirebaseCurrentUserProfileProvider
+import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.data.profile.FirebaseUserProfileProvider
 import media.pixi.appkit.data.search.AlgoliaSearchDataSource
 import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
@@ -41,7 +41,7 @@ abstract class AppModule {
 
 //    @Singleton
 //    @Binds
-//    internal abstract fun provideCurrentUserProfileProvider(dataSource: FirebaseCurrentUserProfileProvider): CurrentUserProfileProvider
+//    internal abstract fun provideCurrentUserProfileProvider(dataSource: FirebaseUserProfileProvider): UserProfileProvider
 
     @Module
     companion object {
@@ -77,8 +77,8 @@ abstract class AppModule {
         @Singleton
         @Provides
         @JvmStatic
-        fun provideCurrentUserProfileProvider(): CurrentUserProfileProvider {
-            return FirebaseCurrentUserProfileProvider()
+        fun provideCurrentUserProfileProvider(): UserProfileProvider {
+            return FirebaseUserProfileProvider()
         }
     }
 }

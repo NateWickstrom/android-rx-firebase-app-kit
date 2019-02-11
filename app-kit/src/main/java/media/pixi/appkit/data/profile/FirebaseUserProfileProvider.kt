@@ -7,7 +7,7 @@ import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class FirebaseCurrentUserProfileProvider: CurrentUserProfileProvider {
+class FirebaseUserProfileProvider: UserProfileProvider {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()

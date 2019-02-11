@@ -3,7 +3,7 @@ package media.pixi.appkit.data.profile
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-interface CurrentUserProfileProvider {
+interface UserProfileProvider {
 
     fun observerProfile(): Flowable<UserProfile>
 
