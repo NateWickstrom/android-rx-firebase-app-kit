@@ -11,6 +11,7 @@ import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
 import media.pixi.appkit.ui.profile.ProfileActivity
 import media.pixi.appkit.ui.search.SearchActivity
+import media.pixi.appkit.ui.settings.SettingsActivity
 import media.pixi.appkit.ui.signin.SignInActivity
 import media.pixi.appkit.ui.signup.SignUpActivity
 
@@ -52,5 +53,9 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [SearchModule::class])
     internal abstract fun searchActivity(): SearchActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [SettingsModule::class])
+    internal abstract fun settingsActivity(): SettingsActivity
 
 }
