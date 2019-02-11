@@ -18,10 +18,6 @@ interface AuthProvider {
 
     fun signUp(email: String, password: String): Completable
 
-    fun updateProfileImage(url: String): Completable
-
-    fun updateDisplayname(name: String): Completable
-
     fun updateEmail(email: String, password: String): Completable
 
     fun updatePassword(newPassword: String, oldPassword: String): Completable

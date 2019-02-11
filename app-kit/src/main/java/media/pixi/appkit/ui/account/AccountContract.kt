@@ -10,6 +10,8 @@ interface AccountContract {
     interface View: BaseView<Presenter> {
         var userImageUrl: String
         var username: String
+        var firstName: String
+        var lastName: String
         var email: String
     }
 

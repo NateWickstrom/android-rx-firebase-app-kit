@@ -5,10 +5,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import durdinapps.rxfirebase2.RxFirebaseRemote
 import io.reactivex.Completable
 import media.pixi.appkit.BuildConfig
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton class FirebaseConfigDataSource @Inject constructor() : ConfigProvider {
+class FirebaseConfigDataSource: ConfigProvider {
 
     private val firebaseRemoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 

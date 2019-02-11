@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.appkit__item_person.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.search.PeopleSearchResult
 import media.pixi.appkit.data.search.PersonSearchResult
+import media.pixi.appkit.utils.ImageUtils
 import java.util.ArrayList
 
 
@@ -82,19 +83,9 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: PersonSearchResult) = with(itemView) {
-            val options = RequestOptions()
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.ic_default_profile_image)
-                .error(R.drawable.ic_default_profile_image)
-            Glide.with(context)
-                .load(item.imageUrl)
-                .apply(options)
-                .into(user_image)
-
+            ImageUtils.setUserImage(user_image, item.imageUrl)
             username.text = item.username
             name.text = itemView.context.getString(R.string.appkit__username, item.firstname, item.lastname)
-
-            //itemImage.loadUrl(item.url)
         }
     }
 }

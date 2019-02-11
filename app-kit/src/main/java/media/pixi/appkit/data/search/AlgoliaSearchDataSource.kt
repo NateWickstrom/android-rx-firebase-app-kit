@@ -13,9 +13,8 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import media.pixi.appkit.BuildConfig
 import timber.log.Timber
-import javax.inject.Inject
 
-class AlgoliaSearchDataSource @Inject constructor(): SearchProvider {
+class AlgoliaSearchDataSource: SearchProvider {
 
     private val myListener = MyListener()
 

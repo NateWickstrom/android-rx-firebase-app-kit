@@ -8,8 +8,11 @@ import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
 import android.view.animation.AlphaAnimation
 import android.view.View
+import io.reactivex.disposables.Disposable
 import media.pixi.appkit.R
-import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.data.profile.CurrentUserProfileProvider
+import media.pixi.appkit.data.profile.UserProfile
+import timber.log.Timber
 
 
 class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
@@ -17,7 +20,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
     lateinit var fragment: ProfileFragment
         @Inject set
 
-    lateinit var authProvider: AuthProvider
+    lateinit var currentUserProfileProvider: CurrentUserProfileProvider
         @Inject set
 
     lateinit var navigator: ProfileContract.Navigator
@@ -25,6 +28,8 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
 
     private var mIsTheTitleVisible = false
     private var mIsTheTitleContainerVisible = true
+
+    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +43,28 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
             supportFragmentManager, fragment, R.id.contentFrame
         )
 
-        val user = authProvider.getUser()
-        if (user != null) {
-            avatar.setImageURI(user.imageUrl)
-            profile_title.text = user.username
-            collapsed_title.text = user.username
-        }
+        disposable?.dispose()
+        disposable = currentUserProfileProvider.observerProfile()
+            .subscribe(
+                { updateUser(it) },
+                { Timber.e(it.message, it) }
+            )
 
         fab.setOnClickListener { navigator.showAccountScreen(this) }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.dispose()
+        disposable = null
+    }
+
+    private fun updateUser(user: UserProfile) {
+        avatar.setImageURI(user.imageUrl)
+        profile_title.text = user.username
+        collapsed_title.text = user.username
+    }
+
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        menuInflater.inflate(R.menu.appkit__profile_menu, menu)

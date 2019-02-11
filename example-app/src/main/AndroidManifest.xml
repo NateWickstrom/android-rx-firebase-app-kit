@@ -44,6 +44,10 @@
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity"/>
+
+        <activity
+                android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.profile.ProfileActivity"/>
 
         <activity

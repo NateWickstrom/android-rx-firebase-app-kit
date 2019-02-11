@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.appkit__error.view.*
 import kotlinx.android.synthetic.main.appkit__fragment_account.*
 import kotlinx.android.synthetic.main.appkit__fragment_account.view.*
 import media.pixi.appkit.R
+import media.pixi.appkit.utils.ImageUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -16,17 +17,23 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
 
     override var userImageUrl: String
         get() = ""
-        set(value) { if (value.isNotEmpty()) {
-            Glide.with(context!!)
-                .load(value)
-                .apply(RequestOptions.circleCropTransform())
-                .into(user_image)
+        set(value) {
+            if (value.isNotEmpty()) {
+                ImageUtils.setUserImage(user_image, value)
             }
         }
 
     override var username: String
         get() = viewOfLayout.username.text.toString()
         set(value) { viewOfLayout.username.setText(value) }
+
+    override var firstName: String
+        get() = viewOfLayout.firstname.text.toString()
+        set(value) { viewOfLayout.firstname.setText(value) }
+
+    override var lastName: String
+        get() = viewOfLayout.lastname.text.toString()
+        set(value) { viewOfLayout.lastname.setText(value) }
 
     override var email: String
         get() = viewOfLayout.email.text.toString()

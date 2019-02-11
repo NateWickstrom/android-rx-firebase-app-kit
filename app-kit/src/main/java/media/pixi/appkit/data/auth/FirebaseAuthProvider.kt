@@ -1,22 +1,15 @@
 package media.pixi.appkit.data.auth
 
-import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
-
-import javax.inject.Inject
-import javax.inject.Singleton
-
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseUser
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import java.lang.IllegalArgumentException
 
 
-@Singleton class FirebaseAuthProvider @Inject constructor() : AuthProvider {
+class FirebaseAuthProvider: AuthProvider {
 
     private val loginSubject: PublishSubject<Boolean> = PublishSubject.create()
     private val authUserModelSubject: PublishSubject<AuthUserModel> = PublishSubject.create()
@@ -68,25 +61,6 @@ import java.lang.IllegalArgumentException
             .map { toUserModel(it) }
             .map { updateUser(it) }
             .ignoreElement()
-    }
-
-    override fun updateProfileImage(url: String): Completable {
-        if (auth.currentUser == null) return Completable.error(IllegalArgumentException("No User"))
-
-        val profileUpdates = UserProfileChangeRequest.Builder()
-            .setPhotoUri(Uri.parse(url))
-            .build()
-
-        return  RxFirebaseUser.updateProfile(auth.currentUser!!, profileUpdates)    }
-
-    override fun updateDisplayname(name: String): Completable {
-        if (auth.currentUser == null) return Completable.error(IllegalArgumentException("No User"))
-
-        val profileUpdates = UserProfileChangeRequest.Builder()
-            .setDisplayName(name)
-            .build()
-
-        return  RxFirebaseUser.updateProfile(auth.currentUser!!, profileUpdates)
     }
 
     override fun updateEmail(email: String, password: String): Completable {
@@ -143,5 +117,13 @@ import java.lang.IllegalArgumentException
             this.loginSubject.onNext(true)
             this.authUserModelSubject.onNext(user)
         }
+    }
+
+    companion object {
+        private const val PEOPLE = "people"
+        private const val FIRSTNAME = "firstname"
+        private const val LASTNAME = "lastname"
+        private const val USERNAME = "username"
+
     }
 }

@@ -72,6 +72,7 @@ dependencies {
     implementation deps.firebase.rx_firebase
     implementation deps.firebase.firebase_config
     implementation deps.firebase.firebase_core
+    implementation deps.firebase.firebase_firestore
 
     // reactiveX
     implementation deps.rxjava2

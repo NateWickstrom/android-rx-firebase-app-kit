@@ -2,14 +2,12 @@ package media.pixi.appkit.data.storage
 
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
-import java.io.File
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import durdinapps.rxfirebase2.RxFirebaseStorage
 import io.reactivex.Maybe
 import io.reactivex.Single
-import java.lang.Exception
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
