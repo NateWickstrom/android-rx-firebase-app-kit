@@ -1,4 +1,6 @@
 package media.pixi.appkit.ui.settings
 
-class SettingsPresenter: SettingsContract.Presenter {
+import javax.inject.Inject
+
+class SettingsPresenter @Inject constructor(): SettingsContract.Presenter {
 }

@@ -1,4 +1,6 @@
 package media.pixi.appkit.ui.settings
 
-class SettingsNavigator: SettingsContract.Navigator {
+import javax.inject.Inject
+
+class SettingsNavigator @Inject constructor(): SettingsContract.Navigator {
 }
