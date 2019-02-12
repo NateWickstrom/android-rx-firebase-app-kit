@@ -1,7 +1,9 @@
 package media.pixi.appkit.ui.search
 
+import android.app.Activity
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.search.PeopleSearchResult
+import media.pixi.appkit.data.search.PersonSearchResult
 import media.pixi.appkit.data.search.SearchProvider
 import timber.log.Timber
 import javax.inject.Inject
@@ -41,6 +43,10 @@ class SearchPresenter @Inject constructor(private val searchProvider: SearchProv
             }
             searchProvider.search(query)
         }
+    }
+
+    override fun onListItemClicked(activity: Activity, personSearchResult: PersonSearchResult) {
+        navigator.showProfile(activity, personSearchResult)
     }
 
     private fun onResult(result: PeopleSearchResult) {

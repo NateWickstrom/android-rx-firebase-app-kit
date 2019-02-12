@@ -17,8 +17,8 @@ import java.util.ArrayList
 
 class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    val onClickListener: ((Int) -> Unit)? = null
-    val onLongClickListener: ((Int) -> Boolean)? = null
+    var onClickListener: ((PersonSearchResult) -> Unit)? = null
+    var onLongClickListener: ((Int) -> Boolean)? = null
 
     private val hits = ArrayList<PersonSearchResult>()
 
@@ -33,8 +33,9 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItemAt(position))
-        holder.itemView.setOnClickListener { onClickListener?.invoke(position) }
+        val item = getItemAt(position)
+        holder.bind(item)
+        holder.itemView.setOnClickListener { onClickListener?.invoke(item) }
         holder.itemView.setOnLongClickListener { onLongClickListener?.invoke(position) ?: false}
     }
 

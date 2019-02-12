@@ -1,6 +1,8 @@
 package media.pixi.appkit.ui.search
 
+import android.app.Activity
 import media.pixi.appkit.data.search.PeopleSearchResult
+import media.pixi.appkit.data.search.PersonSearchResult
 
 
 interface SearchContract {
@@ -29,9 +31,11 @@ interface SearchContract {
         fun dropView()
 
         fun search(query: String)
+
+        fun onListItemClicked(activity: Activity, personSearchResult: PersonSearchResult)
     }
 
     interface Navigator {
-
+        fun showProfile(activity: Activity, user: PersonSearchResult)
     }
 }

@@ -1,5 +1,6 @@
 package media.pixi.appkit.ui.search
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
         view.hits.layoutManager = LinearLayoutManager(context)
 
         adapter = SearchAdapter()
+        adapter?.onClickListener = { presenter.onListItemClicked(activity as Activity, it) }
         view.hits.adapter = adapter
 
         return view
