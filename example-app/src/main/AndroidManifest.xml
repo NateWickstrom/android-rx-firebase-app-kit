@@ -27,8 +27,10 @@
                 android:name=".ui.home.HomeActivity"/>
 
         <activity
-                  android:theme="@style/AppTheme.NoActionBar"
-                  android:name="media.pixi.appkit.ui.account.AccountActivity"/>
+                android:label="@string/account"
+                android:parentActivityName=".ui.home.HomeActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.appkit.ui.account.AccountActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"

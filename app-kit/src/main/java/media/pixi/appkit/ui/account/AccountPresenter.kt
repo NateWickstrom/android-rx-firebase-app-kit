@@ -1,20 +1,33 @@
 package media.pixi.appkit.ui.account
 
 import android.app.Activity
-import android.widget.Toast
+import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.data.profile.UserProfile
+import media.pixi.appkit.data.profile.UserProfileProvider
+import timber.log.Timber
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
     private var authProvider: AuthProvider,
+    private var userProfileProvider: UserProfileProvider,
     private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
+    private var disposable: Disposable? = null
+    private var view: AccountContract.View? = null
+
+
     override fun takeView(view: AccountContract.View) {
+        this.view = view
         val user = authProvider.getUser()
 
-        view.userImageUrl = user?.imageUrl ?: ""
-        view.username = user?.username ?: ""
         view.email = user?.email ?: ""
+
+        disposable = userProfileProvider.observerProfile()
+            .subscribe(
+                { onResult(it) },
+                { onError(it) }
+            )
     }
 
     override fun dropView() {
@@ -44,5 +57,16 @@ class AccountPresenter @Inject constructor(
 
     override fun onVerifyEmailClicked(activity: Activity) {
 
+    }
+
+    private fun onResult(userProfile: UserProfile) {
+        view?.username = userProfile.username
+        view?.firstName = userProfile.firstName
+        view?.lastName = userProfile.lastName
+        view?.userImageUrl = userProfile.imageUrl
+    }
+
+    private fun onError(error: Throwable) {
+        Timber.e(error.message, error)
     }
 }
