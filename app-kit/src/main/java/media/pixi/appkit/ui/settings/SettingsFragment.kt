@@ -1,5 +1,6 @@
 package media.pixi.appkit.ui.settings
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ class SettingsFragment @Inject constructor(): DaggerFragment(), SettingsContract
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_settings, container, false)
 
-        view.account.setOnClickListener {  }
+        view.account.setOnClickListener { presenter.onAccountClicked(activity as Activity) }
         view.notifications.setOnClickListener {  }
 
         presenter.takeView(this)

@@ -16,7 +16,7 @@ class SettingsActivity: DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.appkit__activity)
         setSupportActionBar(toolbar)
-        title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame

@@ -9,6 +9,7 @@
 
     <RelativeLayout
             android:id="@+id/account"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -33,6 +34,7 @@
 
     <RelativeLayout
             android:id="@+id/notifications"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

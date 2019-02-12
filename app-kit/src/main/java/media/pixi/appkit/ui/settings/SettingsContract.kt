@@ -1,7 +1,7 @@
 package media.pixi.appkit.ui.settings
 
+import android.app.Activity
 import media.pixi.appkit.ui.BasePresenter
-import media.pixi.appkit.ui.BaseView
 
 interface SettingsContract {
 
@@ -10,10 +10,10 @@ interface SettingsContract {
     }
 
     interface Presenter: BasePresenter<View> {
-
+        fun onAccountClicked(activity: Activity)
     }
 
     interface Navigator {
-
+        fun showAccount(activity: Activity)
     }
 }

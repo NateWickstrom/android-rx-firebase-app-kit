@@ -1,8 +1,9 @@
 package media.pixi.appkit.ui.settings
 
+import android.app.Activity
 import javax.inject.Inject
 
-class SettingsPresenter @Inject constructor(): SettingsContract.Presenter {
+class SettingsPresenter @Inject constructor(private val navigator: SettingsNavigator): SettingsContract.Presenter {
 
     override fun takeView(view: SettingsContract.View) {
 
@@ -10,5 +11,9 @@ class SettingsPresenter @Inject constructor(): SettingsContract.Presenter {
 
     override fun dropView() {
 
+    }
+
+    override fun onAccountClicked(activity: Activity) {
+        navigator.showAccount(activity)
     }
 }
