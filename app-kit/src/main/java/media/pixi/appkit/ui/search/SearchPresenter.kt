@@ -17,16 +17,14 @@ class SearchPresenter @Inject constructor(private val searchProvider: SearchProv
 
     override fun takeView(view: SearchContract.View) {
         this.view = view
-        disposable = searchProvider.people()
-            .subscribe(
-                { onResult(it) },
-                { onError(it) }
-            )
+        view.clear(true)
+        view.loading = false
     }
 
     override fun dropView() {
         this.view = null
         disposable?.dispose()
+        disposable = null
     }
 
     override fun search(query: String) {
@@ -34,6 +32,13 @@ class SearchPresenter @Inject constructor(private val searchProvider: SearchProv
             view?.clear(true)
         } else {
             view?.loading = true
+            if (disposable == null) {
+                disposable = searchProvider.people()
+                    .subscribe(
+                        { onResult(it) },
+                        { onError(it) }
+                    )
+            }
             searchProvider.search(query)
         }
     }

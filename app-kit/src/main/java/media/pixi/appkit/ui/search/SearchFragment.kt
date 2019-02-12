@@ -18,7 +18,7 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
         get() = progress_bar.visibility == View.INVISIBLE
         set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
-    private val adapter = SearchAdapter()
+    private var adapter: SearchAdapter? = null
 
     lateinit var presenter: SearchContract.Presenter
 
@@ -26,22 +26,30 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_search, container, false)
         view.hits.layoutManager = LinearLayoutManager(context)
+
+        adapter = SearchAdapter()
         view.hits.adapter = adapter
-        presenter.takeView(this)
+
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.takeView(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.dropView()
+        adapter = null
     }
 
     override fun clear(shouldNotify: Boolean) {
-        adapter.clear(shouldNotify)
+        adapter?.clear(shouldNotify)
     }
 
     override fun addHits(results: PeopleSearchResult) {
-        adapter.addHits(results)
+        adapter?.addHits(results)
     }
 
     override fun showNoResults(show: Boolean) {
