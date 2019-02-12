@@ -33,5 +33,6 @@
     <string name="appkit__username">%1$s %2$s</string>
 
     <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
 
 </resources>

@@ -47,7 +47,7 @@
                 android:name="media.pixi.appkit.ui.search.SearchActivity"/>
 
         <activity
-                android:label="@string/account"
+                android:label="@string/settings"
                 android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.settings.SettingsActivity"/>
