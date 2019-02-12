@@ -33,6 +33,12 @@
                 android:name="media.pixi.appkit.ui.account.AccountActivity"/>
 
         <activity
+                android:label="@string/profile"
+                android:parentActivityName=".ui.home.HomeActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.appkit.ui.friend.FriendActivity"/>
+
+        <activity
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity"/>
 

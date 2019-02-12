@@ -24,25 +24,6 @@ abstract class AppModule {
     @Binds
     internal abstract fun bindContext(application: Application): Context
 
-//    @Binds
-//    internal abstract fun provideSearchProvider(dataSource: AlgoliaSearchDataSource): SearchProvider
-
-//    @Singleton
-//    @Binds
-//    internal abstract fun provideCloudStorageRepo(dataSource: GoogleCloudStorageDataSource): CloudStorageRepo
-
-//    @Singleton
-//    @Binds
-//    internal abstract fun provideAuthProvider(dataSource: FirebaseAuthProvider): AuthProvider
-
-//    @Singleton
-//    @Binds
-//    internal abstract fun provideConfigProvider(dataSource: FirebaseConfigDataSource): ConfigProvider
-
-//    @Singleton
-//    @Binds
-//    internal abstract fun provideCurrentUserProfileProvider(dataSource: FirebaseUserProfileProvider): UserProfileProvider
-
     @Module
     companion object {
 
