@@ -8,6 +8,7 @@ import media.pixi.appkit.example.ui.home.HomeActivity
 import media.pixi.appkit.example.ui.splash.SplashActivity
 import media.pixi.appkit.ui.account.AccountActivity
 import media.pixi.appkit.ui.friend.FriendActivity
+import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
 import media.pixi.appkit.ui.profile.ProfileActivity
@@ -63,4 +64,7 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [FriendModule::class])
     internal abstract fun friendActivity(): FriendActivity
 
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [NotificationsModule::class])
+    internal abstract fun notificationsActivity(): NotificationsActivity
 }
