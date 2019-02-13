@@ -7,18 +7,49 @@ import media.pixi.appkit.R
 import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
 
-class FriendActivity: DaggerAppCompatActivity() {
+class FriendActivity: DaggerAppCompatActivity(), FriendContract.View {
+
+    override var userImageUrl: String
+        get() = ""
+        set(value) { avatar.setImageURI(value) }
+
+    override var username: String
+        get() = ""
+        set(value) {
+            profile_title.text = value
+            collapsed_title.text = value
+        }
+
+    override var firstName: String
+        get() = ""
+        set(value) {}
+
+    override var lastName: String
+        get() = ""
+        set(value) {}
 
     lateinit var fragment: FriendFragment
         @Inject set
 
+    lateinit var presenter: FriendPresenter
+        @Inject set
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.appkit__activity_profile)
+        setContentView(R.layout.appkit__activity_friend)
         setSupportActionBar(toolbar)
+        title = ""
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
         )
+
+        presenter.takeView(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dropView()
     }
 }

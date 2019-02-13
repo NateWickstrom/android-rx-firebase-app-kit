@@ -23,7 +23,7 @@ class AccountPresenter @Inject constructor(
 
         view.email = user?.email ?: ""
 
-        disposable = userProfileProvider.observerProfile()
+        disposable = userProfileProvider.observerCurrentUserProfile()
             .subscribe(
                 { onResult(it) },
                 { onError(it) }

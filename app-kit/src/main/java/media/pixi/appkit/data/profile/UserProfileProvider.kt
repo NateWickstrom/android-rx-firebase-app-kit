@@ -5,7 +5,9 @@ import io.reactivex.Flowable
 
 interface UserProfileProvider {
 
-    fun observerProfile(): Flowable<UserProfile>
+    fun observerCurrentUserProfile(): Flowable<UserProfile>
+
+    fun observerUserProfile(userId: String): Flowable<UserProfile>
 
     fun updateProfileImage(url: String): Completable
 

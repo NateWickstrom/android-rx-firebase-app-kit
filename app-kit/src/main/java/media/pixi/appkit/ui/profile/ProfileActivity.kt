@@ -44,7 +44,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
         )
 
         disposable?.dispose()
-        disposable = userProfileProvider.observerProfile()
+        disposable = userProfileProvider.observerCurrentUserProfile()
             .subscribe(
                 { updateUser(it) },
                 { Timber.e(it.message, it) }

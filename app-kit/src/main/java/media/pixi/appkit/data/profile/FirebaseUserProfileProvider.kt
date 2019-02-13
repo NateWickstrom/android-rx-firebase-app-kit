@@ -12,12 +12,17 @@ class FirebaseUserProfileProvider: UserProfileProvider {
     private val firestore = FirebaseFirestore.getInstance()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    override fun observerProfile(): Flowable<UserProfile> {
+    override fun observerCurrentUserProfile(): Flowable<UserProfile> {
         val uid = auth.currentUser?.uid ?: ""
         if (uid.isEmpty()) return Flowable.error(IllegalArgumentException("No User"))
 
         val ref = firestore.collection(PEOPLE).document(uid)
 
+        return RxFirestore.observeDocumentRef(ref).map { this.toUserProfile(it) }
+    }
+
+    override fun observerUserProfile(userId: String): Flowable<UserProfile> {
+        val ref = firestore.collection(PEOPLE).document(userId)
         return RxFirestore.observeDocumentRef(ref).map { this.toUserProfile(it) }
     }
 
