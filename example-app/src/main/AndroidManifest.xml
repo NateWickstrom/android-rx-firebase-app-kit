@@ -68,6 +68,7 @@
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
+                android:parentActivityName="media.pixi.appkit.ui.signin.SignInActivity"
                 android:name="media.pixi.appkit.ui.signup.SignUpActivity"/>
 
         <activity

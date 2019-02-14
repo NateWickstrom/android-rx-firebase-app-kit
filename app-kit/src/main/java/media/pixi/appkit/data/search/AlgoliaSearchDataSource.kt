@@ -12,18 +12,21 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import media.pixi.appkit.BuildConfig
+import media.pixi.appkit.data.auth.AuthProvider
 import timber.log.Timber
 
-class AlgoliaSearchDataSource: SearchProvider {
+class AlgoliaSearchDataSource(private val authProvider: AuthProvider): SearchProvider {
 
     private val myListener = MyListener()
 
     private var searcher: Searcher? = null
 
     override fun search(query: String) {
+        val userId = authProvider.getUser()?.id ?: throw IllegalAccessError("No User")
         if (searcher == null) {
             initSearch()
         }
+        searcher?.addFacetRefinement("-id", userId)
         searcher?.search(query)
     }
 
