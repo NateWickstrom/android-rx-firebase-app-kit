@@ -55,7 +55,7 @@ class FirebaseAuthProvider: AuthProvider {
             .ignoreElement()
     }
 
-    override fun signUp(email: String, password: String): Completable {
+    override fun signUp(firstName: String, lastName: String, email: String, password: String): Completable {
         return RxFirebaseAuth.createUserWithEmailAndPassword(auth, email, password)
             .map { it.user }
             .map { toUserModel(it) }

@@ -72,7 +72,7 @@ class SignUpPresenter @Inject constructor(
         view?.loading = true
 
         disposable?.dispose()
-        disposable = authProvider.signUp(email, password)
+        disposable = authProvider.signUp(firstName, lastName, email, password)
             .subscribe(
                 { onResult(activity) },
                 { onError(it) }
