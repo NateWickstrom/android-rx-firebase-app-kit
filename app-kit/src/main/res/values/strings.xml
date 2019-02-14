@@ -12,13 +12,18 @@
 
     <string name="username">Username</string>
     <string name="firstname">First Name</string>
-    <string name="lastname">Lat Name</string>
+    <string name="lastname">Last Name</string>
 
     <string name="email">Email Address</string>
     <string name="password">Password</string>
     <string name="send">Send</string>
     <string name="reset">Reset</string>
     <string name="save">Save</string>
+
+    <string name="error_email_blank">Email Address is blank</string>
+    <string name="error_password_blank">Password is blank</string>
+    <string name="error_first_name_blank">First name is blank</string>
+    <string name="error_last_name_blank">Last name is blank</string>
 
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>

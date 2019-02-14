@@ -6,12 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__error.view.*
+import kotlinx.android.synthetic.main.appkit__fragment_signup.*
 import kotlinx.android.synthetic.main.appkit__fragment_signup.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.ui.TextChangeWatcher
 import javax.inject.Inject
 
 class SignUpFragment @Inject constructor(): DaggerFragment(), SignUpContract.View {
+
+    override var loading: Boolean
+        get() = progress_bar.visibility == View.INVISIBLE
+        set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
+
+    override var enableSignupButton: Boolean
+        get() = sign_up.isEnabled
+        set(value) { sign_up.isEnabled = value }
 
     override var error: String
         get() = viewOfLayout.error_massage.text.toString()
@@ -35,6 +44,8 @@ class SignUpFragment @Inject constructor(): DaggerFragment(), SignUpContract.Vie
 
         presenter.takeView(this)
 
+        viewOfLayout.firstname.addTextChangedListener(TextChangeWatcher { presenter.onFirstNameTextChanged(it) })
+        viewOfLayout.lastname.addTextChangedListener(TextChangeWatcher { presenter.onLastNameTextChanged(it) })
         viewOfLayout.email.addTextChangedListener(TextChangeWatcher { presenter.onEmailTextChanged(it) })
         viewOfLayout.password.addTextChangedListener(TextChangeWatcher { presenter.onPasswordTextChanged(it) })
         viewOfLayout.sign_up.setOnClickListener { presenter.onSignUpClicked(activity!!) }
