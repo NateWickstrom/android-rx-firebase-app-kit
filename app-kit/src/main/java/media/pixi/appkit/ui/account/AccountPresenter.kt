@@ -14,6 +14,7 @@ class AccountPresenter @Inject constructor(
     private var disposable: Disposable? = null
     private var view: AccountContract.View? = null
 
+    private var originalUser: AuthUserModel? = null
 
     override fun takeView(view: AccountContract.View) {
         this.view = view
@@ -54,12 +55,13 @@ class AccountPresenter @Inject constructor(
 
     }
 
-    private fun onResult(userProfile: AuthUserModel) {
-        view?.email = userProfile.email
-        view?.username = userProfile.username
-        view?.firstName = userProfile.firstName
-        view?.lastName = userProfile.lastName
-        view?.userImageUrl = userProfile.imageUrl
+    private fun onResult(user: AuthUserModel) {
+        originalUser = user
+        view?.email = user.email
+        view?.username = user.username
+        view?.firstName = user.firstName
+        view?.lastName = user.lastName
+        view?.userImageUrl = user.imageUrl
     }
 
     private fun onError(error: Throwable) {

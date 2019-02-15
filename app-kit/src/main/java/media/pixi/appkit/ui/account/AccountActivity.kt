@@ -42,7 +42,8 @@ class AccountActivity : DaggerAppCompatActivity() {
             val bitmap = BitmapUtils.getScaledBitmapFromUri(this, uri, 120, 120)
             val file = File(cacheDir, "profile_pic.jpeg")
             BitmapUtils.saveFile(bitmap, file)
-            fragment.setImage(file)
+
+            // TODO loading while image is uploading
             cloudStorageRepo.setUserProfileImage(file)
                 .flatMapMaybe {
                     cloudStorageRepo.getUserProfileImageReference() }
@@ -50,6 +51,7 @@ class AccountActivity : DaggerAppCompatActivity() {
                     authProvider.updateProfileImage(it.toString()) }
                 .subscribe(
                     {
+                        file.delete()
                         Timber.d( "Upload complete") },
                     {
                         Timber.e(it.message, it) }
