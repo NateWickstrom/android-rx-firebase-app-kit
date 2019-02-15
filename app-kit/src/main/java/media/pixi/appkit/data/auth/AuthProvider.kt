@@ -1,22 +1,32 @@
 package media.pixi.appkit.data.auth
 
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Flowable
 
 
 interface AuthProvider {
 
-    fun getUser(): AuthUserModel?
+    fun getUserId(): String?
 
     fun isSignedIn(): Boolean
 
     fun signOut()
 
-    fun observerAuthState(): Observable<Boolean>
+    fun observerAuthState(): Flowable<Boolean>
+
+    fun observerLoggedInUser(): Flowable<AuthUserModel>
 
     fun signIn(email: String, password: String): Completable
 
     fun signUp(firstName: String, lastName: String, email: String, password: String): Completable
+
+    fun updateProfileImage(url: String): Completable
+
+    fun updateUsername(name: String): Completable
+
+    fun updateFirstName(name: String): Completable
+
+    fun updateLastName(name: String): Completable
 
     fun updateEmail(email: String, password: String): Completable
 

@@ -22,7 +22,7 @@ class AlgoliaSearchDataSource(private val authProvider: AuthProvider): SearchPro
     private var searcher: Searcher? = null
 
     override fun search(query: String) {
-        val userId = authProvider.getUser()?.id ?: throw IllegalAccessError("No User")
+        val userId = authProvider.getUserId() ?: throw IllegalAccessError("No User")
         if (searcher == null) {
             initSearch()
         }

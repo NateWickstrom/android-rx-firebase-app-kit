@@ -3,14 +3,12 @@ package media.pixi.appkit.ui.account
 import android.app.Activity
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.auth.AuthProvider
-import media.pixi.appkit.data.profile.UserProfile
-import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.data.auth.AuthUserModel
 import timber.log.Timber
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
     private var authProvider: AuthProvider,
-    private var userProfileProvider: UserProfileProvider,
     private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
     private var disposable: Disposable? = null
@@ -19,11 +17,8 @@ class AccountPresenter @Inject constructor(
 
     override fun takeView(view: AccountContract.View) {
         this.view = view
-        val user = authProvider.getUser()
 
-        view.email = user?.email ?: ""
-
-        disposable = userProfileProvider.observerCurrentUserProfile()
+        disposable = authProvider.observerLoggedInUser()
             .subscribe(
                 { onResult(it) },
                 { onError(it) }
@@ -31,7 +26,7 @@ class AccountPresenter @Inject constructor(
     }
 
     override fun dropView() {
-
+        disposable?.dispose()
     }
 
     override fun onUserImageClicked(activity: Activity) {
@@ -59,7 +54,8 @@ class AccountPresenter @Inject constructor(
 
     }
 
-    private fun onResult(userProfile: UserProfile) {
+    private fun onResult(userProfile: AuthUserModel) {
+        view?.email = userProfile.email
         view?.username = userProfile.username
         view?.firstName = userProfile.firstName
         view?.lastName = userProfile.lastName

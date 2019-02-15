@@ -10,8 +10,8 @@ import android.view.animation.AlphaAnimation
 import android.view.View
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.R
-import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.data.profile.UserProfile
+import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.data.auth.AuthUserModel
 import timber.log.Timber
 
 
@@ -20,7 +20,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
     lateinit var fragment: ProfileFragment
         @Inject set
 
-    lateinit var userProfileProvider: UserProfileProvider
+    lateinit var userProfileProvider: AuthProvider
         @Inject set
 
     lateinit var navigator: ProfileContract.Navigator
@@ -44,7 +44,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
         )
 
         disposable?.dispose()
-        disposable = userProfileProvider.observerCurrentUserProfile()
+        disposable = userProfileProvider.observerLoggedInUser()
             .subscribe(
                 { updateUser(it) },
                 { Timber.e(it.message, it) }
@@ -59,7 +59,7 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
         disposable = null
     }
 
-    private fun updateUser(user: UserProfile) {
+    private fun updateUser(user: AuthUserModel) {
         avatar.setImageURI(user.imageUrl)
         profile_title.text = user.username
         collapsed_title.text = user.username

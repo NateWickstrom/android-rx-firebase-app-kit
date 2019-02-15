@@ -7,7 +7,7 @@ import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
 import android.content.Intent
 import media.pixi.appkit.R
-import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.utils.BitmapUtils
 import timber.log.Timber
@@ -22,7 +22,7 @@ class AccountActivity : DaggerAppCompatActivity() {
         @Inject set
     lateinit var cloudStorageRepo: CloudStorageRepo
         @Inject set
-    lateinit var userProfileProvider: UserProfileProvider
+    lateinit var authProvider: AuthProvider
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class AccountActivity : DaggerAppCompatActivity() {
                 .flatMapMaybe {
                     cloudStorageRepo.getUserProfileImageReference() }
                 .flatMapCompletable {
-                    userProfileProvider.updateProfileImage(it.toString()) }
+                    authProvider.updateProfileImage(it.toString()) }
                 .subscribe(
                     {
                         Timber.d( "Upload complete") },

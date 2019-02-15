@@ -2,33 +2,25 @@ package media.pixi.appkit.data.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseUser
+import durdinapps.rxfirebase2.RxFirestore
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 
 class FirebaseAuthProvider: AuthProvider {
 
     private val loginSubject: PublishSubject<Boolean> = PublishSubject.create()
-    private val authUserModelSubject: PublishSubject<AuthUserModel> = PublishSubject.create()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
 
-    private var user: AuthUserModel? = null
-
-    override fun getUser(): AuthUserModel? {
-        val firebaseUser = FirebaseAuth.getInstance().currentUser ?: return null
-
-        val username = getUsername(firebaseUser)
-
-        return AuthUserModel(
-            firebaseUser.uid,
-            firebaseUser.email ?: "",
-            username,
-            firebaseUser.photoUrl?.toString() ?: "",
-            firebaseUser.phoneNumber ?: "",
-            firebaseUser.isEmailVerified)
+    override fun getUserId(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
     }
 
     override fun isSignedIn(): Boolean {
@@ -37,44 +29,83 @@ class FirebaseAuthProvider: AuthProvider {
     }
 
     override fun signOut() {
-        user = null
         FirebaseAuth.getInstance().signOut()
         this.loginSubject.onNext(false)
     }
 
-    override fun observerAuthState(): Observable<Boolean> {
+    override fun observerAuthState(): Flowable<Boolean> {
         return RxFirebaseAuth.observeAuthState(FirebaseAuth.getInstance())
                 .map { auth -> auth.currentUser != null }
+                .toFlowable(BackpressureStrategy.LATEST)
+    }
+
+    override fun observerLoggedInUser(): Flowable<AuthUserModel> {
+        return RxFirebaseAuth.observeAuthState(FirebaseAuth.getInstance())
+            .filter { it.currentUser != null }
+            .toFlowable(BackpressureStrategy.BUFFER)
+            .concatMap { auth -> observerLoggedInUser(auth.currentUser!!) }
+    }
+
+    private fun observerLoggedInUser(firebaseUser: FirebaseUser): Flowable<AuthUserModel> {
+        val uid = firebaseUser.uid
+        val ref = firestore.collection(PEOPLE).document(uid)
+        return RxFirestore.observeDocumentRef(ref).map { this.toUserModel(firebaseUser, it) }
     }
 
     override fun signIn(email: String, password: String): Completable {
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password)
-            .map { it.user }
-            .map { toUserModel(it) }
-            .map { updateUser(it) }
             .ignoreElement()
     }
 
     override fun signUp(firstName: String, lastName: String, email: String, password: String): Completable {
         return RxFirebaseAuth.createUserWithEmailAndPassword(auth, email, password)
-            .map { it.user }
-            .map { toUserModel(it) }
-            .map { updateUser(it) }
             .ignoreElement()
     }
 
     override fun updateEmail(email: String, password: String): Completable {
-        if (user == null) return Completable.error(IllegalArgumentException("No User"))
+        if (getUser() == null) return Completable.error(IllegalArgumentException("No User"))
 
-        return RxFirebaseAuth.signInWithEmailAndPassword(auth, user!!.email, password)
+        return RxFirebaseAuth.signInWithEmailAndPassword(auth, getUser()!!.email!!, password)
             .flatMapCompletable { RxFirebaseUser.updateEmail(it.user, email) }
     }
 
     override fun updatePassword(newPassword: String, oldPassword: String): Completable {
-        if (user == null) return Completable.error(IllegalArgumentException("No User"))
+        if (getUser() == null) return Completable.error(IllegalArgumentException("No User"))
 
-        return RxFirebaseAuth.signInWithEmailAndPassword(auth, user!!.email, oldPassword)
+        return RxFirebaseAuth.signInWithEmailAndPassword(auth, getUser()!!.email!!, oldPassword)
             .flatMapCompletable { RxFirebaseUser.updatePassword(it.user, newPassword) }
+    }
+
+    override fun updateUsername(name: String): Completable {
+        val uid = auth.currentUser?.uid ?: ""
+        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
+
+        val ref = firestore.collection(PEOPLE).document(uid)
+        return RxFirestore.updateDocument(ref, USERNAME, name)
+    }
+
+    override fun updateFirstName(name: String): Completable {
+        val uid = auth.currentUser?.uid ?: ""
+        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
+
+        val ref = firestore.collection(PEOPLE).document(uid)
+        return RxFirestore.updateDocument(ref, FIRSTNAME, name)
+    }
+
+    override fun updateLastName(name: String): Completable {
+        val uid = auth.currentUser?.uid ?: ""
+        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
+
+        val ref = firestore.collection(PEOPLE).document(uid)
+        return RxFirestore.updateDocument(ref, LASTNAME, name)
+    }
+
+    override fun updateProfileImage(url: String): Completable {
+        val uid = auth.currentUser?.uid ?: ""
+        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
+
+        val ref = firestore.collection(PEOPLE).document(uid)
+        return RxFirestore.updateDocument(ref, IMAGE_URL, url)
     }
 
     override fun sendEmailVerification(): Completable {
@@ -89,34 +120,25 @@ class FirebaseAuthProvider: AuthProvider {
     }
 
     override fun deleteAccount(password: String): Completable {
-        return RxFirebaseAuth.signInWithEmailAndPassword(auth, user!!.email, password)
+        // todo handle non-email accounts
+        return RxFirebaseAuth.signInWithEmailAndPassword(auth, getUser()!!.email!!, password)
             .flatMapCompletable { RxFirebaseUser.delete(it.user) }
     }
 
-    private fun getUsername(firebaseUser: FirebaseUser): String {
-        if (!firebaseUser.displayName.isNullOrBlank()) return firebaseUser.displayName!!
-
-        if (!firebaseUser.email.isNullOrBlank()) return firebaseUser.email!!.substringBefore("@")
-
-        return ""
+    private fun getUser(): FirebaseUser? {
+        return FirebaseAuth.getInstance().currentUser
     }
 
-    private fun toUserModel(firebaseUser: FirebaseUser): AuthUserModel {
+    private fun toUserModel(firebaseUser: FirebaseUser, snapshot: DocumentSnapshot): AuthUserModel {
         return AuthUserModel(
             id = firebaseUser.uid,
-            username = firebaseUser.displayName ?: "",
-            imageUrl = firebaseUser.photoUrl.toString(),
             email = firebaseUser.email ?: "",
+            username = snapshot.get(USERNAME) as String? ?: "",
+            firstName = snapshot.get(FIRSTNAME) as String? ?: "",
+            lastName = snapshot.get(LASTNAME) as String? ?: "",
+            imageUrl = snapshot.get(IMAGE_URL) as String? ?: "",
             phoneNumber = firebaseUser.phoneNumber ?: "",
             verifiedEmail = firebaseUser.isEmailVerified)
-    }
-
-    private fun updateUser(user: AuthUserModel?) {
-        user?.let {
-            this.user = user
-            this.loginSubject.onNext(true)
-            this.authUserModelSubject.onNext(user)
-        }
     }
 
     companion object {
@@ -124,6 +146,6 @@ class FirebaseAuthProvider: AuthProvider {
         private const val FIRSTNAME = "firstname"
         private const val LASTNAME = "lastname"
         private const val USERNAME = "username"
-
+        private const val IMAGE_URL = "imageUrl"
     }
 }
