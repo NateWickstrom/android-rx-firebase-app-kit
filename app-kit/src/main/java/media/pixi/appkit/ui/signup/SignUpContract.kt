@@ -12,8 +12,7 @@ interface SignUpContract {
     }
 
     interface Presenter: BasePresenter<View> {
-        fun onFirstNameTextChanged(firstName: String)
-        fun onLastNameTextChanged(lastName: String)
+
         fun onEmailTextChanged(email: String)
         fun onPasswordTextChanged(password: String)
 

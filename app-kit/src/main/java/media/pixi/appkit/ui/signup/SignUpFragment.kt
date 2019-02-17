@@ -44,8 +44,6 @@ class SignUpFragment @Inject constructor(): DaggerFragment(), SignUpContract.Vie
 
         presenter.takeView(this)
 
-        viewOfLayout.firstname.addTextChangedListener(TextChangeWatcher { presenter.onFirstNameTextChanged(it) })
-        viewOfLayout.lastname.addTextChangedListener(TextChangeWatcher { presenter.onLastNameTextChanged(it) })
         viewOfLayout.email.addTextChangedListener(TextChangeWatcher { presenter.onEmailTextChanged(it) })
         viewOfLayout.password.addTextChangedListener(TextChangeWatcher { presenter.onPasswordTextChanged(it) })
         viewOfLayout.sign_up.setOnClickListener { presenter.onSignUpClicked(activity!!) }

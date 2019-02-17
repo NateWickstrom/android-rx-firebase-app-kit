@@ -14,8 +14,6 @@ class SignUpPresenter @Inject constructor(
 
     private var view: SignUpContract.View? = null
 
-    private var firstName: String = ""
-    private var lastName: String = ""
     private var email: String = ""
     private var password: String = ""
 
@@ -30,16 +28,6 @@ class SignUpPresenter @Inject constructor(
         disposable?.dispose()
     }
 
-    override fun onFirstNameTextChanged(firstName: String) {
-        view?.error  = ""
-        this.firstName = firstName
-    }
-
-    override fun onLastNameTextChanged(lastName: String) {
-        view?.error  = ""
-        this.lastName = lastName
-    }
-
     override fun onEmailTextChanged(email: String) {
         view?.error  = ""
         this.email = email
@@ -51,14 +39,6 @@ class SignUpPresenter @Inject constructor(
     }
 
     override fun onSignUpClicked(activity: Activity) {
-        if (firstName.isBlank()) {
-            view?.error = context.getString(R.string.error_first_name_blank)
-            return
-        }
-        if (lastName.isBlank()) {
-            view?.error = context.getString(R.string.error_last_name_blank)
-            return
-        }
         if (email.isBlank()) {
             view?.error = context.getString(R.string.error_email_blank)
             return
@@ -72,7 +52,7 @@ class SignUpPresenter @Inject constructor(
         view?.loading = true
 
         disposable?.dispose()
-        disposable = authProvider.signUp(firstName, lastName, email, password)
+        disposable = authProvider.signUp(email, password)
             .subscribe(
                 { onResult(activity) },
                 { onError(it) }
