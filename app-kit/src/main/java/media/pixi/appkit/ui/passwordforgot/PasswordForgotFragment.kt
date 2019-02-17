@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__error.view.*
+import kotlinx.android.synthetic.main.appkit__fragment_password_forgot.*
 import kotlinx.android.synthetic.main.appkit__fragment_password_forgot.view.*
 import media.pixi.appkit.R
 import javax.inject.Inject
@@ -23,6 +24,10 @@ class PasswordForgotFragment @Inject constructor(): DaggerFragment(), PasswordFo
             }
         }
 
+    override var email: String
+        get() = viewOfLayout.email.text.toString()
+        set(value) { viewOfLayout.email.setText(value) }
+
     lateinit var presenter: PasswordForgotContract.Presenter
         @Inject set
 
@@ -34,7 +39,7 @@ class PasswordForgotFragment @Inject constructor(): DaggerFragment(), PasswordFo
 
         presenter.takeView(this)
 
-        viewOfLayout.btn_send.setOnClickListener { presenter.onSendClicked(activity!!) }
+        viewOfLayout.btn_send.setOnClickListener { activity?.let { presenter.onSendClicked(it) } }
 
         return viewOfLayout
     }

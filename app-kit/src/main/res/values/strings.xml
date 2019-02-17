@@ -32,7 +32,7 @@
     <string name="update">Update</string>
     <string name="verify_email">Verify Email</string>
 
-    <string name="password_reset_message">Enter you account\'s email and a email for resetting you password will be send to the address if it exists</string>
+    <string name="password_reset_message">Enter your account\'s email address and an email for resetting you password will be send to the address if it exists</string>
     <string name="profile">Profile</string>
 
     <string name="appkit__username">%1$s %2$s</string>

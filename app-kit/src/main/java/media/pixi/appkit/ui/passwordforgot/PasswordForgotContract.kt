@@ -7,7 +7,7 @@ import media.pixi.appkit.ui.BaseView
 interface PasswordForgotContract {
 
     interface View: BaseView<Presenter> {
-
+        var email: String
     }
 
     interface Presenter: BasePresenter<View> {
