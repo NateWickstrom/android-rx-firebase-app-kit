@@ -20,20 +20,19 @@ class PasswordForgotPresenter @Inject constructor(
     }
 
     override fun onSendClicked(activity: Activity) {
-        signinNavigator.onExit(activity)
-
-        view?.email?.let {
+        view?.email?.let { email ->
             view?.loading = true
-            authProvider.sendPasswordResetEmail(it).subscribe(
-                { onEmailSent(activity) },
+            authProvider.sendPasswordResetEmail(email).subscribe(
+                { onEmailSent(activity, email) },
                 { onError(it) }
             )
         }
     }
 
-    private fun onEmailSent(activity: Activity) {
+    private fun onEmailSent(activity: Activity, email: String) {
         view?.loading = false
-        signinNavigator.onExit(activity)
+        view?.email
+        signinNavigator.onExit(activity, email)
     }
 
     private fun onError(error: Throwable) {

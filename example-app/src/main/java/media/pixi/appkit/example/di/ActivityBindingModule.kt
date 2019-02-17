@@ -10,6 +10,7 @@ import media.pixi.appkit.ui.account.AccountActivity
 import media.pixi.appkit.ui.friend.FriendActivity
 import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
+import media.pixi.appkit.ui.passwordreset.PasswordResetActivity
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
 import media.pixi.appkit.ui.profile.ProfileActivity
 import media.pixi.appkit.ui.search.SearchActivity
@@ -67,4 +68,9 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [NotificationsModule::class])
     internal abstract fun notificationsActivity(): NotificationsActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [PasswordResetModule::class])
+    internal abstract fun passwordResetActivity(): PasswordResetActivity
+
 }

@@ -45,8 +45,16 @@
                 android:name="media.pixi.appkit.ui.friend.FriendActivity"/>
 
         <activity
+                android:label="@string/forgot_password"
+                android:parentActivityName="media.pixi.appkit.ui.signin.SignInActivity"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity"/>
+
+        <activity
+                android:label="@string/password_reset"
+                android:parentActivityName="media.pixi.appkit.ui.signin.SignInActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.appkit.ui.passwordreset.PasswordResetActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"

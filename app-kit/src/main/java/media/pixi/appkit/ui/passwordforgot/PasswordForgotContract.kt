@@ -16,6 +16,6 @@ interface PasswordForgotContract {
     }
 
     interface Navigator {
-        fun onExit(activity: Activity)
+        fun onExit(activity: Activity, email: String)
     }
 }
