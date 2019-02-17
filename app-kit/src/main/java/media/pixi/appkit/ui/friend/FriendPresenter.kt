@@ -8,16 +8,22 @@ import javax.inject.Inject
 
 class FriendPresenter @Inject constructor(private var userProfileProvider: UserProfileProvider): FriendContract.Presenter {
 
+    override var userId: String? = null
+
     private var view: FriendContract.View? = null
     private var disposable: Disposable? = null
 
     override fun takeView(view: FriendContract.View) {
         this.view = view
-        disposable = userProfileProvider.observerCurrentUserProfile()
-            .subscribe(
-                { onResult(it) },
-                { onError(it) }
-            )
+
+        userId?.let {userId ->
+            disposable = userProfileProvider.observerUserProfile(userId)
+                .subscribe(
+                    { onResult(it) },
+                    { onError(it) }
+                )
+        }
+
     }
 
     override fun dropView() {

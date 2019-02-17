@@ -5,5 +5,5 @@ data class PersonSearchResult(
     val lastname: String,
     val username: String,
     val imageUrl: String,
-    val objectID: String
+    val id: String
 )

@@ -31,7 +31,7 @@ class PasswordResetActivity: DaggerAppCompatActivity() {
     companion object {
         const val BUNDLE_EMAIL = "email_address"
 
-        fun lauch(activity: Activity, email: String) {
+        fun launch(activity: Activity, email: String) {
             val intent = Intent(activity, PasswordResetActivity::class.java)
             intent.putExtra(BUNDLE_EMAIL, email)
             activity.startActivity(intent)

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class PasswordForgotNavigator @Inject constructor(): PasswordForgotContract.Navigator {
 
     override fun onExit(activity: Activity, email: String) {
-        PasswordResetActivity.lauch(activity, email)
+        PasswordResetActivity.launch(activity, email)
         activity.finish()
     }
 

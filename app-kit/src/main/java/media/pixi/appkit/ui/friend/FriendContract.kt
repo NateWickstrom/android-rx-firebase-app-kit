@@ -10,6 +10,8 @@ interface FriendContract {
     }
 
     interface Presenter {
+        var userId: String?
+
         fun takeView(view: View)
         fun dropView()
     }

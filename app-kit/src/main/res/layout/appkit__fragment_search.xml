@@ -5,21 +5,13 @@
         android:id="@+id/tasksContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hits"
-        android:background="@android:color/holo_blue_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:overScrollMode="always"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <ProgressBar
