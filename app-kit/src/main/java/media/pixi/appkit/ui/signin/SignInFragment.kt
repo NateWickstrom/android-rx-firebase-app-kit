@@ -5,12 +5,17 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import android.view.*
 import kotlinx.android.synthetic.main.appkit__error.view.*
+import kotlinx.android.synthetic.main.appkit__fragment_signin.*
 import kotlinx.android.synthetic.main.appkit__fragment_signin.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.ui.TextChangeWatcher
 
 
 class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.View {
+
+    override var loading: Boolean
+        get() = progress_bar.visibility == View.INVISIBLE
+        set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     override var error: String
         get() = viewOfLayout.error_massage.text.toString()

@@ -8,7 +8,7 @@ import media.pixi.appkit.ui.BaseView
 interface SignInContract {
 
     interface View: BaseView<Presenter> {
-
+        var loading: Boolean
     }
 
     interface Presenter: BasePresenter<View> {

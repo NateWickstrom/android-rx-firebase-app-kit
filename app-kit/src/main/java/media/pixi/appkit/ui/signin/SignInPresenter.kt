@@ -34,10 +34,12 @@ class SignInPresenter @Inject constructor(
     }
 
     override fun onSignInClicked(activity: Activity) {
+        view?.error = ""
         disposable?.dispose()
+        view?.loading = true
         disposable = authProvider.signIn(email, password)
             .subscribe(
-                { signInNavigator.onLoggedInSuccessfully(activity) },
+                { onSignedIn(activity) },
                 { onError(it) }
             )
     }
@@ -50,7 +52,13 @@ class SignInPresenter @Inject constructor(
         signInNavigator.showSignUpScreen(activity)
     }
 
+    private fun onSignedIn(activity: Activity) {
+        view?.loading = false
+        signInNavigator.onLoggedInSuccessfully(activity)
+    }
+
     private fun onError(error: Throwable) {
-        view?.error = error.message ?: "Unknown appkit__error occurred"
+        view?.loading = false
+        view?.error = error.message ?: "Unknown error occurred"
     }
 }
