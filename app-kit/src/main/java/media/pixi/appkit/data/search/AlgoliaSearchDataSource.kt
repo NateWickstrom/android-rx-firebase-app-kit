@@ -26,8 +26,10 @@ class AlgoliaSearchDataSource(private val authProvider: AuthProvider): SearchPro
         if (searcher == null) {
             initSearch()
         }
-        searcher?.addFacetRefinement("-id", userId)
-        searcher?.search(query)
+
+        searcher?.addFacet("id")
+        searcher?.query = Query(query).setFilters("NOT id:$userId")
+        searcher?.search()
     }
 
     override fun hasMoreHits(): Boolean {
