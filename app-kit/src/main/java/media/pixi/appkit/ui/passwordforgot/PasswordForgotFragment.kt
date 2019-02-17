@@ -31,7 +31,10 @@ class PasswordForgotFragment @Inject constructor(): DaggerFragment(), PasswordFo
 
     override var loading: Boolean
         get() = viewOfLayout.progress_bar.visibility == View.INVISIBLE
-        set(value) { viewOfLayout.progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
+        set(value) {
+            viewOfLayout.btn_send.isEnabled = !value
+            viewOfLayout.progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE
+        }
 
     lateinit var presenter: PasswordForgotContract.Presenter
         @Inject set
