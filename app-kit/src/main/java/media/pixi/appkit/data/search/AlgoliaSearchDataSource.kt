@@ -6,23 +6,24 @@ import com.algolia.instantsearch.core.model.AlgoliaResultsListener
 import com.algolia.instantsearch.core.model.SearchResults
 import com.algolia.search.saas.AlgoliaException
 import com.algolia.search.saas.Query
+import com.google.firebase.auth.FirebaseAuth
 
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import media.pixi.appkit.BuildConfig
-import media.pixi.appkit.data.auth.AuthProvider
 import timber.log.Timber
 
-class AlgoliaSearchDataSource(private val authProvider: AuthProvider): SearchProvider {
+class AlgoliaSearchDataSource: SearchProvider {
 
     private val myListener = MyListener()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private var searcher: Searcher? = null
 
     override fun search(query: String) {
-        val userId = authProvider.getUserId() ?: throw IllegalAccessError("No User")
+        val userId = auth.currentUser?.uid ?: throw IllegalAccessError("No User")
         if (searcher == null) {
             initSearch()
         }
