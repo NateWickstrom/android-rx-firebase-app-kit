@@ -13,6 +13,8 @@ interface AccountContract {
         var firstName: String
         var lastName: String
         var email: String
+
+        var loading: Boolean
     }
 
     interface Presenter: BasePresenter<View> {

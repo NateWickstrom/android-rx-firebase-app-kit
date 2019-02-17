@@ -50,6 +50,10 @@ class AccountFragment @Inject constructor(): DaggerFragment(), AccountContract.V
             }
         }
 
+    override var loading: Boolean
+        get() = progress_bar.visibility == View.INVISIBLE
+        set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
+
     lateinit var presenter: AccountContract.Presenter
         @Inject set
 

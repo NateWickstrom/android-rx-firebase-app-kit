@@ -1,6 +1,7 @@
 package media.pixi.appkit.ui.account
 
 import android.app.Activity
+import io.reactivex.Completable
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.AuthUserModel
@@ -40,11 +41,40 @@ class AccountPresenter @Inject constructor(
     }
 
     override fun onSaveClicked(activity: Activity) {
+        val completables = mutableListOf<Completable>()
 
+        val firstName = view?.firstName ?: ""
+        val lastName = view?.lastName ?: ""
+        val username = view?.username ?: ""
+        val email = view?.email ?: ""
+
+        if (originalUser?.firstName != firstName && firstName.isNotBlank()) {
+            completables.add(authProvider.updateFirstName(firstName))
+        }
+        if (originalUser?.lastName != lastName && lastName.isNotBlank()) {
+            completables.add(authProvider.updateLastName(lastName))
+        }
+        if (originalUser?.username != username && username.isNotBlank()) {
+            completables.add(authProvider.updateUsername(username))
+        }
+        if (originalUser?.email != email && email.isNotBlank()) {
+            // requires password
+            //complatables.add(authProvider.updateEmail(firstName))
+        }
+
+        if (completables.isNotEmpty()) {
+            view?.loading = true
+            Completable.concat(completables).subscribe(
+                { onUpdateComplete() },
+                { onError(it) }
+            )
+        } else {
+            // nothing to update
+        }
     }
 
     override fun onResetClicked(activity: Activity) {
-
+        originalUser?.let { onResult(it) }
     }
 
     override fun onUpdatePasswordClicked(activity: Activity) {
@@ -53,6 +83,15 @@ class AccountPresenter @Inject constructor(
 
     override fun onVerifyEmailClicked(activity: Activity) {
 
+    }
+
+    private fun onUpdateComplete() {
+        view?.loading = false
+    }
+
+    private fun onUpdateError(error: Throwable) {
+        view?.loading = false
+        Timber.e(error.message, error)
     }
 
     private fun onResult(user: AuthUserModel) {
