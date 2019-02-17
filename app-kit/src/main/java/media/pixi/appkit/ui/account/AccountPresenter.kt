@@ -66,7 +66,7 @@ class AccountPresenter @Inject constructor(
             view?.loading = true
             Completable.concat(completables).subscribe(
                 { onUpdateComplete() },
-                { onError(it) }
+                { onUpdateError(it) }
             )
         } else {
             // nothing to update

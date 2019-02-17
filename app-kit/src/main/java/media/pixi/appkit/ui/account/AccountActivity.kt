@@ -43,7 +43,7 @@ class AccountActivity : DaggerAppCompatActivity() {
             val file = File(cacheDir, "profile_pic.jpeg")
             BitmapUtils.saveFile(bitmap, file)
 
-            // TODO loading while image is uploading
+            fragment.loading = true
             cloudStorageRepo.setUserProfileImage(file)
                 .flatMapMaybe {
                     cloudStorageRepo.getUserProfileImageReference() }
@@ -52,8 +52,10 @@ class AccountActivity : DaggerAppCompatActivity() {
                 .subscribe(
                     {
                         file.delete()
+                        fragment.loading = false
                         Timber.d( "Upload complete") },
                     {
+                        fragment.loading = false
                         Timber.e(it.message, it) }
                 )
         }
