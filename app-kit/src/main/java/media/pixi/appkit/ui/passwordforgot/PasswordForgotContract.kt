@@ -7,6 +7,7 @@ import media.pixi.appkit.ui.BaseView
 interface PasswordForgotContract {
 
     interface View: BaseView<Presenter> {
+        var loading: Boolean
         var email: String
     }
 

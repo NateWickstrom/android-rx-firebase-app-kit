@@ -23,6 +23,7 @@ class PasswordForgotPresenter @Inject constructor(
         signinNavigator.onExit(activity)
 
         view?.email?.let {
+            view?.loading = true
             authProvider.sendPasswordResetEmail(it).subscribe(
                 { onEmailSent(activity) },
                 { onError(it) }
@@ -31,10 +32,12 @@ class PasswordForgotPresenter @Inject constructor(
     }
 
     private fun onEmailSent(activity: Activity) {
+        view?.loading = false
         signinNavigator.onExit(activity)
     }
 
     private fun onError(error: Throwable) {
+        view?.loading = false
         Timber.e(error.message, error)
     }
 }

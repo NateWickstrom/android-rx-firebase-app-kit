@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__error.view.*
-import kotlinx.android.synthetic.main.appkit__fragment_password_forgot.*
 import kotlinx.android.synthetic.main.appkit__fragment_password_forgot.view.*
+import kotlinx.android.synthetic.main.appkit__loading.view.*
 import media.pixi.appkit.R
 import javax.inject.Inject
 
@@ -27,6 +27,11 @@ class PasswordForgotFragment @Inject constructor(): DaggerFragment(), PasswordFo
     override var email: String
         get() = viewOfLayout.email.text.toString()
         set(value) { viewOfLayout.email.setText(value) }
+
+
+    override var loading: Boolean
+        get() = viewOfLayout.progress_bar.visibility == View.INVISIBLE
+        set(value) { viewOfLayout.progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     lateinit var presenter: PasswordForgotContract.Presenter
         @Inject set
