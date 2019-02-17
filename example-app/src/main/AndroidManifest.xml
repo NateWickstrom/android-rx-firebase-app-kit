@@ -57,6 +57,8 @@
                 android:name="media.pixi.appkit.ui.passwordreset.PasswordResetActivity"/>
 
         <activity
+                android:label="@string/update_password"
+                android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity"/>
 
@@ -76,7 +78,7 @@
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:parentActivityName="media.pixi.appkit.ui.signin.SignInActivity"
+                android:parentActivityName=".ui.splash.SplashActivity"
                 android:name="media.pixi.appkit.ui.signup.SignUpActivity"/>
 
         <activity
