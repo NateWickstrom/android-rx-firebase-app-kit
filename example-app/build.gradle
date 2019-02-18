@@ -62,7 +62,7 @@ dependencies {
     //implementation deps.google_auth
     implementation deps.firebase.firebase_core
     implementation deps.firebase.firebase_auth
-    implementation 'com.github.FrangSierra:RxFirebase:1.5.0'
+    implementation deps.firebase.rx_firebase
 
     // reactiveX
     implementation deps.rxjava2

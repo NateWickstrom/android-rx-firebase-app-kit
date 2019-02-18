@@ -3,6 +3,8 @@ package media.pixi.appkit.data.profile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.FirebaseFunctions
+import durdinapps.rxfirebase2.RxFirebaseFunctions
 import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -10,57 +12,40 @@ import io.reactivex.Flowable
 class FirebaseUserProfileProvider: UserProfileProvider {
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-
-    override fun observerCurrentUserProfile(): Flowable<UserProfile> {
-        val uid = auth.currentUser?.uid ?: ""
-        if (uid.isEmpty()) return Flowable.error(IllegalArgumentException("No User"))
-
-        val ref = firestore.collection(PEOPLE).document(uid)
-
-        return RxFirestore.observeDocumentRef(ref).map { this.toUserProfile(it) }
-    }
+    private val functions = FirebaseFunctions.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun observerUserProfile(userId: String): Flowable<UserProfile> {
         val ref = firestore.collection(PEOPLE).document(userId)
         return RxFirestore.observeDocumentRef(ref).map { this.toUserProfile(it) }
     }
 
-    override fun updateUsername(name: String): Completable {
-        val uid = auth.currentUser?.uid ?: ""
-        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
-
-        val ref = firestore.collection(PEOPLE).document(uid)
-        return RxFirestore.updateDocument(ref, USERNAME, name)
+    override fun addFriend(userId: String): Completable {
+        val request = request(userId)
+        return RxFirebaseFunctions.getHttpsCallable(functions, ADD_FRIEND, request).ignoreElement()
     }
 
-    override fun updateFirstname(name: String): Completable {
-        val uid = auth.currentUser?.uid ?: ""
-        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
-
-        val ref = firestore.collection(PEOPLE).document(uid)
-        return RxFirestore.updateDocument(ref, FIRSTNAME, name)
+    override fun unFriend(userId: String): Completable {
+        val request = request(userId)
+        return RxFirebaseFunctions.getHttpsCallable(functions, UNFRIEND, request).ignoreElement()
     }
 
-    override fun updateLastname(name: String): Completable {
-        val uid = auth.currentUser?.uid ?: ""
-        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
-
-        val ref = firestore.collection(PEOPLE).document(uid)
-        return RxFirestore.updateDocument(ref, LASTNAME, name)
+    override fun block(userId: String): Completable {
+        val request = request(userId)
+        return RxFirebaseFunctions.getHttpsCallable(functions, BLOCK, request).ignoreElement()
     }
 
-    override fun updateProfileImage(url: String): Completable {
-        val uid = auth.currentUser?.uid ?: ""
-        if (uid.isEmpty()) return Completable.error(IllegalArgumentException("No User"))
-
-        val ref = firestore.collection(PEOPLE).document(uid)
-        return RxFirestore.updateDocument(ref, LASTNAME, IMAGE_URL)
+    private fun request(userId: String): Request {
+        val currentUserId = auth.currentUser?.uid ?: throw IllegalAccessError("No logged in used")
+        return Request(requester = currentUserId, requestee = userId)
     }
 
     private fun toUserProfile(snapshot: DocumentSnapshot): UserProfile {
         return UserProfile(
             id = snapshot.id,
+            isFriend = false,
+            isBlocked = false,
+            friendCount = 0,
             username = snapshot.get(USERNAME) as String,
             firstName = snapshot.get(FIRSTNAME) as String,
             lastName = snapshot.get(LASTNAME) as String,
@@ -73,6 +58,10 @@ class FirebaseUserProfileProvider: UserProfileProvider {
         private const val LASTNAME = "lastname"
         private const val USERNAME = "username"
         private const val IMAGE_URL = "imageUrl"
+
+        private const val ADD_FRIEND = "addFriend"
+        private const val UNFRIEND = "unFriend"
+        private const val BLOCK = "block"
 
     }
 }
