@@ -19,6 +19,9 @@ interface FriendContract {
         fun dropView()
 
         fun onFriendsClicked(activity: Activity)
+        fun onUnFriendsClicked(activity: Activity)
+        fun onAddFriendClicked(activity: Activity)
+
     }
 
     interface Navigator {

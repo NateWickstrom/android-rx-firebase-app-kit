@@ -55,14 +55,44 @@
                             android:textColor="@android:color/white"
                             tools:text="Johnny Knoxville"/>
 
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_friends"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minHeight="48dp"
-                            android:text="0 Friends"
-                            android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
-                            android:layout_marginBottom="@dimen/vertical_spacing_for_similar_input"/>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="center_horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_add_friend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minHeight="48dp"
+                                android:text="Add Friend"
+                                android:visibility="invisible"
+                                android:layout_marginEnd="@dimen/half_horizontal_spacing_for_similar_input"
+                                android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
+                                android:layout_marginBottom="@dimen/vertical_spacing_for_similar_input"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_unfriend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minHeight="48dp"
+                                android:text="unFriend"
+                                android:visibility="gone"
+                                android:layout_marginEnd="@dimen/half_horizontal_spacing_for_similar_input"
+                                android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
+                                android:layout_marginBottom="@dimen/vertical_spacing_for_similar_input"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_friends_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minHeight="48dp"
+                                android:visibility="invisible"
+                                android:layout_marginStart="@dimen/half_horizontal_spacing_for_similar_input"
+                                android:text="0 Friends"
+                                android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
+                                android:layout_marginBottom="@dimen/vertical_spacing_for_similar_input"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

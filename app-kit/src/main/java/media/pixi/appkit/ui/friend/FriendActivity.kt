@@ -3,9 +3,10 @@ package media.pixi.appkit.ui.friend
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.appkit__activity_profile.*
+import kotlinx.android.synthetic.main.appkit__activity_friend.*
 import media.pixi.appkit.R
 import media.pixi.appkit.utils.ActivityUtils
 import media.pixi.appkit.utils.ImageUtils
@@ -30,11 +31,22 @@ class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayo
 
     override var friendCount: Int
         get() = 0
-        set(value) { btn_friends.text = resources.getQuantityString(R.plurals.friends_count, value, value) }
+        set(value) {
+            btn_friends_count.visibility = View.VISIBLE
+            btn_friends_count.text = resources.getQuantityString(R.plurals.friends_count, value, value)
+        }
 
     override var isFriend: Boolean
         get() = true
-        set(value) {}
+        set(value) {
+            if (value) {
+                btn_add_friend.visibility = View.GONE
+                btn_unfriend.visibility = View.VISIBLE
+            } else {
+                btn_add_friend.visibility = View.VISIBLE
+                btn_unfriend.visibility = View.GONE
+            }
+        }
 
     lateinit var fragment: FriendFragment
         @Inject set
@@ -53,7 +65,9 @@ class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayo
 
         appbar.addOnOffsetChangedListener(this)
 
-        btn_friends.setOnClickListener { presenter.onFriendsClicked(this) }
+        btn_friends_count.setOnClickListener { presenter.onFriendsClicked(this) }
+        btn_add_friend.setOnClickListener { presenter.onAddFriendClicked(this) }
+        btn_unfriend.setOnClickListener { presenter.onUnFriendsClicked(this) }
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
@@ -78,7 +92,7 @@ class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayo
         profile_image.alpha = inverse
         profile_title.alpha = inverse
         profile_subtitle.alpha = inverse
-        btn_friends.alpha = inverse
+        btn_friends_count.alpha = inverse
 
         collapsed_title.alpha = percentage
     }
