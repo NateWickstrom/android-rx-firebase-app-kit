@@ -1,12 +1,14 @@
 package media.pixi.appkit.ui.friend
 
+import android.app.Activity
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
 import timber.log.Timber
 import javax.inject.Inject
 
-class FriendPresenter @Inject constructor(private var userProfileProvider: UserProfileProvider): FriendContract.Presenter {
+class FriendPresenter @Inject constructor(private var userProfileProvider: UserProfileProvider,
+                                          private var friendNavigator: FriendContract.Navigator): FriendContract.Presenter {
 
     override var userId: String? = null
 
@@ -32,11 +34,17 @@ class FriendPresenter @Inject constructor(private var userProfileProvider: UserP
         disposable = null
     }
 
+    override fun onFriendsClicked(activity: Activity) {
+        friendNavigator.showFriendsScreen(activity)
+    }
+
     private fun onResult(userProfile: UserProfile) {
-        view?.username = userProfile.username
-        view?.firstName = userProfile.firstName
-        view?.lastName = userProfile.lastName
-        view?.userImageUrl = userProfile.imageUrl
+        val name = "${userProfile.firstName} ${userProfile.lastName}"
+
+        view?.profileImageUrl = userProfile.imageUrl
+        view?.profileTitle = name
+        view?.profileSubtitle = userProfile.username
+        view?.friendCount = 100
     }
 
     private fun onError(error: Throwable) {

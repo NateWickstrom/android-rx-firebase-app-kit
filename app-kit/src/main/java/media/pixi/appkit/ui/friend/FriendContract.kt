@@ -1,12 +1,15 @@
 package media.pixi.appkit.ui.friend
 
+import android.app.Activity
+
 interface FriendContract {
 
     interface View {
-        var userImageUrl: String
-        var username: String
-        var firstName: String
-        var lastName: String
+        var profileImageUrl: String
+        var profileTitle: String
+        var profileSubtitle: String
+        var friendCount: Int
+        var isFriend: Boolean
     }
 
     interface Presenter {
@@ -14,9 +17,11 @@ interface FriendContract {
 
         fun takeView(view: View)
         fun dropView()
+
+        fun onFriendsClicked(activity: Activity)
     }
 
     interface Navigator {
-
+        fun showFriendsScreen(activity: Activity)
     }
 }
