@@ -8,6 +8,7 @@ import media.pixi.appkit.example.di.FragmentScoped
 import media.pixi.appkit.example.ui.AppNavigator
 import media.pixi.appkit.ui.profile.ProfileContract
 import media.pixi.appkit.ui.profile.ProfileFragment
+import media.pixi.appkit.ui.profile.ProfileNavigator
 import media.pixi.appkit.ui.profile.ProfilePresenter
 
 @Module
@@ -23,6 +24,6 @@ abstract class ProfileModule {
 
     @ActivityScoped
     @Binds
-    internal abstract fun profileNavigator(navigator: AppNavigator): ProfileContract.Navigator
+    internal abstract fun profileNavigator(navigator: ProfileNavigator): ProfileContract.Navigator
 
 }

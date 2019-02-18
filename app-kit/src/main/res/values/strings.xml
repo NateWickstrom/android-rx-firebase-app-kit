@@ -41,6 +41,14 @@
 
     <string name="appkit__username">%1$s %2$s</string>
 
+    <!--<string name="friends_count">%1$s Friends</string>-->
+
+    <plurals name="friends_count">
+        <item quantity="zero">%d Friends</item>
+        <item quantity="one">%d Friend</item>
+        <item quantity="other">%d Friends</item>
+    </plurals>
+
     <string name="notifications">Notifications</string>
     <string name="settings">Settings</string>
 

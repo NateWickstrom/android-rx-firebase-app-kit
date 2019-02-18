@@ -12,7 +12,7 @@ import media.pixi.appkit.ui.profile.ProfileContract
 import timber.log.Timber
 import javax.inject.Inject
 
-class AppNavigator @Inject constructor(): ProfileContract.Navigator, AccountContract.Navigator {
+class AppNavigator @Inject constructor(): AccountContract.Navigator {
 
     override fun showUpdatePasswordScreen(activity: Activity) {
         val intent = Intent(activity, PasswordUpdateActivity::class.java)
@@ -23,11 +23,6 @@ class AppNavigator @Inject constructor(): ProfileContract.Navigator, AccountCont
         val intent = Intent(activity, SplashActivity::class.java)
         // set the new task and clear flags
         intent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        activity.startActivity(intent)
-    }
-
-    override fun showAccountScreen(activity: Activity) {
-        val intent = Intent(activity, AccountActivity::class.java)
         activity.startActivity(intent)
     }
 

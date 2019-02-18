@@ -6,26 +6,36 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__activity_profile.*
 import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
-import io.reactivex.disposables.Disposable
 import media.pixi.appkit.R
-import media.pixi.appkit.data.auth.AuthProvider
-import media.pixi.appkit.data.auth.AuthUserModel
 import media.pixi.appkit.utils.ImageUtils
-import timber.log.Timber
 
 
-class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
+class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarLayout.OnOffsetChangedListener {
+
+    override var profileImageUrl: String
+        get() = ""
+        set(value) { ImageUtils.setUserImage(profile_image, value) }
+
+    override var profileTitle: String
+        get() = profile_title.text.toString()
+        set(value) {
+            profile_title.text = value
+            collapsed_title.text = value
+        }
+
+    override var profileSubtitle: String
+        get() = profile_subtitle.text.toString()
+        set(value) { profile_subtitle.text = value}
+
+    override var friendCount: Int
+        get() = 0
+        set(value) { btn_friends.text = resources.getQuantityString(R.plurals.friends_count, value, value) }
 
     lateinit var fragment: ProfileFragment
         @Inject set
 
-    lateinit var userProfileProvider: AuthProvider
+    lateinit var profilePresenter: ProfilePresenter
         @Inject set
-
-    lateinit var navigator: ProfileContract.Navigator
-        @Inject set
-
-    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,22 +45,18 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
 
         appbar.addOnOffsetChangedListener(this)
 
+        btn_friends.setOnClickListener { profilePresenter.onFriendsClicked(this) }
+
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
         )
 
-        disposable?.dispose()
-        disposable = userProfileProvider.observerLoggedInUser()
-            .subscribe(
-                { updateUser(it) },
-                { Timber.e(it.message, it) }
-            )
+        profilePresenter.takeView(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.dispose()
-        disposable = null
+        profilePresenter.dropView()
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {
@@ -67,15 +73,5 @@ class ProfileActivity : DaggerAppCompatActivity(), AppBarLayout.OnOffsetChangedL
         btn_friends.alpha = inverse
 
         collapsed_title.alpha = percentage
-    }
-
-    private fun updateUser(user: AuthUserModel) {
-        ImageUtils.setUserImage(profile_image, user.imageUrl)
-
-        val name = "${user.firstName} ${user.lastName}"
-
-        profile_title.text = name
-        profile_subtitle.text = user.username
-        collapsed_title.text = name
     }
 }

@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class ProfileNavigator @Inject constructor(): ProfileContract.Navigator {
 
-    override fun showAccountScreen(activity: Activity) {
+    override fun showFriendsScreen(activity: Activity) {
     }
 
 }
