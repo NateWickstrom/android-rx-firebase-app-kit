@@ -54,7 +54,6 @@ class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayo
     lateinit var presenter: FriendPresenter
         @Inject set
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.appkit__activity_friend)

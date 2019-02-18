@@ -25,7 +25,7 @@ class FriendPresenter @Inject constructor(private var userProfileProvider: UserP
                 { onError(it) }
             ))
 
-            disposables.add(userProfileProvider.isBlocked(userId).subscribe(
+            disposables.add(userProfileProvider.isFriend(userId).subscribe(
                 {
                     this.view?.isFriend = it
                 },
@@ -34,7 +34,7 @@ class FriendPresenter @Inject constructor(private var userProfileProvider: UserP
                 }
             ))
 
-            disposables.add(userProfileProvider.isFriend(userId).subscribe(
+            disposables.add(userProfileProvider.isBlocked(userId).subscribe(
                 {
                     //TODO
                 },
