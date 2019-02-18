@@ -4,9 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.appkit__activity_profile.*
+import kotlinx.android.synthetic.main.appkit__activity_friend.*
 import media.pixi.appkit.R
-import media.pixi.appkit.ui.passwordreset.PasswordResetActivity
 import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
 

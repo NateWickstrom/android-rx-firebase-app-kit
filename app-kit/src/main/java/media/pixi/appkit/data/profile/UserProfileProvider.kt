@@ -13,6 +13,10 @@ interface UserProfileProvider {
 
     fun block(userId: String): Completable
 
+    fun isFriend(userId: String): Flowable<Boolean>
+
+    fun isBlocked(userId: String): Flowable<Boolean>
+
     // observer friends for user
 
 }

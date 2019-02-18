@@ -30,8 +30,8 @@ abstract class AppModule {
         @Singleton
         @Provides
         @JvmStatic
-        fun searchSearchProvider(authProvider: AuthProvider): SearchProvider {
-            return AlgoliaSearchDataSource(authProvider)
+        fun searchSearchProvider(): SearchProvider {
+            return AlgoliaSearchDataSource()
         }
 
         @Singleton
