@@ -19,6 +19,6 @@ interface ProfileContract {
     }
 
     interface Navigator {
-        fun showFriendsScreen(activity: Activity)
+        fun showFriendsScreen(activity: Activity, forUserId: String)
     }
 }

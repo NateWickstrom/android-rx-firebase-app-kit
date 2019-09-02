@@ -39,6 +39,8 @@
     <string name="password_reset_message">Enter your account\'s email address and an email for resetting you password will be send to the address if it exists</string>
     <string name="profile">Profile</string>
 
+    <string name="friends">Friends</string>
+
     <string name="appkit__username">%1$s %2$s</string>
 
     <!--<string name="friends_count">%1$s Friends</string>-->

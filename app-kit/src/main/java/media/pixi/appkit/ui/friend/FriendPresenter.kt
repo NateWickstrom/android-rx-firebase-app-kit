@@ -51,7 +51,9 @@ class FriendPresenter @Inject constructor(private var userProfileProvider: UserP
     }
 
     override fun onFriendsClicked(activity: Activity) {
-        friendNavigator.showFriendsScreen(activity)
+        userId?.let { userId ->
+            friendNavigator.showFriendsScreen(activity, userId)
+        }
     }
 
     override fun onUnFriendsClicked(activity: Activity) {

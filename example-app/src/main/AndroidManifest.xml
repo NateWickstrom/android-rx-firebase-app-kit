@@ -45,6 +45,12 @@
                 android:name="media.pixi.appkit.ui.friend.FriendActivity"/>
 
         <activity
+                android:label="@string/friends"
+                android:parentActivityName=".ui.home.HomeActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.appkit.ui.friends.FriendsActivity"/>
+
+        <activity
                 android:label="@string/forgot_password"
                 android:parentActivityName="media.pixi.appkit.ui.signin.SignInActivity"
                 android:theme="@style/AppTheme.NoActionBar"

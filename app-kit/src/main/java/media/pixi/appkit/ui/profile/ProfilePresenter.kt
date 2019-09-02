@@ -30,7 +30,9 @@ class ProfilePresenter @Inject constructor(private var authProvider: AuthProvide
     }
 
     override fun onFriendsClicked(activity: Activity) {
-        navigator.showFriendsScreen(activity)
+        authProvider.getUserId()?.let { userId ->
+            navigator.showFriendsScreen(activity, userId)
+        }
     }
 
     private fun updateUser(user: AuthUserModel) {
