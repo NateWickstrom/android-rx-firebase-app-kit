@@ -1,7 +1,9 @@
 package media.pixi.appkit.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import com.algolia.instantsearch.core.helpers.Searcher
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
@@ -28,6 +30,7 @@ class SearchActivity: DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.appkit__activity_search)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = ""
 
         // Initialize a Searcher with your credentials and an index name

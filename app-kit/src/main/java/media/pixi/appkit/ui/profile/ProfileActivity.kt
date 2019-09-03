@@ -41,6 +41,8 @@ class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.appkit__activity_profile)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         title = ""
 
         appbar.addOnOffsetChangedListener(this)
