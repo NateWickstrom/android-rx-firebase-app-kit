@@ -9,6 +9,8 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
+import media.pixi.appkit.data.friends.FirebaseFriendsProvider
+import media.pixi.appkit.data.friends.FriendsProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.data.profile.FirebaseUserProfileProvider
 import media.pixi.appkit.data.search.AlgoliaSearchDataSource
@@ -60,6 +62,13 @@ abstract class AppModule {
         @JvmStatic
         fun provideCurrentUserProfileProvider(): UserProfileProvider {
             return FirebaseUserProfileProvider()
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideFriendsProvider(): FriendsProvider {
+            return FirebaseFriendsProvider()
         }
     }
 }
