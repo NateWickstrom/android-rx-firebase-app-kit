@@ -4,10 +4,10 @@ import android.os.Bundle
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__activity_profile.*
-import media.pixi.appkit.utils.ActivityUtils
-import javax.inject.Inject
 import media.pixi.appkit.R
+import media.pixi.appkit.utils.ActivityUtils
 import media.pixi.appkit.utils.ImageUtils
+import javax.inject.Inject
 
 
 class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarLayout.OnOffsetChangedListener {

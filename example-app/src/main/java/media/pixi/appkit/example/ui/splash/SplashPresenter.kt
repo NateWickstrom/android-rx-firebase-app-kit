@@ -21,6 +21,8 @@ class SplashPresenter @Inject constructor(private val navigator: SplashNavigator
 
     override fun onLaunch(activity: Activity) {
         if (authProvider.isSignedIn())
+            // TODO verify device was not unregistered
+            // TODO verify app version (not forcing update)
             navigator.showHomeScreen(activity)
         else
             navigator.showLoginScreen(activity)

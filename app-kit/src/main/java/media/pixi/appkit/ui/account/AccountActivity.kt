@@ -1,17 +1,17 @@
 package media.pixi.appkit.ui.account
 
+import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__appbar.*
-import media.pixi.appkit.utils.ActivityUtils
-import javax.inject.Inject
-import android.content.Intent
 import media.pixi.appkit.R
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
+import media.pixi.appkit.utils.ActivityUtils
 import media.pixi.appkit.utils.BitmapUtils
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
 
 
 class AccountActivity : DaggerAppCompatActivity() {

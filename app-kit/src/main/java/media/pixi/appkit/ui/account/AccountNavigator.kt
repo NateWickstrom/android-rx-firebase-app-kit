@@ -1,13 +1,13 @@
 package media.pixi.appkit.ui.account
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import com.theartofdev.edmodo.cropper.CropImage
-import javax.inject.Inject
-import android.app.Activity.RESULT_OK
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
 import media.pixi.appkit.ui.signin.SignInActivity
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class AccountNavigator @Inject constructor(): AccountContract.Navigator {

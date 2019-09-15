@@ -1,1 +1,3 @@
-include ':example-app', ':app-kit'
+include ':example-app', ':app-kit', ':rx-firebase'
+project(':rx-firebase').projectDir = new File(settingsDir, '../RxFirebase/app')
+

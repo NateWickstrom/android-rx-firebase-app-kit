@@ -19,6 +19,7 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
         profile.setOnClickListener { presenter.onProfileClicked(this) }
         settings.setOnClickListener { presenter.onSettingsClicked(this) }
         notifications.setOnClickListener { presenter.onNotificationsClicked(this) }
+        devices.setOnClickListener { presenter.onDevicesClicked(this) }
 
     }
 }

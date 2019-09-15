@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def getAlgoliaAppId() {
@@ -59,7 +59,6 @@ dependencies {
     implementation 'com.algolia:instantsearch-androidx:1.15.0'
 
     // Dagger dependencies
-    // Dagger dependencies
     kapt deps.dagger.android_support_compiler
     kapt deps.dagger.compiler
     implementation deps.dagger.runtime
@@ -67,13 +66,16 @@ dependencies {
     implementation deps.dagger.android_support
 
     // Firebase
+    implementation deps.firebase.firebase_analytics
     implementation deps.firebase.firebase_storage
     implementation deps.firebase.firebase_auth
-    implementation deps.firebase.firebase_config
     implementation deps.firebase.firebase_core
+    implementation deps.firebase.firebase_config
     implementation deps.firebase.firebase_firestore
     implementation deps.firebase.firebase_functions
-    implementation deps.firebase.rx_firebase
+    implementation deps.firebase.firebase_messaging
+    //implementation deps.firebase.rx_firebase
+    implementation project(":rx-firebase")
 
     // reactiveX
     implementation deps.rxjava2

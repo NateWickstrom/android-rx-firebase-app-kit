@@ -2,9 +2,9 @@ package media.pixi.appkit.utils
 
 import android.content.Context
 import android.graphics.Bitmap
-import timber.log.Timber
 import android.graphics.BitmapFactory
 import android.net.Uri
+import timber.log.Timber
 import java.io.*
 
 

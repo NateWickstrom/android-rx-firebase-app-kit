@@ -9,6 +9,8 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
+import media.pixi.appkit.data.devices.DevicesProvider
+import media.pixi.appkit.data.devices.FirebaseDevicesProvider
 import media.pixi.appkit.data.friends.FirebaseFriendsProvider
 import media.pixi.appkit.data.friends.FriendsProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
@@ -48,6 +50,13 @@ abstract class AppModule {
         @JvmStatic
         fun provideAuthProvider(): AuthProvider {
             return FirebaseAuthProvider()
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideDevicesProvider(context: Context): DevicesProvider {
+            return FirebaseDevicesProvider(context)
         }
 
         @Singleton

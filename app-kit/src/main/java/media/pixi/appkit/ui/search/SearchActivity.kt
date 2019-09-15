@@ -1,9 +1,7 @@
 package media.pixi.appkit.ui.search
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import com.algolia.instantsearch.core.helpers.Searcher
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges

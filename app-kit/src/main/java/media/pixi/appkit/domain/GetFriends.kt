@@ -17,6 +17,6 @@ class GetFriends @Inject constructor(private val userProfileProvider: UserProfil
     private fun toProfiles(userIds: Iterable<String>) : Flowable<Iterator<UserProfile>> {
         val flowables = userIds.map { userProfileProvider.observerUserProfile(it) }
 
-        return Flowable.zipIterable(flowables, { list -> list.map { it as UserProfile }.iterator()}, true, 10)
+        return Flowable.zipIterable(flowables, { list -> list.map { it as UserProfile }.iterator()}, true, 1)
     }
 }

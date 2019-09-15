@@ -8,9 +8,7 @@ import kotlinx.android.synthetic.main.appkit__item_person.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.utils.ImageUtils
-import java.util.ArrayList
-
-
+import java.util.*
 
 class FriendsAdapter: RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
 
@@ -48,7 +46,6 @@ class FriendsAdapter: RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
         hits.addAll(results)
         notifyDataSetChanged()
     }
-
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 

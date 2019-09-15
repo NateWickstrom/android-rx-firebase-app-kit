@@ -1,9 +1,9 @@
 package media.pixi.appkit.ui.passwordreset
 
 import android.app.Activity
-import javax.inject.Inject
 import android.content.Intent
 import media.pixi.appkit.R
+import javax.inject.Inject
 
 
 class PasswordResetNavigator @Inject internal constructor(): PasswordResetContract.Navigator {

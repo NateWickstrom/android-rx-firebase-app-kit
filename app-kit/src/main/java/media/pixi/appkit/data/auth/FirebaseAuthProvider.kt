@@ -66,14 +66,14 @@ class FirebaseAuthProvider: AuthProvider {
         if (getUser() == null) return Completable.error(IllegalArgumentException("No User"))
 
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, getUser()!!.email!!, password)
-            .flatMapCompletable { RxFirebaseUser.updateEmail(it.user, email) }
+            .flatMapCompletable { RxFirebaseUser.updateEmail(it.user!!, email) }
     }
 
     override fun updatePassword(newPassword: String, oldPassword: String): Completable {
         if (getUser() == null) return Completable.error(IllegalArgumentException("No User"))
 
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, getUser()!!.email!!, oldPassword)
-            .flatMapCompletable { RxFirebaseUser.updatePassword(it.user, newPassword) }
+            .flatMapCompletable { RxFirebaseUser.updatePassword(it.user!!, newPassword) }
     }
 
     override fun updateUsername(name: String): Completable {
@@ -122,7 +122,7 @@ class FirebaseAuthProvider: AuthProvider {
     override fun deleteAccount(password: String): Completable {
         // todo handle non-email accounts
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, getUser()!!.email!!, password)
-            .flatMapCompletable { RxFirebaseUser.delete(it.user) }
+            .flatMapCompletable { RxFirebaseUser.delete(it.user!!) }
     }
 
     private fun getUser(): FirebaseUser? {

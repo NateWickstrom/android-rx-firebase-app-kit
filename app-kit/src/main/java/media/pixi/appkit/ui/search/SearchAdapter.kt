@@ -4,15 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.appkit__item_person.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.search.PeopleSearchResult
 import media.pixi.appkit.data.search.PersonSearchResult
 import media.pixi.appkit.utils.ImageUtils
-import java.util.ArrayList
-
+import java.util.*
 
 
 class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {

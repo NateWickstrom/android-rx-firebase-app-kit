@@ -1,12 +1,14 @@
 package media.pixi.appkit.ui.signin
 
 import android.app.Activity
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import media.pixi.appkit.data.auth.AuthProvider
+import io.reactivex.schedulers.Schedulers
+import media.pixi.appkit.domain.SignIn
 import javax.inject.Inject
 
 class SignInPresenter @Inject constructor(
-    private var authProvider: AuthProvider,
+    private var signIn: SignIn,
     private var signInNavigator: SignInContract.Navigator): SignInContract.Presenter {
 
     private var view: SignInContract.View? = null
@@ -37,7 +39,9 @@ class SignInPresenter @Inject constructor(
         view?.error = ""
         disposable?.dispose()
         view?.loading = true
-        disposable = authProvider.signIn(email, password)
+        disposable = signIn.signIn(email, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { onSignedIn(activity) },
                 { onError(it) }
@@ -59,6 +63,14 @@ class SignInPresenter @Inject constructor(
 
     private fun onError(error: Throwable) {
         view?.loading = false
-        view?.error = error.message ?: "Unknown error occurred"
+        showError(error.message ?: "Unknown error occurred")
+    }
+
+    private fun showError(message: String) {
+        view?.error = message
+    }
+
+    private fun onTooManyDevices() {
+
     }
 }

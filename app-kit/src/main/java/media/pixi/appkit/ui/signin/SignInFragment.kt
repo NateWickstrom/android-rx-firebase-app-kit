@@ -1,14 +1,14 @@
 package media.pixi.appkit.ui.signin
 
 import android.os.Bundle
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 import android.view.*
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__error.view.*
 import kotlinx.android.synthetic.main.appkit__fragment_signin.*
 import kotlinx.android.synthetic.main.appkit__fragment_signin.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.ui.TextChangeWatcher
+import javax.inject.Inject
 
 
 class SignInFragment @Inject constructor(): DaggerFragment(), SignInContract.View {
