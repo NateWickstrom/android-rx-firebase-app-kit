@@ -31,6 +31,10 @@ class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarL
         get() = 0
         set(value) { btn_friends.text = resources.getQuantityString(R.plurals.friends_count, value, value) }
 
+    override var followerCount: Int
+        get() = 0
+        set(value) { btn_followers.text = resources.getQuantityString(R.plurals.followers_count, value, value) }
+
     lateinit var fragment: ProfileFragment
         @Inject set
 
@@ -48,6 +52,7 @@ class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarL
         appbar.addOnOffsetChangedListener(this)
 
         btn_friends.setOnClickListener { profilePresenter.onFriendsClicked(this) }
+        btn_followers.setOnClickListener { profilePresenter.onFollowersClicked(this) }
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame

@@ -35,6 +35,12 @@ class ProfilePresenter @Inject constructor(private var authProvider: AuthProvide
         }
     }
 
+    override fun onFollowersClicked(activity: Activity) {
+        authProvider.getUserId()?.let { userId ->
+            navigator.showFollowersScreen(activity, userId)
+        }
+    }
+
     private fun updateUser(user: AuthUserModel) {
         val name = "${user.firstName} ${user.lastName}"
 
