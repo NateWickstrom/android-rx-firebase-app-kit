@@ -33,26 +33,17 @@ class FirebaseDevicesProvider(context: Context): DevicesProvider {
     }
 
     override fun unregisterDevice(devices: List<Device>): Completable {
-        val userId = auth.currentUser?.uid ?: return Completable.error(IllegalArgumentException("No user Id found."))
-
-        val completable = mutableListOf<Completable>()
-
-        for (device in devices) {
-            val ref = firestore.collection(DEVICES).document(userId).collection(DEVICES).document(device.instanceId)
-            completable.add(RxFirestore.deleteDocument(ref))
-        }
-
-        return Completable.concat(completable)
+        return getUserIdSingle()
+            .map { id ->  getDeviceDocs(id, devices) }
+            .flatMapCompletable { docs -> toCompletable(docs) }
     }
 
     override fun observerUserDeviceList(): Flowable<List<Device>> {
-        val userId = auth.currentUser?.uid ?: return Flowable.error(IllegalArgumentException("No user Id found."))
-
-        val ref = firestore.collection(DEVICES)
-            .document(userId).collection(DEVICES)
-
-        val snapshot = RxFirestore.getCollection(ref).toFlowable()
-        return snapshot.map { snap -> toList(snap) }
+        return getUserIdSingle()
+            .map { userId -> firestore.collection(DEVICES).document(userId).collection(DEVICES) }
+            .flatMapMaybe { collection -> RxFirestore.getCollection(collection) }
+            .map { snap -> toList(snap) }
+            .toFlowable()
     }
 
     override fun observerRegisteredDeviceLimitHit(): Flowable<Boolean> {
@@ -80,6 +71,32 @@ class FirebaseDevicesProvider(context: Context): DevicesProvider {
         val deviceId = deviceId ?: throw IllegalArgumentException("No device Id found.")
         val userId = auth.currentUser?.uid ?: throw IllegalArgumentException("No user Id found.")
         return firestore.collection(DEVICES).document(userId).collection(DEVICES).document(deviceId)
+    }
+
+    private fun toCompletable(docs: List<DocumentReference>): Completable {
+        val completable = mutableListOf<Completable>()
+
+        for (doc in docs) {
+            completable.add(RxFirestore.deleteDocument(doc))
+        }
+
+        return Completable.concat(completable)
+    }
+
+    private fun getUserIdSingle(): Single<String> {
+        return Single.fromCallable {
+            auth.currentUser?.uid ?: throw IllegalArgumentException("No user Id found.")
+        }
+    }
+
+    private fun getDeviceDocs(userId: String, devices: List<Device>): List<DocumentReference> {
+        val docs = mutableListOf<DocumentReference>()
+
+        for (device in devices) {
+            docs.add(firestore.collection(DEVICES).document(userId).collection(DEVICES).document(device.instanceId))
+        }
+
+        return docs
     }
 
     companion object {
