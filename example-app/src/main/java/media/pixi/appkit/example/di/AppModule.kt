@@ -11,6 +11,8 @@ import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.devices.DevicesProvider
 import media.pixi.appkit.data.devices.FirebaseDevicesProvider
+import media.pixi.appkit.data.followers.FirebaseFollowersProvider
+import media.pixi.appkit.data.followers.FollowersProvider
 import media.pixi.appkit.data.friends.FirebaseFriendsProvider
 import media.pixi.appkit.data.friends.FriendsProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
@@ -57,6 +59,13 @@ abstract class AppModule {
         @JvmStatic
         fun provideDevicesProvider(context: Context): DevicesProvider {
             return FirebaseDevicesProvider(context)
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideFollowersProvider(): FollowersProvider {
+            return FirebaseFollowersProvider()
         }
 
         @Singleton
