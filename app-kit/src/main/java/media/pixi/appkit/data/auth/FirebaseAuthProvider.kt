@@ -11,6 +11,7 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 
 class FirebaseAuthProvider: AuthProvider {
@@ -54,11 +55,15 @@ class FirebaseAuthProvider: AuthProvider {
 
     override fun signIn(email: String, password: String): Completable {
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password)
+            // TODO bug with completion before signed in user actually available
+            .delay(SIGNIN_DELAY_SECONDS, TimeUnit.SECONDS)
             .ignoreElement()
     }
 
     override fun signUp(email: String, password: String): Completable {
         return RxFirebaseAuth.createUserWithEmailAndPassword(auth, email, password)
+            // TODO bug with completion before signed in user actually available
+            .delay(SIGNIN_DELAY_SECONDS, TimeUnit.SECONDS)
             .ignoreElement()
     }
 
@@ -147,5 +152,7 @@ class FirebaseAuthProvider: AuthProvider {
         private const val LASTNAME = "lastname"
         private const val USERNAME = "username"
         private const val IMAGE_URL = "imageUrl"
+
+        private const val SIGNIN_DELAY_SECONDS = 2L
     }
 }

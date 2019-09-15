@@ -3,7 +3,6 @@ package media.pixi.appkit.ui.account
 import android.app.Activity
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.AuthUserModel
 import media.pixi.appkit.domain.SignOut

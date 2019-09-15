@@ -2,13 +2,15 @@ package media.pixi.appkit.ui.signup
 
 import android.app.Activity
 import android.content.Context
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import media.pixi.appkit.R
-import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.domain.SignUp
 import javax.inject.Inject
 
 class SignUpPresenter @Inject constructor(
-    private var authProvider: AuthProvider,
+    private var signUp: SignUp,
     private var navigator: SignUpNavigator,
     private var context: Context): SignUpContract.Presenter {
 
@@ -52,7 +54,9 @@ class SignUpPresenter @Inject constructor(
         view?.loading = true
 
         disposable?.dispose()
-        disposable = authProvider.signUp(email, password)
+        disposable = signUp.signUp(email, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { onResult(activity) },
                 { onError(it) }

@@ -12,5 +12,6 @@ class SignUp @Inject constructor(private var authProvider: AuthProvider,
     fun signUp(email: String, password: String): Completable {
         return authProvider.signUp(email, password)
             .andThen(devicesProvider.registerDevice())
+            .doOnError { authProvider.signOut() }
     }
 }
