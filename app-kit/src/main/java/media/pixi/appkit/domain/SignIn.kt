@@ -12,7 +12,8 @@ class SignIn @Inject constructor(private var authProvider: AuthProvider,
 
     fun signIn(email: String, password: String): Completable {
         return authProvider.signIn(email, password)
-            .andThen(Completable.fromCallable { getUser() })
+            //.andThen(Completable.fromCallable { getUser() })
+            .delay(1 , TimeUnit.SECONDS)
             .andThen(devicesProvider.registerDevice())
             .doOnError { authProvider.signOut() }
     }
@@ -20,7 +21,7 @@ class SignIn @Inject constructor(private var authProvider: AuthProvider,
     private fun getUser(): FirebaseUser {
         return GetUserFuture().get(TIMEOUT, TimeUnit.SECONDS) ?: throw IllegalArgumentException("Failed to get FirebaseUser")
     }
-    
+
     companion object {
         private const val TIMEOUT = 10L
     }

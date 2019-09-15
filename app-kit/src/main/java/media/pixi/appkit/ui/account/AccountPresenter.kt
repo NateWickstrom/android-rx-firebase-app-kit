@@ -2,17 +2,21 @@ package media.pixi.appkit.ui.account
 
 import android.app.Activity
 import io.reactivex.Completable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.AuthUserModel
+import media.pixi.appkit.domain.SignOut
 import timber.log.Timber
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
     private var authProvider: AuthProvider,
+    private var signOut: SignOut,
     private var navigator: AccountContract.Navigator): AccountContract.Presenter {
 
-    private var disposable: Disposable? = null
+    private var disposables = CompositeDisposable()
     private var view: AccountContract.View? = null
 
     private var originalUser: AuthUserModel? = null
@@ -20,15 +24,15 @@ class AccountPresenter @Inject constructor(
     override fun takeView(view: AccountContract.View) {
         this.view = view
 
-        disposable = authProvider.observerLoggedInUser()
+        disposables.add(authProvider.observerLoggedInUser()
             .subscribe(
                 { onResult(it) },
                 { onError(it) }
-            )
+            ))
     }
 
     override fun dropView() {
-        disposable?.dispose()
+        disposables.clear()
     }
 
     override fun onUserImageClicked(activity: Activity) {
@@ -36,11 +40,19 @@ class AccountPresenter @Inject constructor(
     }
 
     override fun onSignOutClicked(activity: Activity) {
-        authProvider.signOut()
-        navigator.showSignInScreen(activity)
+        view?.loading = true
+
+        //disposables.add(
+            signOut.signOut().subscribe(
+                { onSignOutResult(WeakReference(activity)) },
+                { onError(it) }
+            )
+        //)
     }
 
     override fun onSaveClicked(activity: Activity) {
+        view?.loading = true
+
         val completables = mutableListOf<Completable>()
 
         val firstName = view?.firstName ?: ""
@@ -94,7 +106,15 @@ class AccountPresenter @Inject constructor(
         Timber.e(error.message, error)
     }
 
+    private fun onSignOutResult(activity: WeakReference<Activity>) {
+        view?.loading = false
+        activity.get()?.let {
+            navigator.showSignInScreen(it)
+        }
+    }
+
     private fun onResult(user: AuthUserModel) {
+        view?.loading = false
         originalUser = user
         view?.email = user.email
         view?.username = user.username
@@ -104,6 +124,7 @@ class AccountPresenter @Inject constructor(
     }
 
     private fun onError(error: Throwable) {
+        view?.loading = false
         Timber.e(error.message, error)
     }
 }

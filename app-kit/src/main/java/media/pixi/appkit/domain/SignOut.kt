@@ -11,9 +11,12 @@ class SignOut @Inject constructor(private var authProvider: AuthProvider,
     fun signOut(): Completable {
         return devicesProvider.unregisterDevice()
             .andThen(signOutCompletable())
+            .doOnError { devicesProvider.registerDevice() }
     }
 
     private fun signOutCompletable(): Completable {
-        return Completable.fromCallable { authProvider.signOut() }
+        return Completable.fromCallable {
+            authProvider.signOut()
+        }
     }
 }
