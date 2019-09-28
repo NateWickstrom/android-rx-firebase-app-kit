@@ -3,6 +3,7 @@ package media.pixi.appkit.service
 import android.annotation.SuppressLint
 import androidx.annotation.WorkerThread
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 import media.pixi.appkit.AppKitInjector
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.devices.DevicesProvider
@@ -32,6 +33,18 @@ class AppKitNotificationService: FirebaseMessagingService() {
                 Timber.w("Trouble registering device")
             }
         }
+    }
+
+    @WorkerThread
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        super.onMessageReceived(remoteMessage)
+        Timber.d("notification message received")
+    }
+
+    @WorkerThread
+    override fun onDeletedMessages() {
+        super.onDeletedMessages()
+        Timber.d("notification message deleted")
     }
 
     @SuppressLint("WrongConstant")
