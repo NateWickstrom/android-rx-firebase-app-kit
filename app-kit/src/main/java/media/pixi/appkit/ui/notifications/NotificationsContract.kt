@@ -14,6 +14,9 @@ interface NotificationsContract {
 
     interface Presenter: BasePresenter<View> {
 
+        fun onItemClicked(position: Int)
+        fun onItemLongClicked(position: Int)
+        fun onActionLongClicked(position: Int)
     }
 
     interface Navigator {

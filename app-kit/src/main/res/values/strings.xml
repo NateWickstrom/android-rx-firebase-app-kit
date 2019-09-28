@@ -60,6 +60,8 @@
     </plurals>
 
     <string name="notifications">Notifications</string>
+    <string name="action">action</string>
+
     <string name="settings">Settings</string>
 
 </resources>

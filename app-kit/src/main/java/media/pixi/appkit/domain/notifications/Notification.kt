@@ -1,5 +1,7 @@
 package media.pixi.appkit.domain.notifications
 
 interface Notification {
-    val id: String
+    val imageUrl: String
+    val title: String
+    val subtitle: String
 }

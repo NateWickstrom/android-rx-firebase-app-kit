@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
-import kotlinx.android.synthetic.main.appkit__fragment_list.view.progress_bar
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.notifications.Notification
 import javax.inject.Inject
@@ -40,6 +39,10 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
 
         view.results.layoutManager = LinearLayoutManager(context)
         view.results.adapter = adapter
+
+        adapter.onClickListener = { presenter.onItemClicked(it) }
+        adapter.onLongClickListener = { presenter.onItemLongClicked(it) }
+        adapter.onActionClickListener = { presenter.onActionLongClicked(it) }
 
         viewOfLayout = view
 

@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.appkit__item_notification.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.notifications.Notification
+import media.pixi.appkit.utils.ImageUtils
 import java.util.*
 
 class NotificationsAdapter: RecyclerView.Adapter<NotificationsAdapter.ViewHolder>() {
 
     var onClickListener: ((Int) -> Unit)? = null
-    var onLongClickListener: ((Int) -> Boolean)? = null
+    var onLongClickListener: ((Int) -> Unit)? = null
+    var onActionClickListener: ((Int) -> Unit)? = null
 
     private val hits = ArrayList<Notification>()
 
@@ -30,7 +32,9 @@ class NotificationsAdapter: RecyclerView.Adapter<NotificationsAdapter.ViewHolder
         val item = getItemAt(position)
         holder.bind(item)
         holder.itemView.setOnClickListener { onClickListener?.invoke(position) }
-        holder.itemView.setOnLongClickListener { onLongClickListener?.invoke(position) ?: false}
+        holder.itemView.setOnLongClickListener { onLongClickListener?.invoke(position); true }
+        holder.itemView.action.setOnClickListener { onActionClickListener?.invoke(position) }
+
     }
 
     fun add(result: Notification) {
@@ -49,9 +53,10 @@ class NotificationsAdapter: RecyclerView.Adapter<NotificationsAdapter.ViewHolder
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Notification) = with(itemView) {
-            //ImageUtils.setUserImage(user_image, item.imageUrl)
-            username.text = item.id
-            //name.text = itemView.context.getString(R.string.appkit__username, item.firstName, item.lastName)
+            ImageUtils.setUserImage(itemView.image, item.imageUrl)
+            itemView.title.text = item.title
+            itemView.subtitle.text = item.subtitle
+            itemView.action.text = "accept"
         }
     }
 }

@@ -28,6 +28,18 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         disposable?.dispose()
     }
 
+    override fun onItemClicked(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemLongClicked(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onActionLongClicked(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun onResult(results: List<Notification>) {
         view?.setResults(results)
         view?.loading = false
