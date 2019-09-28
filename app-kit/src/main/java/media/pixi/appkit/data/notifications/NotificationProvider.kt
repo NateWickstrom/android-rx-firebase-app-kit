@@ -1,8 +1,9 @@
 package media.pixi.appkit.data.notifications
 
+import io.reactivex.Flowable
+
 interface NotificationProvider {
 
-    fun registerUser()
+    fun getNotifications(): Flowable<List<String>>
 
-    fun unregisterUser()
 }

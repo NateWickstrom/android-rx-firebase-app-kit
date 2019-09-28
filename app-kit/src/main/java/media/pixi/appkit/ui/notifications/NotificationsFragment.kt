@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
@@ -17,7 +18,7 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
     override var error: String
         get() = ""
         set(value) {
-
+            Toast.makeText(context, value, Toast.LENGTH_SHORT).show()
         }
 
     override var loading: Boolean

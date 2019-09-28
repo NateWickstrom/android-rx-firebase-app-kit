@@ -15,6 +15,8 @@ import media.pixi.appkit.data.followers.FirebaseFollowersProvider
 import media.pixi.appkit.data.followers.FollowersProvider
 import media.pixi.appkit.data.friends.FirebaseFriendsProvider
 import media.pixi.appkit.data.friends.FriendsProvider
+import media.pixi.appkit.data.notifications.FirebaseNotificationProvider
+import media.pixi.appkit.data.notifications.NotificationProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.data.profile.FirebaseUserProfileProvider
 import media.pixi.appkit.data.search.AlgoliaSearchDataSource
@@ -59,6 +61,13 @@ abstract class AppModule {
         @JvmStatic
         fun provideDevicesProvider(context: Context): DevicesProvider {
             return FirebaseDevicesProvider(context)
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideNotificationProvider(): NotificationProvider {
+            return FirebaseNotificationProvider()
         }
 
         @Singleton

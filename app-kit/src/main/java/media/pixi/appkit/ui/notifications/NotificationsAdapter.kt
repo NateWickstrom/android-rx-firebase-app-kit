@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.appkit__item_notification.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.notifications.Notification
 import java.util.*
@@ -17,7 +18,7 @@ class NotificationsAdapter: RecyclerView.Adapter<NotificationsAdapter.ViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view  = LayoutInflater.from(parent.context)
-            .inflate(R.layout.appkit__item_person, parent, false)
+            .inflate(R.layout.appkit__item_notification, parent, false)
         return ViewHolder(view)
     }
 
@@ -48,9 +49,9 @@ class NotificationsAdapter: RecyclerView.Adapter<NotificationsAdapter.ViewHolder
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Notification) = with(itemView) {
-//            ImageUtils.setUserImage(user_image, item.imageUrl)
-//            username.text = item.username
-//            name.text = itemView.context.getString(R.string.appkit__username, item.firstName, item.lastName)
+            //ImageUtils.setUserImage(user_image, item.imageUrl)
+            username.text = item.id
+            //name.text = itemView.context.getString(R.string.appkit__username, item.firstName, item.lastName)
         }
     }
 }
