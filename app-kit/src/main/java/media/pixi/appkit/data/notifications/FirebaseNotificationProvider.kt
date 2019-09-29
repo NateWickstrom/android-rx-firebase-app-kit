@@ -1,17 +1,18 @@
 package media.pixi.appkit.data.notifications
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Flowable
 
-class FirebaseNotificationProvider(): NotificationProvider {
+class FirebaseNotificationProvider: NotificationProvider {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    override fun getNotifications(): Flowable<List<String>> {
+    override fun getNotifications(): Flowable<List<NotificationEntity>> {
         val userId = auth.currentUser!!.uid
         val ref = firestore.collection(NOTIFICATIONS)
             .document(userId).collection(NOTIFICATIONS)
@@ -20,8 +21,15 @@ class FirebaseNotificationProvider(): NotificationProvider {
             .map { toList(it) }
     }
 
-    private fun toList(snapshot: QuerySnapshot): List<String> {
-        return snapshot.documents.map { it.id }
+    private fun toList(snapshot: QuerySnapshot): List<NotificationEntity> {
+        return snapshot.documents.map { toNotificationEntity(it) }
+    }
+
+    private fun toNotificationEntity(doc: DocumentSnapshot): NotificationEntity {
+        val type = doc.getString("type") ?: "unkown"
+        val noteType = NotificationType.toEnum(type)
+        val id = doc.getString("requester") ?: "unkown"
+        return NotificationEntity(type = noteType, id = id)
     }
 
     companion object {

@@ -3,6 +3,7 @@ package media.pixi.appkit.ui.notifications
 import io.reactivex.disposables.Disposable
 import media.pixi.appkit.domain.notifications.GetNotifications
 import media.pixi.appkit.domain.notifications.Notification
+import timber.log.Timber
 import javax.inject.Inject
 
 class NotificationsPresenter @Inject constructor(private var getNotifications: GetNotifications,
@@ -10,6 +11,7 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
 
     private var view: NotificationsContract.View? = null
     private var disposable: Disposable? = null
+    private var notifications: List<Notification>? = null
 
     override fun takeView(view: NotificationsContract.View) {
         this.view = view
@@ -29,18 +31,19 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
     }
 
     override fun onItemClicked(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onItemLongClicked(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onActionLongClicked(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     private fun onResult(results: List<Notification>) {
+        notifications = results
         view?.setResults(results)
         view?.loading = false
     }
@@ -50,6 +53,7 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
     }
 
     private fun onError(error: Throwable) {
+        Timber.e(error)
         view?.error = error.message?: "Oops, error"
         view?.loading = false
     }

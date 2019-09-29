@@ -4,6 +4,6 @@ import io.reactivex.Flowable
 
 interface NotificationProvider {
 
-    fun getNotifications(): Flowable<List<String>>
+    fun getNotifications(): Flowable<List<NotificationEntity>>
 
 }
