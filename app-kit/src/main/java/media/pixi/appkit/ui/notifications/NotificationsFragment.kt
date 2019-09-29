@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.notifications.Notification
+import media.pixi.appkit.ui.SwipeToDeleteCallback
 import javax.inject.Inject
 
 class NotificationsFragment @Inject constructor(): DaggerFragment(), NotificationsContract.View {
@@ -40,9 +43,17 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
         view.results.layoutManager = LinearLayoutManager(context)
         view.results.adapter = adapter
 
-        adapter.onClickListener = { presenter.onItemClicked(it) }
-        adapter.onLongClickListener = { presenter.onItemLongClicked(it) }
-        adapter.onActionClickListener = { presenter.onActionLongClicked(it) }
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(view.results)
+
+        adapter.onClickListener = { notification, position -> presenter.onItemClicked(activity!!, notification, position) }
+        adapter.onLongClickListener = { notification, position -> presenter.onItemLongClicked(activity!!, notification, position) }
+        adapter.onActionClickListener = { notification, position -> presenter.onActionLongClicked(notification, position) }
 
         viewOfLayout = view
 
@@ -51,6 +62,10 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
 
     override fun setResults(results: List<Notification>) {
         adapter.add(results)
+    }
+
+    override fun set(position: Int, notification: Notification) {
+        adapter.set(position, notification)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

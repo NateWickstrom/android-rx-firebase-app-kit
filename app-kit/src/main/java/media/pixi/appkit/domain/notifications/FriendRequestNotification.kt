@@ -6,5 +6,5 @@ data class FriendRequestNotification(
     override val imageUrl: String,
     override val title: String,
     override val subtitle: String,
-    val userProfile: UserProfile
+    override val userProfile: UserProfile
 ) : Notification
