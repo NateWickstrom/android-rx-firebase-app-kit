@@ -20,6 +20,9 @@ interface NotificationsContract {
         fun onItemClicked(activity: Activity, notification: Notification, position: Int)
         fun onItemLongClicked(activity: Activity, notification: Notification, position: Int)
         fun onActionLongClicked(notification: Notification, position: Int)
+
+        fun onItemDeleted(position: Int)
+
     }
 
     interface Navigator {

@@ -51,6 +51,10 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
             ))
     }
 
+    override fun onItemDeleted(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun onActionComplete(notification: Notification, position: Int) {
         view?.set(position, NewFriendNotification(
             imageUrl = notification.imageUrl,

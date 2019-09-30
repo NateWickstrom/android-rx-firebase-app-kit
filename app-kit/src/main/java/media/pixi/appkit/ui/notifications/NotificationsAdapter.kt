@@ -11,7 +11,7 @@ import media.pixi.appkit.domain.notifications.Notification
 import media.pixi.appkit.utils.ImageUtils
 import java.util.*
 
-class NotificationsAdapter: RecyclerView.Adapter<NotificationsAdapter.NotificationListItemViewHolder>() {
+class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.NotificationListItemViewHolder>() {
 
     var onClickListener: ((Notification, Int) -> Unit)? = null
     var onLongClickListener: ((Notification, Int) -> Unit)? = null

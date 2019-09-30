@@ -46,6 +46,7 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 adapter.removeAt(viewHolder.adapterPosition)
+                presenter.onItemDeleted(viewHolder.adapterPosition)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
