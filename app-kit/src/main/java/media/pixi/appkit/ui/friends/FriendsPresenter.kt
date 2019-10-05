@@ -35,9 +35,9 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
         navigator.showFriendScreen(activity, userProfile.id)
     }
 
-    private fun onResult(itter: Iterator<UserProfile>) {
+    private fun onResult(friends: List<UserProfile>) {
         view?.let {
-            it.setResults(itter.asSequence().toList())
+            it.setResults(friends)
         }
     }
 

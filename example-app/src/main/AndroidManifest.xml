@@ -45,12 +45,6 @@
                 android:name="media.pixi.appkit.ui.userprofile.UserProfileActivity"/>
 
         <activity
-                android:label="@string/followers"
-                android:parentActivityName=".ui.home.HomeActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.appkit.ui.followers.FollowersActivity"/>
-
-        <activity
                 android:label="@string/friends"
                 android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"

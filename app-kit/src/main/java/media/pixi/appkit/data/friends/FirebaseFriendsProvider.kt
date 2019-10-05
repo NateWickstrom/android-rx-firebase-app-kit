@@ -10,7 +10,7 @@ class FirebaseFriendsProvider: FriendsProvider {
 
     private val firestore = FirebaseFirestore.getInstance()
 
-    override fun getFriendsForUser(userId: String): Flowable<FriendsResult> {
+    override fun getFriendsForUser(userId: String): Flowable<List<String>> {
         val ref = firestore.collection(FRIENDS)
             .document(userId).collection(FRIENDS)
         return RxFirestore.getCollection(ref)
@@ -18,9 +18,8 @@ class FirebaseFriendsProvider: FriendsProvider {
             .map { toList(it) }
     }
 
-    private fun toList(snapshot: QuerySnapshot): FriendsResult {
-        val result =  snapshot.documents.map { it.id }
-        return FriendsResult(ids = result)
+    private fun toList(snapshot: QuerySnapshot): List<String> {
+        return snapshot.documents.map { it.id }
     }
 
     companion object {

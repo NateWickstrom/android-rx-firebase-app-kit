@@ -4,5 +4,5 @@ import io.reactivex.Flowable
 
 interface FriendsProvider {
 
-    fun getFriendsForUser(userId: String): Flowable<FriendsResult>
+    fun getFriendsForUser(userId: String): Flowable<List<String>>
 }

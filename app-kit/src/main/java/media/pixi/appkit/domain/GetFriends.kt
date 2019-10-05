@@ -9,14 +9,14 @@ import javax.inject.Inject
 class GetFriends @Inject constructor(private val userProfileProvider: UserProfileProvider,
                                      private val friendsProvider: FriendsProvider) {
 
-    fun getFriendsForUser(userId: String) : Flowable<Iterator<UserProfile>> {
+    fun getFriendsForUser(userId: String) : Flowable<List<UserProfile>> {
         return friendsProvider.getFriendsForUser(userId)
-            .concatMap { toProfiles(it.ids) }
+            .concatMap { toProfiles(it) }
     }
 
-    private fun toProfiles(userIds: Iterable<String>) : Flowable<Iterator<UserProfile>> {
+    private fun toProfiles(userIds: Iterable<String>) : Flowable<List<UserProfile>> {
         val flowables = userIds.map { userProfileProvider.observerUserProfile(it) }
 
-        return Flowable.zipIterable(flowables, { list -> list.map { it as UserProfile }.iterator()}, true, 1)
+        return Flowable.zipIterable(flowables, { list -> list.map { it as UserProfile } }, true, 1)
     }
 }

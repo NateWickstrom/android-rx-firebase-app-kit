@@ -1,6 +1,7 @@
 package media.pixi.appkit.ui.myprofile
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__activity_profile.*
@@ -29,11 +30,9 @@ class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarL
 
     override var friendCount: Int
         get() = 0
-        set(value) { btn_friends.text = resources.getQuantityString(R.plurals.friends_count, value, value) }
-
-    override var followerCount: Int
-        get() = 0
-        set(value) { btn_followers.text = resources.getQuantityString(R.plurals.followers_count, value, value) }
+        set(value) {
+            btn_friends.visibility = View.VISIBLE
+            btn_friends.text = resources.getQuantityString(R.plurals.friends_count, value, value) }
 
     lateinit var fragment: ProfileFragment
         @Inject set
@@ -52,7 +51,6 @@ class ProfileActivity : DaggerAppCompatActivity(), ProfileContract.View, AppBarL
         appbar.addOnOffsetChangedListener(this)
 
         btn_friends.setOnClickListener { profilePresenter.onFriendsClicked(this) }
-        btn_followers.setOnClickListener { profilePresenter.onFollowersClicked(this) }
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame

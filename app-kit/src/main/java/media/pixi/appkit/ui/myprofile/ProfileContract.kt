@@ -9,8 +9,6 @@ interface ProfileContract {
         var profileTitle: String
         var profileSubtitle: String
         var friendCount: Int
-        var followerCount: Int
-
     }
 
     interface Presenter {
@@ -18,13 +16,9 @@ interface ProfileContract {
         fun dropView()
 
         fun onFriendsClicked(activity: Activity)
-
-        fun onFollowersClicked(activity: Activity)
     }
 
     interface Navigator {
         fun showFriendsScreen(activity: Activity, forUserId: String)
-
-        fun showFollowersScreen(activity: Activity, forUserId: String)
     }
 }
