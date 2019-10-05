@@ -1,8 +1,8 @@
-package media.pixi.appkit.ui.friend
+package media.pixi.appkit.ui.userprofile
 
 import android.app.Activity
 
-interface FriendContract {
+interface UserProfileContract {
 
     interface View {
         var profileImageUrl: String

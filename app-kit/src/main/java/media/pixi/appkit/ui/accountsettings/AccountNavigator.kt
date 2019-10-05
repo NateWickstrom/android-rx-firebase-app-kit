@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.account
+package media.pixi.appkit.ui.accountsettings
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK

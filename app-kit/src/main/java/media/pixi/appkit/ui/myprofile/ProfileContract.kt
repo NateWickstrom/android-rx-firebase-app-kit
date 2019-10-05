@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.profile
+package media.pixi.appkit.ui.myprofile
 
 import android.app.Activity
 

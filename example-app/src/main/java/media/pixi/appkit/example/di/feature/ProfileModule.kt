@@ -5,11 +5,10 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
-import media.pixi.appkit.example.ui.AppNavigator
-import media.pixi.appkit.ui.profile.ProfileContract
-import media.pixi.appkit.ui.profile.ProfileFragment
-import media.pixi.appkit.ui.profile.ProfileNavigator
-import media.pixi.appkit.ui.profile.ProfilePresenter
+import media.pixi.appkit.ui.myprofile.ProfileContract
+import media.pixi.appkit.ui.myprofile.ProfileFragment
+import media.pixi.appkit.ui.myprofile.ProfileNavigator
+import media.pixi.appkit.ui.myprofile.ProfilePresenter
 
 @Module
 abstract class ProfileModule {

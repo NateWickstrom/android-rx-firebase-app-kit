@@ -5,24 +5,24 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
-import media.pixi.appkit.ui.friend.FriendContract
-import media.pixi.appkit.ui.friend.FriendFragment
-import media.pixi.appkit.ui.friend.FriendNavigator
-import media.pixi.appkit.ui.friend.FriendPresenter
+import media.pixi.appkit.ui.userprofile.UserProfileContract
+import media.pixi.appkit.ui.userprofile.UserProfileFragment
+import media.pixi.appkit.ui.userprofile.UserProfileNavigator
+import media.pixi.appkit.ui.userprofile.UserProfilePresenter
 
 @Module
 abstract class FriendModule {
 
     @FragmentScoped
     @ContributesAndroidInjector
-    internal abstract fun friendFragment(): FriendFragment
+    internal abstract fun friendFragment(): UserProfileFragment
 
     @ActivityScoped
     @Binds
-    internal abstract fun friendPresenter(presenter: FriendPresenter): FriendContract.Presenter
+    internal abstract fun friendPresenter(presenter: UserProfilePresenter): UserProfileContract.Presenter
 
     @ActivityScoped
     @Binds
-    internal abstract fun friendNavigator(navigator: FriendNavigator): FriendContract.Navigator
+    internal abstract fun friendNavigator(navigator: UserProfileNavigator): UserProfileContract.Navigator
 
 }

@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.friend
+package media.pixi.appkit.ui.userprofile
 
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
@@ -7,15 +7,15 @@ import media.pixi.appkit.data.profile.UserProfileProvider
 import timber.log.Timber
 import javax.inject.Inject
 
-class FriendPresenter @Inject constructor(private var userProfileProvider: UserProfileProvider,
-                                          private var friendNavigator: FriendContract.Navigator): FriendContract.Presenter {
+class UserProfilePresenter @Inject constructor(private var userProfileProvider: UserProfileProvider,
+                                               private var userProfileNavigator: UserProfileContract.Navigator): UserProfileContract.Presenter {
 
     override var userId: String? = null
 
-    private var view: FriendContract.View? = null
+    private var view: UserProfileContract.View? = null
     private var disposables = CompositeDisposable()
 
-    override fun takeView(view: FriendContract.View) {
+    override fun takeView(view: UserProfileContract.View) {
         this.view = view
 
         userId?.let { userId ->
@@ -52,7 +52,7 @@ class FriendPresenter @Inject constructor(private var userProfileProvider: UserP
 
     override fun onFriendsClicked(activity: Activity) {
         userId?.let { userId ->
-            friendNavigator.showFriendsScreen(activity, userId)
+            userProfileNavigator.showFriendsScreen(activity, userId)
         }
     }
 

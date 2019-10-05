@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.friend
+package media.pixi.appkit.ui.userprofile
 
 import android.app.Activity
 import android.content.Intent
@@ -12,7 +12,7 @@ import media.pixi.appkit.utils.ActivityUtils
 import media.pixi.appkit.utils.ImageUtils
 import javax.inject.Inject
 
-class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayout.OnOffsetChangedListener {
+class UserProfileActivity: DaggerAppCompatActivity(), UserProfileContract.View, AppBarLayout.OnOffsetChangedListener {
 
     override var profileImageUrl: String
         get() = ""
@@ -48,10 +48,10 @@ class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayo
             }
         }
 
-    lateinit var fragment: FriendFragment
+    lateinit var fragment: UserProfileFragment
         @Inject set
 
-    lateinit var presenter: FriendPresenter
+    lateinit var presenter: UserProfilePresenter
         @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +100,7 @@ class FriendActivity: DaggerAppCompatActivity(), FriendContract.View, AppBarLayo
         const val BUNDLE_USER = "user_id"
 
         fun launch(activity: Activity, userId: String) {
-            val intent = Intent(activity, FriendActivity::class.java)
+            val intent = Intent(activity, UserProfileActivity::class.java)
             intent.putExtra(BUNDLE_USER, userId)
             activity.startActivity(intent)
         }

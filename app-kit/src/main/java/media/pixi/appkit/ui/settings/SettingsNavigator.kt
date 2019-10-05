@@ -2,7 +2,7 @@ package media.pixi.appkit.ui.settings
 
 import android.app.Activity
 import android.content.Intent
-import media.pixi.appkit.ui.account.AccountActivity
+import media.pixi.appkit.ui.accountsettings.AccountActivity
 import javax.inject.Inject
 
 class SettingsNavigator @Inject constructor(): SettingsContract.Navigator {

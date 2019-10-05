@@ -6,16 +6,16 @@ import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.feature.*
 import media.pixi.appkit.example.ui.home.HomeActivity
 import media.pixi.appkit.example.ui.splash.SplashActivity
-import media.pixi.appkit.ui.account.AccountActivity
+import media.pixi.appkit.ui.accountsettings.AccountActivity
 import media.pixi.appkit.ui.devices.DevicesActivity
 import media.pixi.appkit.ui.followers.FollowersActivity
-import media.pixi.appkit.ui.friend.FriendActivity
+import media.pixi.appkit.ui.userprofile.UserProfileActivity
 import media.pixi.appkit.ui.friends.FriendsActivity
 import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.appkit.ui.passwordreset.PasswordResetActivity
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
-import media.pixi.appkit.ui.profile.ProfileActivity
+import media.pixi.appkit.ui.myprofile.ProfileActivity
 import media.pixi.appkit.ui.search.SearchActivity
 import media.pixi.appkit.ui.settings.SettingsActivity
 import media.pixi.appkit.ui.signin.SignInActivity
@@ -74,7 +74,7 @@ abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [FriendModule::class])
-    internal abstract fun friendActivity(): FriendActivity
+    internal abstract fun friendActivity(): UserProfileActivity
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [FriendsModule::class])

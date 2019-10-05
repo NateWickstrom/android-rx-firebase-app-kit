@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.account
+package media.pixi.appkit.ui.accountsettings
 
 import android.os.Bundle
 import android.view.*

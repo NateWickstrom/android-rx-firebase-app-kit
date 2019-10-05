@@ -30,7 +30,7 @@
                 android:label="@string/account"
                 android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.appkit.ui.account.AccountActivity"/>
+                android:name="media.pixi.appkit.ui.accountsettings.AccountActivity"/>
 
         <activity
                 android:label="@string/notifications"
@@ -42,7 +42,7 @@
                 android:label="@string/profile"
                 android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.appkit.ui.friend.FriendActivity"/>
+                android:name="media.pixi.appkit.ui.userprofile.UserProfileActivity"/>
 
         <activity
                 android:label="@string/followers"
@@ -81,7 +81,7 @@
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.appkit.ui.profile.ProfileActivity"/>
+                android:name="media.pixi.appkit.ui.myprofile.ProfileActivity"/>
 
         <activity
                 android:theme="@style/AppTheme.NoActionBar"

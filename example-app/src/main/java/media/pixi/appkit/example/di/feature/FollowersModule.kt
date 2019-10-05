@@ -9,10 +9,6 @@ import media.pixi.appkit.ui.followers.FollowersContract
 import media.pixi.appkit.ui.followers.FollowersFragment
 import media.pixi.appkit.ui.followers.FollowersNavigator
 import media.pixi.appkit.ui.followers.FollowersPresenter
-import media.pixi.appkit.ui.friend.FriendContract
-import media.pixi.appkit.ui.friend.FriendFragment
-import media.pixi.appkit.ui.friend.FriendNavigator
-import media.pixi.appkit.ui.friend.FriendPresenter
 
 @Module
 abstract class FollowersModule {
