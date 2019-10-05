@@ -30,7 +30,7 @@
                 android:label="@string/account"
                 android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
-                android:name="media.pixi.appkit.ui.accountsettings.AccountActivity"/>
+                android:name="media.pixi.appkit.ui.account.AccountActivity"/>
 
         <activity
                 android:label="@string/notifications"

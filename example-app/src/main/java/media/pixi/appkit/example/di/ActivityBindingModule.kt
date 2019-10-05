@@ -6,7 +6,7 @@ import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.feature.*
 import media.pixi.appkit.example.ui.home.HomeActivity
 import media.pixi.appkit.example.ui.splash.SplashActivity
-import media.pixi.appkit.ui.accountsettings.AccountActivity
+import media.pixi.appkit.ui.account.AccountActivity
 import media.pixi.appkit.ui.devices.DevicesActivity
 import media.pixi.appkit.ui.followers.FollowersActivity
 import media.pixi.appkit.ui.userprofile.UserProfileActivity

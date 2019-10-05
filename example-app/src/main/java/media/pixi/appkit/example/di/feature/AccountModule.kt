@@ -6,9 +6,9 @@ import dagger.android.ContributesAndroidInjector
 import media.pixi.appkit.example.di.ActivityScoped
 import media.pixi.appkit.example.di.FragmentScoped
 import media.pixi.appkit.example.ui.AppNavigator
-import media.pixi.appkit.ui.accountsettings.AccountContract
-import media.pixi.appkit.ui.accountsettings.AccountFragment
-import media.pixi.appkit.ui.accountsettings.AccountPresenter
+import media.pixi.appkit.ui.account.AccountContract
+import media.pixi.appkit.ui.account.AccountFragment
+import media.pixi.appkit.ui.account.AccountPresenter
 
 @Module
 abstract class AccountModule {

@@ -5,7 +5,7 @@ import android.content.Intent
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import media.pixi.appkit.example.ui.splash.SplashActivity
-import media.pixi.appkit.ui.accountsettings.AccountContract
+import media.pixi.appkit.ui.account.AccountContract
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
 import timber.log.Timber
 import javax.inject.Inject
