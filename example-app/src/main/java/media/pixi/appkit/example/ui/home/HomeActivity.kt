@@ -20,6 +20,7 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
         settings.setOnClickListener { presenter.onSettingsClicked(this) }
         notifications.setOnClickListener { presenter.onNotificationsClicked(this) }
         devices.setOnClickListener { presenter.onDevicesClicked(this) }
+        myFriends.setOnClickListener { presenter.onFriendsClicked(this) }
 
     }
 }

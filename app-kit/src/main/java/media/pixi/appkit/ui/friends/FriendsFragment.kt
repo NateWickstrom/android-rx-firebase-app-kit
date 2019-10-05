@@ -28,11 +28,11 @@ class FriendsFragment @Inject constructor(): DaggerFragment(), FriendsContract.V
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_friends, container, false)
-        view.hits.layoutManager = LinearLayoutManager(context)
+        view.list.layoutManager = LinearLayoutManager(context)
 
         adapter = FriendsAdapter()
         adapter?.onClickListener = { presenter.onListItemClicked(activity as Activity, it) }
-        view.hits.adapter = adapter
+        view.list.adapter = adapter
 
         return view
     }

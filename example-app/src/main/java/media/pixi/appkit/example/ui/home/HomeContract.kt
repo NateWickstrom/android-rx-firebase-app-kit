@@ -14,6 +14,7 @@ interface HomeContract {
         fun onSettingsClicked(activity: Activity)
         fun onNotificationsClicked(activity: Activity)
         fun onDevicesClicked(activity: Activity)
+        fun onFriendsClicked(activity: Activity)
     }
 
     interface Navigator {
@@ -22,6 +23,6 @@ interface HomeContract {
         fun showSettings(activity: Activity)
         fun showNotification(activity: Activity)
         fun showDevices(activity: Activity)
-
+        fun showFriends(activity: Activity, forUserId: String)
     }
 }

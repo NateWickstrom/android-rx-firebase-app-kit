@@ -58,6 +58,8 @@ class UserProfileActivity: DaggerAppCompatActivity(), UserProfileContract.View, 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.appkit__activity_friend)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         title = ""
 
         presenter.userId = intent.extras?.getString(BUNDLE_USER)

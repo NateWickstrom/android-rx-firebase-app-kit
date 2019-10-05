@@ -20,7 +20,7 @@ class FriendsActivity: DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.appkit__activity_friends)
+        setContentView(R.layout.appkit__activity)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

@@ -1,10 +1,16 @@
 package media.pixi.appkit.example.ui.home
 
 import android.app.Activity
+import media.pixi.appkit.data.auth.AuthProvider
 import javax.inject.Inject
 
-class HomePresenter @Inject constructor(private val navigator: HomeNavigator):
+class HomePresenter @Inject constructor(private val navigator: HomeNavigator,
+                                        private val authProvider: AuthProvider):
     HomeContract.Presenter {
+
+    override fun onFriendsClicked(activity: Activity) {
+        navigator.showFriends(activity, authProvider.getUserId()!!)
+    }
 
     override fun onDevicesClicked(activity: Activity) {
         navigator.showDevices(activity)
