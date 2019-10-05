@@ -41,8 +41,8 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
         val view = inflater.inflate(R.layout.appkit__fragment_list, container, false)
         adapter = NotificationsAdapter()
 
-        view.results.layoutManager = LinearLayoutManager(context)
-        view.results.adapter = adapter
+        view.list.layoutManager = LinearLayoutManager(context)
+        view.list.adapter = adapter
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -52,7 +52,7 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(view.results)
+        itemTouchHelper.attachToRecyclerView(view.list)
 
         adapter.onClickListener = { notification, position -> presenter.onItemClicked(activity!!, notification, position) }
         adapter.onLongClickListener = { notification, position -> presenter.onItemLongClicked(activity!!, notification, position) }

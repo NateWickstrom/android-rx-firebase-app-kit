@@ -5,6 +5,7 @@ import android.util.Log
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.GetFriends
+import timber.log.Timber
 import javax.inject.Inject
 
 class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
@@ -17,6 +18,7 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
 
     override fun takeView(view: FriendsContract.View) {
         this.view = view
+        view.loading = true
 
         userId?.let { userId ->
             disposables.add(getFriends.getFriendsForUser(userId).subscribe(
@@ -36,13 +38,14 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
     }
 
     private fun onResult(friends: List<UserProfile>) {
-        view?.let {
-            it.setResults(friends)
-        }
+        view?.loading = false
+        view?.setResults(friends)
     }
 
     private fun onError(error: Throwable) {
-        Log.d("FriendsActivity", error.toString())
+        view?.loading = false
+        view?.error = error.message.toString()
+        Timber.e(error)
     }
 
 }
