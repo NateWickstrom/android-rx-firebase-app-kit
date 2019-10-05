@@ -48,7 +48,8 @@
 
     <string name="appkit__username">%1$s %2$s</string>
 
-    <!--<string name="friends_count">%1$s Friends</string>-->
+    <string name="add_friend">Add Friend</string>
+    <string name="remove_friend">Unfriend</string>
 
     <plurals name="friends_count">
         <item quantity="zero">%d Friends</item>

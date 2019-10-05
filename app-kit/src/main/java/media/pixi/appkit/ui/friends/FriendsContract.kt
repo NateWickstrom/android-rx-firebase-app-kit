@@ -24,5 +24,7 @@ interface FriendsContract {
 
     interface Navigator {
         fun showFriendScreen(activity: Activity, userId: String)
+        fun showMyProfilecreen(activity: Activity)
+
     }
 }

@@ -3,12 +3,14 @@ package media.pixi.appkit.ui.friends
 import android.app.Activity
 import android.util.Log
 import io.reactivex.disposables.CompositeDisposable
+import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.GetFriends
 import timber.log.Timber
 import javax.inject.Inject
 
 class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
+                                           private var authProvider: AuthProvider,
                                            private var navigator: FriendsNavigator): FriendsContract.Presenter {
 
     override var userId: String? = null
@@ -34,7 +36,11 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
     }
 
     override fun onListItemClicked(activity: Activity, userProfile: UserProfile) {
-        navigator.showFriendScreen(activity, userProfile.id)
+        if (authProvider.getUserId() === userProfile.id) {
+            navigator.showMyProfilecreen(activity)
+        } else {
+            navigator.showFriendScreen(activity, userProfile.id)
+        }
     }
 
     private fun onResult(friends: List<UserProfile>) {

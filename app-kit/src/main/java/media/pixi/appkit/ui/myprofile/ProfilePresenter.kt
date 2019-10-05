@@ -28,7 +28,7 @@ class ProfilePresenter @Inject constructor(private var authProvider: AuthProvide
         disposables.add(friendsProvider.getFriendsForUser(authProvider.getUserId()!!)
             .subscribe(
                 { updateFriendCount(it.size) },
-                { Timber.e(it.message, it) }
+                { onError(it) }
             ))
     }
 
@@ -53,5 +53,9 @@ class ProfilePresenter @Inject constructor(private var authProvider: AuthProvide
         view?.profileImageUrl = user.imageUrl
         view?.profileTitle = name
         view?.profileSubtitle = user.username
+    }
+
+    private fun onError(error: Throwable) {
+        Timber.e(error.message, error)
     }
 }

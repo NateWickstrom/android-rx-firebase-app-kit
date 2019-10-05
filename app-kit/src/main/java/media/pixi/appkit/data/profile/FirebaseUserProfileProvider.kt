@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import media.pixi.appkit.utils.getString
 
 
 class FirebaseUserProfileProvider: UserProfileProvider {
@@ -59,10 +60,10 @@ class FirebaseUserProfileProvider: UserProfileProvider {
         return UserProfile(
             id = snapshot.id,
             friendCount = 0,
-            username = snapshot.get(USERNAME) as String,
-            firstName = snapshot.get(FIRST_NAME) as String,
-            lastName = snapshot.get(LAST_NAME) as String,
-            imageUrl = snapshot.get(IMAGE_URL) as String)
+            username = snapshot.getString(USERNAME, "<unknown>"),
+            firstName = snapshot.getString(FIRST_NAME, "<unknown>"),
+            lastName = snapshot.getString(LAST_NAME, "<unknown>"),
+            imageUrl = snapshot.getString(IMAGE_URL, "<unknown>"))
     }
 
     companion object {

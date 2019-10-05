@@ -64,7 +64,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:minHeight="48dp"
-                                android:text="Add Friend"
+                                android:text="@string/add_friend"
                                 android:visibility="invisible"
                                 android:layout_marginEnd="@dimen/half_horizontal_spacing_for_similar_input"
                                 android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
@@ -75,7 +75,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:minHeight="48dp"
-                                android:text="unFriend"
+                                android:text="@string/remove_friend"
                                 android:visibility="gone"
                                 android:layout_marginEnd="@dimen/half_horizontal_spacing_for_similar_input"
                                 android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
@@ -88,9 +88,9 @@
                                 android:minHeight="48dp"
                                 android:visibility="invisible"
                                 android:layout_marginStart="@dimen/half_horizontal_spacing_for_similar_input"
-                                android:text="0 Friends"
                                 android:layout_marginTop="@dimen/vertical_spacing_for_similar_input"
-                                android:layout_marginBottom="@dimen/vertical_spacing_for_similar_input"/>
+                                android:layout_marginBottom="@dimen/vertical_spacing_for_similar_input"
+                                tools:text="0 Friends"/>
 
                     </LinearLayout>
 

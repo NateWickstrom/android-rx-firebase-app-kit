@@ -2,12 +2,14 @@ package media.pixi.appkit.ui.userprofile
 
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
+import media.pixi.appkit.data.friends.FriendsProvider
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class UserProfilePresenter @Inject constructor(private var userProfileProvider: UserProfileProvider,
+                                               private var friendsProvider: FriendsProvider,
                                                private var userProfileNavigator: UserProfileContract.Navigator): UserProfileContract.Presenter {
 
     override var userId: String? = null
@@ -42,6 +44,12 @@ class UserProfilePresenter @Inject constructor(private var userProfileProvider: 
                     onError(it)
                 }
             ))
+
+            disposables.add(friendsProvider.getFriendsForUser(userId)
+                .subscribe(
+                    { updateFriendCount(it.size) },
+                    { onError(it) }
+                ))
         }
     }
 
@@ -86,6 +94,10 @@ class UserProfilePresenter @Inject constructor(private var userProfileProvider: 
                     }
                 ))
         }
+    }
+
+    private fun updateFriendCount(friendCount: Int) {
+        view?.friendCount = friendCount
     }
 
     private fun onResult(userProfile: UserProfile) {
