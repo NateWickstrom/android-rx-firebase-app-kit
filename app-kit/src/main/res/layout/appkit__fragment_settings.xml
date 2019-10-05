@@ -57,4 +57,29 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/debug"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginStart="@dimen/material_list_avatar_margin_start"
+            android:layout_width="@dimen/material_list_avatar_size"
+            android:layout_height="@dimen/material_list_avatar_size"
+            android:layout_marginTop="@dimen/material_list_avatar_margin_start"
+            android:layout_marginBottom="@dimen/material_list_avatar_margin_start"
+            android:src="@drawable/appkit__ic_bug_black_24px"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_list_text_second_position_edge_margin_start"
+            android:layout_marginEnd="@dimen/material_list_text_last_position_margin_end"
+            android:textSize="@dimen/material_list_normal_primary_text_size"
+            android:layout_centerVertical="true"
+            android:text="@string/debug"/>
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -56,7 +56,7 @@ class FirebaseDevicesProvider(context: Context): DevicesProvider {
             Device(
                 name = it.get(DEVICE_NAME) as String? ?: "(model unknown)",
                 instanceId = it.id,
-                isCurrentDevice = deviceId === it.id) }
+                isCurrentDevice = deviceId.equals(it.id)) }
     }
 
     private fun verifySize(devices: List<Device>): Boolean {

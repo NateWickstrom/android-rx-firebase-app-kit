@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_settings.view.*
+import media.pixi.appkit.BuildConfig
 import media.pixi.appkit.R
 import javax.inject.Inject
 
@@ -21,6 +22,10 @@ class SettingsFragment @Inject constructor(): DaggerFragment(), SettingsContract
 
         view.account.setOnClickListener { presenter.onAccountClicked(activity as Activity) }
         view.notifications.setOnClickListener {  }
+
+        if (BuildConfig.DEBUG.not()) {
+            view.debug.visibility = View.GONE
+        }
 
         presenter.takeView(this)
         return view
