@@ -94,18 +94,15 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         notifications = ArrayList(results)
         view?.setResults(results)
         view?.loading = false
-        view?.hasResults = results.isNotEmpty()
     }
 
     private fun onComplete() {
         view?.loading = false
-        view?.hasResults = false
     }
 
     private fun onError(error: Throwable) {
         Timber.e(error)
         view?.error = error.message?: "Oops, error"
         view?.loading = false
-        view?.hasResults = false
     }
 }

@@ -1,5 +1,7 @@
 <resources>
     <string name="search__hint">search</string>
+    <string name="search__welcome_message">Search for something&#8230;</string>
+
     <string name="search__no_results">Sorry, no results found.</string>
 
     <string name="action_undo">undo</string>

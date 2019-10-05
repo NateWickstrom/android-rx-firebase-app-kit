@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.appkit__fragment_search.*
-import kotlinx.android.synthetic.main.appkit__fragment_search.view.*
+import kotlinx.android.synthetic.main.appkit__fragment_list.*
+import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.search.PeopleSearchResult
 import javax.inject.Inject
@@ -25,12 +25,12 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.appkit__fragment_search, container, false)
-        view.hits.layoutManager = LinearLayoutManager(context)
+        val view = inflater.inflate(R.layout.appkit__fragment_list, container, false)
+        view.list.layoutManager = LinearLayoutManager(context)
 
         adapter = SearchAdapter()
         adapter?.onClickListener = { presenter.onListItemClicked(activity as Activity, it) }
-        view.hits.adapter = adapter
+        view.list.adapter = adapter
 
         return view
     }
@@ -55,7 +55,7 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
     }
 
     override fun showNoResults(show: Boolean) {
-        no_result.visibility = if (show) View.VISIBLE else View.GONE
+        empty_message.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun showEmptyState(show: Boolean) {
