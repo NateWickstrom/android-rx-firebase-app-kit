@@ -22,9 +22,10 @@ class SettingsFragment @Inject constructor(): DaggerFragment(), SettingsContract
 
         view.account.setOnClickListener { presenter.onAccountClicked(activity as Activity) }
         view.notifications.setOnClickListener {  }
+        view.develop.setOnClickListener { presenter.onDevelopClicked(activity as Activity) }
 
         if (BuildConfig.DEBUG.not()) {
-            view.debug.visibility = View.GONE
+            view.develop.visibility = View.GONE
         }
 
         presenter.takeView(this)

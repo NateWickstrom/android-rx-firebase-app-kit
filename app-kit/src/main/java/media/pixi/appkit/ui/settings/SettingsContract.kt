@@ -11,9 +11,11 @@ interface SettingsContract {
 
     interface Presenter: BasePresenter<View> {
         fun onAccountClicked(activity: Activity)
+        fun onDevelopClicked(activity: Activity)
     }
 
     interface Navigator {
         fun showAccount(activity: Activity)
+        fun showDevelop(activity: Activity)
     }
 }

@@ -75,6 +75,12 @@
                 android:name="media.pixi.appkit.ui.devices.DevicesActivity"/>
 
         <activity
+                android:label="@string/develop"
+                android:parentActivityName=".ui.home.HomeActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name="media.pixi.appkit.ui.develop.DevelopActivity"/>
+
+        <activity
                 android:parentActivityName=".ui.home.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.myprofile.ProfileActivity"/>

@@ -16,4 +16,8 @@ class SettingsPresenter @Inject constructor(private val navigator: SettingsNavig
     override fun onAccountClicked(activity: Activity) {
         navigator.showAccount(activity)
     }
+
+    override fun onDevelopClicked(activity: Activity) {
+        navigator.showDevelop(activity)
+    }
 }
