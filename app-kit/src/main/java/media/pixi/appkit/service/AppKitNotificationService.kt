@@ -23,6 +23,7 @@ class AppKitNotificationService: FirebaseMessagingService() {
     @WorkerThread
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+        //todo delete old token when replacing
         Timber.d("New Device Token: $token")
         devicesProvider.deviceId = token
 
