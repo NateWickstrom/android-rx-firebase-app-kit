@@ -48,7 +48,6 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
         return hits[position]
     }
 
-
     /**
      * Adds or replaces hits to/in this widget.
      *
@@ -81,7 +80,7 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: PersonSearchResult) = with(itemView) {
-            ImageUtils.setUserImage(user_image, item.imageUrl)
+            ImageUtils.setUserImage(user_image, item.imageUrl ?: "")
             username.text = item.username
             name.text = itemView.context.getString(R.string.appkit__username, item.firstname, item.lastname)
         }
