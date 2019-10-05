@@ -18,6 +18,12 @@ import javax.inject.Inject
 
 class NotificationsFragment @Inject constructor(): DaggerFragment(), NotificationsContract.View {
 
+    override var hasResults: Boolean
+        get() = false
+        set(value) {
+            viewOfLayout.no_results.visibility = if (value) View.GONE else View.VISIBLE
+        }
+
     override var error: String
         get() = ""
         set(value) {

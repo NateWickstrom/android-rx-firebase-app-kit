@@ -10,6 +10,7 @@ interface NotificationsContract {
 
     interface View: BaseView<Presenter> {
         var loading: Boolean
+        var hasResults: Boolean
 
         fun setResults(results: List<Notification>)
         fun set(position: Int, notification: Notification)
