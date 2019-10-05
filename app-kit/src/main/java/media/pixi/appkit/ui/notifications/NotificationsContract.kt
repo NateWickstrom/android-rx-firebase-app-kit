@@ -13,15 +13,16 @@ interface NotificationsContract {
 
         fun setResults(results: List<Notification>)
         fun set(position: Int, notification: Notification)
+
+        fun showMessage(message: String, onUndoClickListener: () -> Unit)
     }
 
     interface Presenter: BasePresenter<View> {
 
         fun onItemClicked(activity: Activity, notification: Notification, position: Int)
         fun onItemLongClicked(activity: Activity, notification: Notification, position: Int)
-        fun onActionLongClicked(notification: Notification, position: Int)
-
-        fun onItemDeleted(position: Int)
+        fun onAcceptFriendRequestClicked(notification: Notification, position: Int)
+        fun onDeleteNotification(position: Int)
 
     }
 

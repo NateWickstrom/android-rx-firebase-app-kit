@@ -84,11 +84,11 @@ class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.Notifica
             itemView.action.text = "accept"
             itemView.action.isEnabled = true
 
-            itemView.setOnClickListener { onClickListener?.invoke(item, position) }
-            itemView.setOnLongClickListener { onLongClickListener?.invoke(item, position); true }
+            itemView.setOnClickListener { onClickListener?.invoke(item, adapterPosition) }
+            itemView.setOnLongClickListener { onLongClickListener?.invoke(item, adapterPosition); true }
             itemView.action.setOnClickListener {
                 itemView.action.isEnabled = false
-                onActionClickListener?.invoke(item, position)
+                onActionClickListener?.invoke(item, adapterPosition)
             }
         }
     }

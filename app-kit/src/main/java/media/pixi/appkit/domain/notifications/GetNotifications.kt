@@ -40,6 +40,7 @@ class GetNotifications @Inject constructor(private val notificationProvider: Not
 
         private fun toNotification(userProfile: UserProfile, entity: NotificationEntity): Notification {
             return FriendRequestNotification(
+                id = entity.id,
                 imageUrl = userProfile.imageUrl,
                 title = "Friend Request",
                 subtitle = "${userProfile.firstName} ${userProfile.lastName}",

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
@@ -45,8 +46,9 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.removeAt(viewHolder.adapterPosition)
-                presenter.onItemDeleted(viewHolder.adapterPosition)
+                val position = viewHolder.adapterPosition
+                adapter.removeAt(position)
+                presenter.onDeleteNotification(position)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
@@ -54,11 +56,16 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
 
         adapter.onClickListener = { notification, position -> presenter.onItemClicked(activity!!, notification, position) }
         adapter.onLongClickListener = { notification, position -> presenter.onItemLongClicked(activity!!, notification, position) }
-        adapter.onActionClickListener = { notification, position -> presenter.onActionLongClicked(notification, position) }
+        adapter.onActionClickListener = { notification, position -> presenter.onAcceptFriendRequestClicked(notification, position) }
 
         viewOfLayout = view
 
         return viewOfLayout
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.takeView(this)
     }
 
     override fun setResults(results: List<Notification>) {
@@ -69,8 +76,9 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
         adapter.set(position, notification)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.takeView(this)
+    override fun showMessage(message: String, onUndoClickListener: () -> Unit) {
+        Snackbar.make(viewOfLayout, message, Snackbar.LENGTH_LONG)
+            .setAction(R.string.action_undo) { onUndoClickListener.invoke() }
+            .show()
     }
 }

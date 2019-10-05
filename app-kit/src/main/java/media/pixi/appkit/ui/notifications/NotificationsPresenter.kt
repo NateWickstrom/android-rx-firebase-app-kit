@@ -2,21 +2,24 @@ package media.pixi.appkit.ui.notifications
 
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
+import media.pixi.appkit.data.notifications.NotificationProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.domain.notifications.AcceptFriendRequest
 import media.pixi.appkit.domain.notifications.GetNotifications
-import media.pixi.appkit.domain.notifications.NewFriendNotification
 import media.pixi.appkit.domain.notifications.Notification
 import timber.log.Timber
 import javax.inject.Inject
 
 class NotificationsPresenter @Inject constructor(private var getNotifications: GetNotifications,
+                                                 private val notificationProvider: NotificationProvider,
+                                                 private val acceptFriendRequest: AcceptFriendRequest,
                                                  private var userProfileProvider: UserProfileProvider,
                                                  private var navigator: NotificationsNavigator): NotificationsContract.Presenter {
 
     private val disposable = CompositeDisposable()
 
     private var view: NotificationsContract.View? = null
-    private var notifications: List<Notification>? = null
+    private var notifications: ArrayList<Notification>? = null
 
     override fun takeView(view: NotificationsContract.View) {
         this.view = view
@@ -43,29 +46,52 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         navigator.showProfile(activity, notification.userProfile)
     }
 
-    override fun onActionLongClicked(notification: Notification, position: Int) {
+    override fun onAcceptFriendRequestClicked(notification: Notification, position: Int) {
+        view?.loading = true
         disposable.add(userProfileProvider.addFriend(notification.userProfile.id)
             .subscribe(
-                { onActionComplete(notification, position) },
+                { onAcceptFriendRequestComplete(notification, position) },
                 this::onError
             ))
     }
 
-    override fun onItemDeleted(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onDeleteNotification(position: Int) {
+        notifications?.let {
+            view?.loading = true
+            val notification = it[position]
+            it.removeAt(position)
+
+            view?.showMessage("Deleted Notification") {
+                add(notification, position)
+            }
+
+            // delete notification
+            disposable.add(notificationProvider.deleteNotification(notification.id)
+                .subscribe(
+                    { onDeleteComplete(notification, position) },
+                    this::onError
+                ))
+        }
     }
 
-    private fun onActionComplete(notification: Notification, position: Int) {
-        view?.set(position, NewFriendNotification(
-            imageUrl = notification.imageUrl,
-            title = "You and ${notification.userProfile.firstName} are now friends",
-            subtitle = "",
-            userProfile = notification.userProfile
-        ))
+    private fun onDeleteComplete(notification: Notification, position: Int) {
+        view?.loading = false
+    }
+
+    private fun add(notification: Notification, position: Int) {
+        notifications?.add(position, notification)
+        view?.setResults(notifications!!)
+        view?.loading = false
+    }
+
+    private fun onAcceptFriendRequestComplete(notification: Notification, position: Int) {
+        view?.loading = false
+        notifications?.removeAt(position)
     }
 
     private fun onResult(results: List<Notification>) {
-        notifications = results
+        notifications?.clear()
+        notifications = ArrayList(results)
         view?.setResults(results)
         view?.loading = false
     }

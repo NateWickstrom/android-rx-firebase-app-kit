@@ -2,6 +2,9 @@
     <string name="search__hint">search</string>
     <string name="search__no_results">Sorry, no results found.</string>
 
+    <string name="action_undo">undo</string>
+
+
     <string name="account">Account</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
