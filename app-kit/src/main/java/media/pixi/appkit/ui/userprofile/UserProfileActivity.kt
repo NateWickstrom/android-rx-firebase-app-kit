@@ -4,15 +4,29 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__activity_friend.*
+import kotlinx.android.synthetic.main.appkit__activity_friend.progress_bar
 import media.pixi.appkit.R
 import media.pixi.appkit.utils.ActivityUtils
 import media.pixi.appkit.utils.ImageUtils
 import javax.inject.Inject
 
 class UserProfileActivity: DaggerAppCompatActivity(), UserProfileContract.View, AppBarLayout.OnOffsetChangedListener {
+
+    override var loading: Boolean
+        get() = progress_bar.visibility == View.INVISIBLE
+        set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
+
+    override var error: String
+        get() = ""
+        set(value) {
+            if (value.isNotBlank()) {
+                Toast.makeText(this@UserProfileActivity, error, Toast.LENGTH_LONG).show()
+            }
+        }
 
     override var profileImageUrl: String
         get() = ""

@@ -1,7 +1,9 @@
 package media.pixi.appkit.ui.userprofile
 
 import android.app.Activity
+import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Function4
 import media.pixi.appkit.data.friends.FriendsProvider
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
@@ -14,41 +16,44 @@ class UserProfilePresenter @Inject constructor(private var userProfileProvider: 
 
     override var userId: String? = null
 
+    data class MyUserProfile(val id: String,
+                             val friendCount: Int,
+                             val username: String,
+                             val firstName: String,
+                             val lastName: String,
+                             val imageUrl: String,
+                             val isFriend: Boolean,
+                             val isBlocked: Boolean)
+
     private var view: UserProfileContract.View? = null
     private var disposables = CompositeDisposable()
 
     override fun takeView(view: UserProfileContract.View) {
         this.view = view
+        view.loading = true
 
         userId?.let { userId ->
 
-            disposables.add(userProfileProvider.observerUserProfile(userId).subscribe(
-                { onResult(it) },
-                { onError(it) }
-            ))
-
-            disposables.add(userProfileProvider.isFriend(userId).subscribe(
-                {
-                    this.view?.isFriend = it
-                },
-                {
-                    onError(it)
-                }
-            ))
-
-            disposables.add(userProfileProvider.isBlocked(userId).subscribe(
-                {
-                    //TODO
-                },
-                {
-                    onError(it)
-                }
-            ))
-
-            disposables.add(friendsProvider.getFriendsForUser(userId)
-                .subscribe(
-                    { updateFriendCount(it.size) },
-                    { onError(it) }
+            disposables.add(
+                Flowable.zip(
+                    userProfileProvider.observerUserProfile(userId),
+                    userProfileProvider.isFriend(userId),
+                    userProfileProvider.isBlocked(userId),
+                    friendsProvider.getFriendsForUser(userId),
+                    Function4<UserProfile, Boolean, Boolean, List<String>, MyUserProfile>
+                    { userProfile, isFriend, isBlocked, friendCnt ->
+                        MyUserProfile(
+                            id = userProfile.id,
+                            username = userProfile.username,
+                            firstName = userProfile.firstName,
+                            lastName = userProfile.lastName,
+                            imageUrl = userProfile.imageUrl,
+                            isFriend = isFriend,
+                            isBlocked = isBlocked,
+                            friendCount = friendCnt.size) }
+                ).subscribe(
+                    this::onResult,
+                    this::onError
                 ))
         }
     }
@@ -96,23 +101,21 @@ class UserProfilePresenter @Inject constructor(private var userProfileProvider: 
         }
     }
 
-    private fun updateFriendCount(friendCount: Int) {
-        view?.friendCount = friendCount
-    }
+    private fun onResult(userProfile: MyUserProfile) {
+        view?.loading = false
 
-    private fun onResult(userProfile: UserProfile) {
-        //val userProfile = model.userProfile
-
-        val name = "${userProfile.firstName} ${userProfile.lastName}"
-
+        view?.friendCount = userProfile.friendCount
+        view?.isFriend = userProfile.isFriend
         view?.profileImageUrl = userProfile.imageUrl
-        view?.profileTitle = name
+        view?.profileTitle = "${userProfile.firstName} ${userProfile.lastName}"
         view?.profileSubtitle = userProfile.username
-        view?.friendCount = 100
     }
 
     private fun onError(error: Throwable) {
-        Timber.e(error.message, error)
+        view?.loading = false
+
+        view?.error = error.message.toString()
+        Timber.e(error)
     }
 
 }

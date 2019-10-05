@@ -143,5 +143,21 @@
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/contentFrame"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminateTintMode="src_in"
+        android:layout_marginTop="-6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:indeterminate="true"/>
+
 </LinearLayout>
 
