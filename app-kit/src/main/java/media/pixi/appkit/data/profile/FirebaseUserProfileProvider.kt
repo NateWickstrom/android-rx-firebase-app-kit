@@ -21,14 +21,21 @@ class FirebaseUserProfileProvider: UserProfileProvider {
 
     override fun addFriend(userId: String): Completable {
         val request = request(userId)
-        val ref = firestore.collection(FRIEND_REQUEST).document()
+        val ref = firestore.collection(FRIEND_REQUEST)
+            .document(currentUserId())
+            .collection(FRIEND_REQUEST)
+            .document(userId)
+
         return RxFirestore.setDocument(ref, request)
     }
 
     override fun unFriend(userId: String): Completable {
-        val request = request(userId)
-        val ref = firestore.collection(UNFRIEND_REQUEST).document()
-        return RxFirestore.setDocument(ref, request)
+        val ref = firestore.collection(FRIEND_REQUEST)
+            .document(currentUserId())
+            .collection(FRIEND_REQUEST)
+            .document(userId)
+
+        return RxFirestore.deleteDocument(ref)
     }
 
     override fun block(userId: String): Completable {
@@ -39,13 +46,19 @@ class FirebaseUserProfileProvider: UserProfileProvider {
 
     override fun isFriend(userId: String): Flowable<Boolean> {
         val ref = firestore.collection(FRIENDS)
-            .document(currentUserId()).collection(FRIENDS).document(userId)
+            .document(currentUserId())
+            .collection(FRIENDS)
+            .document(userId)
+
         return RxFirestore.observeDocumentRef(ref).map { it.exists() }
     }
 
     override fun isBlocked(userId: String): Flowable<Boolean> {
         val ref = firestore.collection(SOCIAL)
-            .document(currentUserId()).collection(BLOCKED).document(userId)
+            .document(currentUserId())
+            .collection(BLOCKED)
+            .document(userId)
+
         return RxFirestore.observeDocumentRef(ref).map { it.exists() }    }
 
     private fun request(userId: String): Request {
@@ -78,8 +91,7 @@ class FirebaseUserProfileProvider: UserProfileProvider {
         private const val FRIENDS = "friends"
         private const val BLOCKED = "blocked"
 
-        private const val FRIEND_REQUEST = "create_friend_request"
-        private const val UNFRIEND_REQUEST = "unfriend_request"
+        private const val FRIEND_REQUEST = "friend_requests"
         private const val BLOCKED_REQUEST = "block_request"
     }
 }

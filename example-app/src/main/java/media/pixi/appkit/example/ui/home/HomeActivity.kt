@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 import media.pixi.appkit.example.R
 import javax.inject.Inject
 
+
 class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
 
     lateinit var presenter: HomeContract.Presenter

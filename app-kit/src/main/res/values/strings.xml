@@ -6,6 +6,8 @@
 
     <string name="action_undo">undo</string>
 
+    <string name="notification_channel_title">General</string>
+    <string name="notification_channel_description">These are general notifications</string>
 
     <string name="account">Account</string>
     <string name="sign_in">Sign In</string>

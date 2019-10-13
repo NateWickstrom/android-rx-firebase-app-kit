@@ -9,17 +9,17 @@ import media.pixi.appkit.example.ui.splash.SplashActivity
 import media.pixi.appkit.ui.account.AccountActivity
 import media.pixi.appkit.ui.develop.DevelopActivity
 import media.pixi.appkit.ui.devices.DevicesActivity
-import media.pixi.appkit.ui.userprofile.UserProfileActivity
 import media.pixi.appkit.ui.friends.FriendsActivity
+import media.pixi.appkit.ui.myprofile.ProfileActivity
 import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
 import media.pixi.appkit.ui.passwordreset.PasswordResetActivity
 import media.pixi.appkit.ui.passwordupdate.PasswordUpdateActivity
-import media.pixi.appkit.ui.myprofile.ProfileActivity
 import media.pixi.appkit.ui.search.SearchActivity
 import media.pixi.appkit.ui.settings.SettingsActivity
 import media.pixi.appkit.ui.signin.SignInActivity
 import media.pixi.appkit.ui.signup.SignUpActivity
+import media.pixi.appkit.ui.userprofile.UserProfileActivity
 
 @Module
 abstract class ActivityBindingModule {

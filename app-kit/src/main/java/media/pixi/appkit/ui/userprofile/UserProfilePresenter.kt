@@ -39,7 +39,7 @@ class UserProfilePresenter @Inject constructor(private var userProfileProvider: 
                     userProfileProvider.observerUserProfile(userId),
                     userProfileProvider.isFriend(userId),
                     userProfileProvider.isBlocked(userId),
-                    friendsProvider.getFriendsForUser(userId),
+                    Flowable.just(emptyList()), //friendsProvider.getFriendsForUser(userId),
                     Function4<UserProfile, Boolean, Boolean, List<String>, MyUserProfile>
                     { userProfile, isFriend, isBlocked, friendCnt ->
                         MyUserProfile(

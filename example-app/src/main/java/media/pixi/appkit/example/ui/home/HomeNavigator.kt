@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import media.pixi.appkit.ui.devices.DevicesActivity
 import media.pixi.appkit.ui.friends.FriendsActivity
-import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.myprofile.ProfileActivity
+import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.search.SearchActivity
 import media.pixi.appkit.ui.settings.SettingsActivity
 import javax.inject.Inject
