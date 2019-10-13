@@ -100,8 +100,8 @@ class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.Notifica
             itemView.title.text = item.title
             itemView.subtitle.text = item.subtitle
 
-            itemView.setOnClickListener { onClickListener?.invoke(item, position) }
-            itemView.setOnLongClickListener { onLongClickListener?.invoke(item, position); true }
+            itemView.setOnClickListener { onClickListener?.invoke(item, adapterPosition) }
+            itemView.setOnLongClickListener { onLongClickListener?.invoke(item, adapterPosition); true }
         }
     }
 
