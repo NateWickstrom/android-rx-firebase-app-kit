@@ -16,6 +16,12 @@
             android:text="Search"/>
 
     <Button
+            android:id="@+id/chat"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:text="Chat"/>
+
+    <Button
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="60dp"

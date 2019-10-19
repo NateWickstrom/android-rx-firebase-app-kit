@@ -17,6 +17,7 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
         setContentView(R.layout.activity_home)
 
         search.setOnClickListener { presenter.onSearchClicked(this) }
+        chat.setOnClickListener { presenter.onChatClicked(this) }
         profile.setOnClickListener { presenter.onProfileClicked(this) }
         settings.setOnClickListener { presenter.onSettingsClicked(this) }
         notifications.setOnClickListener { presenter.onNotificationsClicked(this) }

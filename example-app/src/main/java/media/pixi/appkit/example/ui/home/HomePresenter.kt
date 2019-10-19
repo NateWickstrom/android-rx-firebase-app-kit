@@ -12,6 +12,10 @@ class HomePresenter @Inject constructor(private val navigator: HomeNavigator,
         navigator.showFriends(activity, authProvider.getUserId()!!)
     }
 
+    override fun onChatClicked(activity: Activity) {
+        navigator.showChat(activity)
+    }
+
     override fun onDevicesClicked(activity: Activity) {
         navigator.showDevices(activity)
     }

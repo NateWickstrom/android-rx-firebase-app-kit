@@ -102,6 +102,11 @@
                 android:name="media.pixi.appkit.ui.signup.SignUpActivity"/>
 
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.splash.SplashActivity"
+            android:name="media.pixi.appkit.ui.chat.ChatActivity"/>
+
+        <activity
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.signin.SignInActivity"/>
 
