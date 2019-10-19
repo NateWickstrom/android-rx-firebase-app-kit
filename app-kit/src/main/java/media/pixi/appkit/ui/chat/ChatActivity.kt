@@ -20,6 +20,7 @@ class ChatActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.appkit__activity_chat)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame

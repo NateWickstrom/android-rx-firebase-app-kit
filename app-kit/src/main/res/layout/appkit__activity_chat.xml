@@ -8,7 +8,7 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include layout="@layout/appkit__appbar"/>
+    <include layout="@layout/appkit__appbar_chat"/>
 
     <FrameLayout
             android:id="@+id/contentFrame"
