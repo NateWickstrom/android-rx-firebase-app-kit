@@ -12,6 +12,8 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
     private var view: ChatCreatorContract.View? = null
     private var disposables = CompositeDisposable()
 
+    private val selected: MutableSet<UserProfile> = mutableSetOf()
+
     override fun takeView(view: ChatCreatorContract.View) {
         this.view = view
 
@@ -29,7 +31,12 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
     }
 
     override fun onListItemClicked(activity: Activity, userProfile: UserProfile) {
-
+        if (selected.contains(userProfile)) {
+            selected.remove(userProfile)
+        } else {
+            selected.add(userProfile)
+        }
+        view?.setSelectedContacts(selected)
     }
 
     override fun onStartChatClicked(activity: Activity) {
@@ -47,6 +54,9 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
     private fun onResult(friends: List<UserProfile>) {
         view?.loading = false
         view?.setContacts(friends)
+
+        selected.clear()
+        view?.setSelectedContacts(selected)
     }
 
     private fun onError(error: Throwable) {

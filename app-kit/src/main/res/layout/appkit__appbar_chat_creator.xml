@@ -53,6 +53,7 @@
             android:textColor="@color/white"
             android:textCursorDrawable="@null"
             android:background="@null"
+            android:inputType="text"
             android:hint="@string/new_conversation_hint"
             android:layout_below="@id/chip_group"/>
 

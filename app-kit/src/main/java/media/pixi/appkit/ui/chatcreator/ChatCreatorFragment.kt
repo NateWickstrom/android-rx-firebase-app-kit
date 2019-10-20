@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import android.view.LayoutInflater
+import media.pixi.appkit.utils.ImageUtils
 
 
 class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorContract.View {
@@ -37,11 +37,10 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
         set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     private var createIsVisible = false
-    private val bucket = CompositeDisposable()
     private var adapter: ContactsAdapter? = null
 
     lateinit var presenter: ChatCreatorContract.Presenter
-    lateinit var chipGroup: ChipGroup
+    private var chipGroup: ChipGroup? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,22 +96,26 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
     }
 
     override fun setContacts(results: List<UserProfile>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        adapter?.setContacts(results)
     }
 
     override fun setSelectedContacts(results: Set<UserProfile>) {
+        adapter?.setSelectedContacts(results)
         setChips(results)
     }
 
     private fun setChips(people: Collection<UserProfile>) {
-        chipGroup.removeAllViews()
-        people.forEach { chipGroup.addView(createChip(it)) }
+        chipGroup?.removeAllViews()
+        people
+            //.sortedBy {  }
+            .forEach { chipGroup?.addView(createChip(it)) }
     }
 
     private fun createChip(user: UserProfile): Chip {
         val inflater = LayoutInflater.from(context)
         val chip = inflater.inflate(R.layout.view_chip, chipGroup, false) as Chip
         chip.text = user.firstName
+        ImageUtils.setChipIcon(context!!, chip, user.imageUrl)
         return chip
     }
 

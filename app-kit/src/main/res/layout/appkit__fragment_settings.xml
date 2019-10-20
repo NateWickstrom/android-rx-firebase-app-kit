@@ -19,7 +19,7 @@
                 android:layout_height="@dimen/material_list_avatar_size"
                 android:layout_marginTop="@dimen/material_list_avatar_margin_start"
                 android:layout_marginBottom="@dimen/material_list_avatar_margin_start"
-                android:src="@drawable/ic_baseline_account_circle_24px"/>
+                android:src="@drawable/ic_person_circle_24px"/>
 
         <TextView
                 android:layout_width="match_parent"

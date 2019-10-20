@@ -22,6 +22,14 @@ class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    fun setContacts(contacts: List<UserProfile>) {
+
+    }
+
+    fun setSelectedContacts(selected: Set<UserProfile>) {
+
+    }
+
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: UserProfile) = with(itemView) {

@@ -5,4 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    app:closeIconEnabled="true"
+    app:chipIcon="@drawable/ic_person_circle_24px"
     app:chipMinTouchTargetSize="0dp" />
