@@ -1,10 +1,7 @@
 package media.pixi.appkit.ui.chatcreator
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
@@ -14,8 +11,11 @@ import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
 import javax.inject.Inject
-import android.view.MenuInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import android.view.LayoutInflater
+
 
 class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorContract.View {
 
@@ -41,6 +41,7 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
     private var adapter: ContactsAdapter? = null
 
     lateinit var presenter: ChatCreatorContract.Presenter
+    lateinit var chipGroup: ChipGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,8 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
                 it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             }
         }
+
+        chipGroup = view.findViewById(R.id.chip_group)
 
         adapter = ContactsAdapter()
 
@@ -85,7 +88,32 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun setResults(results: List<UserProfile>) {
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_create_chat) {
+            presenter.onStartChatClicked(activity!!)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
+
+    override fun setContacts(results: List<UserProfile>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setSelectedContacts(results: Set<UserProfile>) {
+        setChips(results)
+    }
+
+    private fun setChips(people: Collection<UserProfile>) {
+        chipGroup.removeAllViews()
+        people.forEach { chipGroup.addView(createChip(it)) }
+    }
+
+    private fun createChip(user: UserProfile): Chip {
+        val inflater = LayoutInflater.from(context)
+        val chip = inflater.inflate(R.layout.view_chip, chipGroup, false) as Chip
+        chip.text = user.firstName
+        return chip
+    }
+
 }

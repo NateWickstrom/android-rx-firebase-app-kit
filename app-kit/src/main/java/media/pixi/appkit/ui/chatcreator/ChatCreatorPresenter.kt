@@ -36,9 +36,17 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
 
     }
 
+    override fun onCreateChatClicked(activity: Activity) {
+
+    }
+
+    override fun onTextChanged(query: String) {
+
+    }
+
     private fun onResult(friends: List<UserProfile>) {
         view?.loading = false
-        view?.setResults(friends)
+        view?.setContacts(friends)
     }
 
     private fun onError(error: Throwable) {

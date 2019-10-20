@@ -42,10 +42,7 @@
             android:layout_toEndOf="@+id/to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
-
-        </com.google.android.material.chip.ChipGroup>
-
+            app:chipSpacing="4dp"/>
 
         <EditText
             android:layout_width="match_parent"

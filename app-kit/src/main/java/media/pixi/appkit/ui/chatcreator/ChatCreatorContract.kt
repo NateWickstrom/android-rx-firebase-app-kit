@@ -11,16 +11,19 @@ interface ChatCreatorContract {
         var loading: Boolean
         var canCreate: Boolean
 
-        fun setResults(results: List<UserProfile>)
+        fun setContacts(results: List<UserProfile>)
+        fun setSelectedContacts(results: Set<UserProfile>)
 
     }
 
     interface Presenter: BasePresenter<View> {
         fun onListItemClicked(activity: Activity, userProfile: UserProfile)
         fun onStartChatClicked(activity: Activity)
+        fun onCreateChatClicked(activity: Activity)
+        fun onTextChanged(query: String)
     }
 
     interface Navigator {
-
+        fun showNewChat(activity: Activity)
     }
 }
