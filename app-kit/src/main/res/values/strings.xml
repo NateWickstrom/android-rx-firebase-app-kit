@@ -5,6 +5,7 @@
     <string name="search__no_results">Sorry, no results found.</string>
 
     <string name="action_undo">undo</string>
+    <string name="ok">ok</string>
 
     <string name="notification_channel_title">General</string>
     <string name="notification_channel_description">These are general notifications</string>
@@ -75,5 +76,24 @@
     <string name="settings">Settings</string>
     <string name="my_friends">My Friends</string>
     <string name="chat">Chat</string>
+
+    <string name="recording_cancelled">Recording cancelled</string>
+    <string name="recording_too_short">Recording too short</string>
+    <string name="audio_length_limit_reached">Audio length limit reached</string>
+    <string name="send_or_discard_recording">Send or discard recording</string>
+    <string name="seconds_remaining">Seconds remaining %d</string>
+    <string name="recording">Recording</string>
+    <string name="cancel">Cancel</string>
+    <string name="acces_message_option_button">Message option button</string>
+    <string name="message">Message</string>
+
+    <string name="error_permission_not_granted">Permission not granted: %s</string>
+    <string name="permission_not_granted" formatted="true">%s permission not granted. Please enable this permission in your phone\'s settings.</string>
+
+    <string name="permission_record_audio_title">Microphone Access</string>
+    <string name="permission_record_audio_message">Grant permission to send audio messages</string>
+
+    <string name="permission_write_external_storage_title">Gallery Access</string>
+    <string name="permission_write_external_storage_message">Grant permission to allow images to be saved to your phone</string>
 
 </resources>
