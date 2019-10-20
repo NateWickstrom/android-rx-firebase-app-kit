@@ -113,6 +113,7 @@
             android:name="media.pixi.appkit.ui.chats.ChatsActivity"/>
 
         <activity
+            android:label="@string/new_conversation"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.splash.SplashActivity"
             android:name="media.pixi.appkit.ui.chatcreator.ChatCreatorActivity"/>

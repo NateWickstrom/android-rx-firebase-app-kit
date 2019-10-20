@@ -9,6 +9,11 @@ import javax.inject.Inject
 class GetFriends @Inject constructor(private val userProfileProvider: UserProfileProvider,
                                      private val friendsProvider: FriendsProvider) {
 
+    fun getFriends() : Flowable<List<UserProfile>> {
+        return friendsProvider.getFriends()
+            .concatMap { toProfiles(it) }
+    }
+
     fun getFriendsForUser(userId: String) : Flowable<List<UserProfile>> {
         return friendsProvider.getFriendsForUser(userId)
             .concatMap { toProfiles(it) }

@@ -1,14 +1,49 @@
 package media.pixi.appkit.ui.chatcreator
 
+import android.app.Activity
+import io.reactivex.disposables.CompositeDisposable
+import media.pixi.appkit.data.profile.UserProfile
+import media.pixi.appkit.domain.GetFriends
+import timber.log.Timber
 import javax.inject.Inject
 
-class ChatCreatorPresenter @Inject constructor(): ChatCreatorContract.Presenter {
+class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriends): ChatCreatorContract.Presenter {
+
+    private var view: ChatCreatorContract.View? = null
+    private var disposables = CompositeDisposable()
 
     override fun takeView(view: ChatCreatorContract.View) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.view = view
+
+        view.loading = true
+
+        disposables.add(getFriends.getFriends().subscribe(
+            { onResult(it) },
+            { onError(it) }
+        ))
     }
 
     override fun dropView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        disposables.clear()
+        view = null
+    }
+
+    override fun onListItemClicked(activity: Activity, userProfile: UserProfile) {
+
+    }
+
+    override fun onStartChatClicked(activity: Activity) {
+
+    }
+
+    private fun onResult(friends: List<UserProfile>) {
+        view?.loading = false
+        view?.setResults(friends)
+    }
+
+    private fun onError(error: Throwable) {
+        view?.loading = false
+        view?.error = error.message.toString()
+        Timber.e(error)
     }
 }
