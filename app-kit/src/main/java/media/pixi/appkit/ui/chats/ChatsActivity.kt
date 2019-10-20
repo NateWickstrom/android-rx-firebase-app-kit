@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.appkit__activity_chats.*
 import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
 import media.pixi.appkit.utils.ActivityUtils
@@ -18,7 +19,7 @@ class ChatsActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.appkit__activity)
+        setContentView(R.layout.appkit__activity_chats)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -27,6 +28,8 @@ class ChatsActivity : DaggerAppCompatActivity() {
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
         )
+
+        fab.setOnClickListener { presenter.onNewChatClicked(this@ChatsActivity) }
     }
 
     companion object {
