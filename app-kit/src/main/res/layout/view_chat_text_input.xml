@@ -12,11 +12,12 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:src="@drawable/ic_add_24px"
-        android:tint="@color/colorAccent"
+        android:tint="@color/colorPrimary"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_gravity="bottom"
         android:id="@+id/button_options"
         android:layout_margin="10dp"
+        android:scaleType="fitXY"
         android:contentDescription="@string/acces_message_option_button" />
 
     <FrameLayout
@@ -42,9 +43,10 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:src="@drawable/ic_mic_24px"
-        android:tint="@color/colorAccent"
+        android:tint="@color/colorPrimary"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center"
+        android:scaleType="fitXY"
         android:layout_margin="10dp"
         android:layout_gravity="bottom"
         android:layout_marginLeft="5dp"

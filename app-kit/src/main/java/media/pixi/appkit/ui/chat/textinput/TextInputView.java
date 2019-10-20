@@ -64,11 +64,16 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         init();
     }
 
-    public void setDelegate (TextInputDelegate delegate) {
+    public TextInputView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    public void setDelegate(TextInputDelegate delegate) {
         this.delegate = new WeakReference<>(delegate);
     }
 
-    protected void init(){
+    protected void init() {
         inflate(getContext(), R.layout.view_chat_text_input, this);
     }
 
@@ -76,6 +81,7 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         btnSend = findViewById(R.id.button_send);
         btnOptions = findViewById(R.id.button_options);
         etMessage = findViewById(R.id.text_input_message);
+        updateSendButton();
     }
 
     protected Activity getActivity() {
@@ -251,13 +257,13 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         }
     }
 
-    public void setAudioModeEnabled (boolean audioEnabled) {
+    public void setAudioModeEnabled(boolean audioEnabled) {
         audioModeEnabled = audioEnabled;
         updateSendButton();
     }
 
-    public void updateSendButton () {
-        if(isNullOrEmpty(getMessageText()) && audioModeEnabled) {
+    public void updateSendButton() {
+        if (isNullOrEmpty(getMessageText()) && audioModeEnabled) {
             btnSend.setImageResource(R.drawable.ic_mic_24px);
             recordOnPress = true;
         }

@@ -7,12 +7,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+    <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+        android:id="@+id/messageOptionsOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <media.pixi.appkit.ui.chat.textinput.TextInputView
+        android:id="@+id/view_message_text_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:overScrollMode="always"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_alignParentBottom="true"
+        />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/layout_swipe_to_refresh"
+        android:layout_height="match_parent"
+        android:layout_above="@id/view_message_text_input">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="always"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"
