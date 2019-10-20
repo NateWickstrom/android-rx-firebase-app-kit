@@ -13,6 +13,8 @@ class ChatActivity : DaggerAppCompatActivity() {
 
     lateinit var fragment: ChatFragment
         @Inject set
+    lateinit var presenter: ChatPresenter
+        @Inject set
     lateinit var navigator: ChatContract.Navigator
         @Inject set
 
@@ -21,6 +23,8 @@ class ChatActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.appkit__activity_chat)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        fragment.presenter = presenter
 
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
