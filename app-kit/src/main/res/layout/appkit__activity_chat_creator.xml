@@ -8,8 +8,6 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include layout="@layout/appkit__appbar_chat_creator"/>
-
     <FrameLayout
             android:id="@+id/contentFrame"
             android:layout_width="match_parent"

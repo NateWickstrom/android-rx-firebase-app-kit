@@ -31,6 +31,7 @@
     <string name="send">Send</string>
     <string name="reset">Reset</string>
     <string name="save">Save</string>
+    <string name="create_chat">Create Chat</string>
 
     <string name="error_email_blank">Email Address is blank</string>
     <string name="error_password_blank">Password is blank</string>

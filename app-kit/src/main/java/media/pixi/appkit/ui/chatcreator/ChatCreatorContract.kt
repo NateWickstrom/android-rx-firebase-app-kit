@@ -9,8 +9,10 @@ interface ChatCreatorContract {
 
     interface View: BaseView<Presenter> {
         var loading: Boolean
+        var canCreate: Boolean
 
         fun setResults(results: List<UserProfile>)
+
     }
 
     interface Presenter: BasePresenter<View> {
