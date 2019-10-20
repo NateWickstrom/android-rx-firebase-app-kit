@@ -107,6 +107,12 @@
             android:name="media.pixi.appkit.ui.chat.ChatActivity"/>
 
         <activity
+            android:label="@string/chats"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.splash.SplashActivity"
+            android:name="media.pixi.appkit.ui.chats.ChatsActivity"/>
+
+        <activity
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.signin.SignInActivity"/>
 

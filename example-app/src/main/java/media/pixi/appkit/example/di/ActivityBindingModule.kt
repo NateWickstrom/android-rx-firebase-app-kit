@@ -8,6 +8,7 @@ import media.pixi.appkit.example.ui.home.HomeActivity
 import media.pixi.appkit.example.ui.splash.SplashActivity
 import media.pixi.appkit.ui.account.AccountActivity
 import media.pixi.appkit.ui.chat.ChatActivity
+import media.pixi.appkit.ui.chats.ChatsActivity
 import media.pixi.appkit.ui.develop.DevelopActivity
 import media.pixi.appkit.ui.devices.DevicesActivity
 import media.pixi.appkit.ui.friends.FriendsActivity
@@ -32,6 +33,10 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [ChatModule::class])
     internal abstract fun chatActivity(): ChatActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [ChatsModule::class])
+    internal abstract fun chatsActivity(): ChatsActivity
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [HomeModule::class])

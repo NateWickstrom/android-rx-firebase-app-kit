@@ -3,6 +3,7 @@ package media.pixi.appkit.example.ui.home
 import android.app.Activity
 import android.content.Intent
 import media.pixi.appkit.ui.chat.ChatActivity
+import media.pixi.appkit.ui.chats.ChatsActivity
 import media.pixi.appkit.ui.devices.DevicesActivity
 import media.pixi.appkit.ui.friends.FriendsActivity
 import media.pixi.appkit.ui.myprofile.ProfileActivity
@@ -18,7 +19,7 @@ class HomeNavigator @Inject constructor(): HomeContract.Navigator {
     }
 
     override fun showChat(activity: Activity) {
-        ChatActivity.launch(activity)
+        ChatsActivity.launch(activity)
     }
 
     override fun showDevices(activity: Activity) {
