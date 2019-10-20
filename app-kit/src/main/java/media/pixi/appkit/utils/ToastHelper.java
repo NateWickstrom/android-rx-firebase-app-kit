@@ -1,14 +1,10 @@
-package media.pixi.appkit.ui.chat.toasts;
+package media.pixi.appkit.utils;
 
 import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 
-
-/**
- * Created by ben on 9/8/17.
- */
 
 public class ToastHelper {
 

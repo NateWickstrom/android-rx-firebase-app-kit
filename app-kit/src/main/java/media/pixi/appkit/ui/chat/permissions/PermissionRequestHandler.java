@@ -32,21 +32,21 @@ public class PermissionRequestHandler {
 
     private Map<Integer, CompletableEmitter> completableMap = new HashMap<>();
 
-    private static int RECORD_AUDIO_REQUEST = 102;
+    private static final int RECORD_AUDIO_REQUEST = 102;
 
     public Completable requestRecordAudio(Activity activity) {
         return requestPermissions(activity, RECORD_AUDIO_REQUEST, recordAudio(), writeExternalStorage());
     }
 
-    public Permission recordAudio () {
+    private Permission recordAudio () {
         return new Permission(Manifest.permission.RECORD_AUDIO, R.string.permission_record_audio_title, R.string.permission_record_audio_message);
     }
 
-    public Permission writeExternalStorage () {
+    private Permission writeExternalStorage () {
         return new Permission(Manifest.permission.WRITE_EXTERNAL_STORAGE, R.string.permission_write_external_storage_title, R.string.permission_write_external_storage_message);
     }
 
-    public Completable requestPermissions(final Activity activity, final int result, Permission... permissions) {
+    private Completable requestPermissions(final Activity activity, final int result, Permission... permissions) {
 
         // If the method is called twice, just return success...
         if (completableMap.containsKey(result)) {

@@ -29,8 +29,8 @@ import io.reactivex.disposables.Disposable;
 import media.pixi.appkit.R;
 import media.pixi.appkit.data.audio.Recording;
 import media.pixi.appkit.ui.chat.permissions.PermissionRequestHandler;
-import media.pixi.appkit.ui.chat.toasts.InfiniteToast;
-import media.pixi.appkit.ui.chat.toasts.ToastHelper;
+import media.pixi.appkit.utils.InfiniteToast;
+import media.pixi.appkit.utils.ToastHelper;
 
 public class TextInputView extends LinearLayout implements TextView.OnEditorActionListener{
 
