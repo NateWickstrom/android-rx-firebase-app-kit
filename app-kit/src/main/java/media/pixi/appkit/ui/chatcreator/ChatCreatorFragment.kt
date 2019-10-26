@@ -96,7 +96,7 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_create_chat) {
-            presenter.onStartChatClicked(activity!!)
+            presenter.onCreateChatClicked(activity!!)
             return true
         }
         return super.onOptionsItemSelected(item)

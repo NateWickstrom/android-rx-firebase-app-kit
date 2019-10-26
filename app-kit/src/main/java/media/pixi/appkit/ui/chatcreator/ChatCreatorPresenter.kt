@@ -55,12 +55,8 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
         navigator.showUserProfile(activity, userProfile.id)
     }
 
-    override fun onStartChatClicked(activity: Activity) {
-
-    }
-
     override fun onCreateChatClicked(activity: Activity) {
-
+        navigator.showNewChat(activity)
     }
 
     override fun onTextChanged(query: String) {

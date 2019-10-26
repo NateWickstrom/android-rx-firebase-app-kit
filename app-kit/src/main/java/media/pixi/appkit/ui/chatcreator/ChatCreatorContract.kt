@@ -18,7 +18,6 @@ interface ChatCreatorContract {
 
     interface Presenter: BasePresenter<View> {
         fun onListItemClicked(activity: Activity, userProfile: UserProfile)
-        fun onStartChatClicked(activity: Activity)
         fun onCreateChatClicked(activity: Activity)
         fun onRemoveContactClicked(activity: Activity, userProfile: UserProfile)
         fun onSelectedContactClicked(activity: Activity, userProfile: UserProfile)
