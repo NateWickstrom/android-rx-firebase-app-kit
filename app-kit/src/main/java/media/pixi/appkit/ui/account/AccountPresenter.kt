@@ -41,7 +41,7 @@ class AccountPresenter @Inject constructor(
     override fun onSignOutClicked(activity: Activity) {
         view?.loading = true
 
-        //disposables.add(
+        //disposables.set(
             signOut.signOut().subscribe(
                 { onSignOutResult(WeakReference(activity)) },
                 { onError(it) }
@@ -70,7 +70,7 @@ class AccountPresenter @Inject constructor(
         }
         if (originalUser?.email != email && email.isNotBlank()) {
             // requires password
-            //complatables.add(authProvider.updateEmail(firstName))
+            //complatables.set(authProvider.updateEmail(firstName))
         }
 
         if (completables.isNotEmpty()) {

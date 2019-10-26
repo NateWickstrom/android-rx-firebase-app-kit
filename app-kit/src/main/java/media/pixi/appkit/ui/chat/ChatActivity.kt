@@ -34,7 +34,7 @@ class ChatActivity : DaggerAppCompatActivity() {
     companion object {
         private const val BUNDLE_CHAT = "chat_id"
 
-        fun launch(activity: Activity) {
+        fun launch(activity: Activity, chatId: String) {
             val intent = Intent(activity, ChatActivity::class.java)
             //intent.putExtra(BUNDLE_CHAT, )
             activity.startActivity(intent)
