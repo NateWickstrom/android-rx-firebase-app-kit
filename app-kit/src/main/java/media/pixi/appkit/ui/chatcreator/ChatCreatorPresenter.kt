@@ -7,7 +7,8 @@ import media.pixi.appkit.domain.GetFriends
 import timber.log.Timber
 import javax.inject.Inject
 
-class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriends): ChatCreatorContract.Presenter {
+class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriends,
+                                               private var navigator: ChatCreatorContract.Navigator): ChatCreatorContract.Presenter {
 
     private var view: ChatCreatorContract.View? = null
     private var disposables = CompositeDisposable()
@@ -39,6 +40,15 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
             selected.add(userProfile)
         }
         view?.setSelectedContacts(selected)
+    }
+
+    override fun onRemoveContactClicked(activity: Activity, userProfile: UserProfile) {
+        selected.remove(userProfile)
+        view?.setSelectedContacts(selected)
+    }
+
+    override fun onSelectedContactClicked(activity: Activity, userProfile: UserProfile) {
+        navigator.showUserProfile(activity, userProfile.id)
     }
 
     override fun onStartChatClicked(activity: Activity) {

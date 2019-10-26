@@ -1,5 +1,6 @@
 package media.pixi.appkit.ui.chatcreator
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -62,6 +63,7 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
         chipGroup = view.findViewById(R.id.chip_group)
 
         adapter = ContactsAdapter()
+        adapter?.onClickListener = { presenter.onListItemClicked(activity as Activity, it) }
 
         view.list.adapter = adapter
 
@@ -115,6 +117,8 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
         val inflater = LayoutInflater.from(context)
         val chip = inflater.inflate(R.layout.view_chip, chipGroup, false) as Chip
         chip.text = user.firstName
+        chip.setOnCloseIconClickListener { presenter.onRemoveContactClicked(activity!!, user)}
+        chip.setOnClickListener { presenter.onSelectedContactClicked(activity!!, user)}
         ImageUtils.setChipIcon(context!!, chip, user.imageUrl)
         return chip
     }

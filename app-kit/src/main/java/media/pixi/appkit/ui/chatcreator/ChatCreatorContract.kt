@@ -20,10 +20,13 @@ interface ChatCreatorContract {
         fun onListItemClicked(activity: Activity, userProfile: UserProfile)
         fun onStartChatClicked(activity: Activity)
         fun onCreateChatClicked(activity: Activity)
+        fun onRemoveContactClicked(activity: Activity, userProfile: UserProfile)
+        fun onSelectedContactClicked(activity: Activity, userProfile: UserProfile)
         fun onTextChanged(query: String)
     }
 
     interface Navigator {
         fun showNewChat(activity: Activity)
+        fun showUserProfile(activity: Activity, userId: String)
     }
 }

@@ -4,7 +4,12 @@ import android.app.Activity
 import javax.inject.Inject
 
 class ChatCreatorNavigator  @Inject constructor(): ChatCreatorContract.Navigator {
+
     override fun showNewChat(activity: Activity) {
+
+    }
+
+    override fun showUserProfile(activity: Activity, userId: String) {
 
     }
 }
