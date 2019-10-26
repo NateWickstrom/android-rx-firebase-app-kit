@@ -42,11 +42,13 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
             selected.add(userProfile)
         }
         view?.setSelectedContacts(selected)
+        view?.canCreate = selected.isNotEmpty()
     }
 
     override fun onRemoveContactClicked(activity: Activity, userProfile: UserProfile) {
         selected.remove(userProfile)
         view?.setSelectedContacts(selected)
+        view?.canCreate = selected.isNotEmpty()
     }
 
     override fun onSelectedContactClicked(activity: Activity, userProfile: UserProfile) {
@@ -96,7 +98,7 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
             UserProfile(
                 id = "some_id",
                 friendCount = 10,
-                username = "Sting",
+                username = "sting@gmail.com",
                 firstName = "Sting",
                 lastName = "",
                 imageUrl = ""
@@ -107,6 +109,38 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
                 username = "david.bowie",
                 firstName = "David",
                 lastName = "Bowie",
+                imageUrl = ""
+            ),
+            UserProfile(
+                id = "some_id",
+                friendCount = 10,
+                username = "travis.daily",
+                firstName = "Travis",
+                lastName = "Daily",
+                imageUrl = ""
+            ),
+            UserProfile(
+                id = "some_id",
+                friendCount = 10,
+                username = "matt.bower",
+                firstName = "Matt",
+                lastName = "Bower",
+                imageUrl = ""
+            ),
+            UserProfile(
+                id = "some_id",
+                friendCount = 10,
+                username = "sarah.hawkins",
+                firstName = "Sarah",
+                lastName = "Hawkins",
+                imageUrl = ""
+            ),
+            UserProfile(
+                id = "some_id",
+                friendCount = 10,
+                username = "Seth.Green",
+                firstName = "Seth",
+                lastName = "Green",
                 imageUrl = ""
             )
         )

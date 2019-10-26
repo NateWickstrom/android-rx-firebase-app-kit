@@ -16,7 +16,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import android.view.LayoutInflater
 import android.widget.EditText
-import kotlinx.android.synthetic.main.appkit__appbar_chat_creator.*
 import media.pixi.appkit.utils.ImageUtils
 import media.pixi.appkit.utils.TextChangeListner
 
