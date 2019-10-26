@@ -6,8 +6,8 @@ import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.appkit__fragment_list.*
-import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
+import kotlinx.android.synthetic.main.appkit__fragment_create_chat.*
+import kotlinx.android.synthetic.main.appkit__fragment_create_chat.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
 import javax.inject.Inject
@@ -15,10 +15,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import android.view.LayoutInflater
+import android.widget.EditText
+import kotlinx.android.synthetic.main.appkit__appbar_chat_creator.*
 import media.pixi.appkit.utils.ImageUtils
+import media.pixi.appkit.utils.TextChangeListner
 
 
-class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorContract.View {
+class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorContract.View,
+    TextChangeListner {
 
     override var canCreate: Boolean
         get() = createIsVisible
@@ -67,6 +71,8 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
 
         view.list.adapter = adapter
 
+        val searchBar = view.findViewById(R.id.search_bar) as EditText
+        searchBar.addTextChangedListener(this)
         return view
     }
 
@@ -104,6 +110,10 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
     override fun setSelectedContacts(results: Set<UserProfile>) {
         //adapter?.setSelectedContacts(results)
         setChips(results)
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        presenter.onTextChanged(s.toString())
     }
 
     private fun setChips(people: Collection<UserProfile>) {

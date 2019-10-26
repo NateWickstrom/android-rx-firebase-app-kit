@@ -10,10 +10,12 @@ import javax.inject.Inject
 class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriends,
                                                private var navigator: ChatCreatorContract.Navigator): ChatCreatorContract.Presenter {
 
+    private val selected: MutableSet<UserProfile> = mutableSetOf()
+    private val contacts: MutableSet<UserProfile> = mutableSetOf()
+
     private var view: ChatCreatorContract.View? = null
     private var disposables = CompositeDisposable()
-
-    private val selected: MutableSet<UserProfile> = mutableSetOf()
+    private var filter: String? = null
 
     override fun takeView(view: ChatCreatorContract.View) {
         this.view = view
@@ -60,11 +62,15 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
     }
 
     override fun onTextChanged(query: String) {
-
+        filter = query
+        filterContacts()
     }
 
     private fun onResult(friends: List<UserProfile>) {
         view?.loading = false
+        contacts.clear()
+        contacts.addAll(friends)
+
         view?.setContacts(friends)
 
         selected.clear()
@@ -75,6 +81,14 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
         view?.loading = false
         view?.error = error.message.toString()
         Timber.e(error)
+    }
+
+    private fun filterContacts() {
+        filter?.let { filter ->
+            val filtered = contacts.filter { it.username.startsWith( filter, true) }
+            view?.setContacts(filtered)
+        }
+
     }
 
     private fun loadFakeContacts() {
