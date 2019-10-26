@@ -19,10 +19,12 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
 
         view.loading = true
 
-        disposables.add(getFriends.getFriends().subscribe(
-            { onResult(it) },
-            { onError(it) }
-        ))
+//        disposables.add(getFriends.getFriends().subscribe(
+//            { onResult(it) },
+//            { onError(it) }
+//        ))
+
+        loadFakeContacts()
     }
 
     override fun dropView() {
@@ -63,5 +65,27 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
         view?.loading = false
         view?.error = error.message.toString()
         Timber.e(error)
+    }
+
+    private fun loadFakeContacts() {
+        val users = mutableListOf(
+            UserProfile(
+                id = "some_id",
+                friendCount = 10,
+                username = "Sting",
+                firstName = "Sting",
+                lastName = "",
+                imageUrl = ""
+            ),
+            UserProfile(
+                id = "some_id",
+                friendCount = 10,
+                username = "david.bowie",
+                firstName = "David",
+                lastName = "Bowie",
+                imageUrl = ""
+            )
+        )
+        onResult(users)
     }
 }

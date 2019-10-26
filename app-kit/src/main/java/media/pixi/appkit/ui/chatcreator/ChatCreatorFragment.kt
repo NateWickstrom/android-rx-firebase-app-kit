@@ -96,11 +96,11 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
     }
 
     override fun setContacts(results: List<UserProfile>) {
-        adapter?.setContacts(results)
+        adapter?.set(results)
     }
 
     override fun setSelectedContacts(results: Set<UserProfile>) {
-        adapter?.setSelectedContacts(results)
+        //adapter?.setSelectedContacts(results)
         setChips(results)
     }
 
