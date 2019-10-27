@@ -2,7 +2,7 @@ package media.pixi.appkit.ui.chat.textinput
 
 import media.pixi.appkit.data.audio.Recording
 
-interface TextInputDelegate {
+interface TextInputListener {
 
     fun showOptions()
     fun hideOptions()

@@ -32,7 +32,7 @@ import media.pixi.appkit.ui.chat.permissions.PermissionRequestHandler;
 import media.pixi.appkit.utils.InfiniteToast;
 import media.pixi.appkit.utils.ToastHelper;
 
-public class TextInputView extends LinearLayout implements TextView.OnEditorActionListener{
+public class TextInputView extends LinearLayout implements TextView.OnEditorActionListener {
 
     private static final int AUIDO_MESSAGE_LENGTH_MAX = 300;
 
@@ -43,7 +43,7 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
     protected boolean recordOnPress = false;
     protected Recording recording = null;
     protected InfiniteToast toast;
-    protected WeakReference<TextInputDelegate> delegate;
+    protected WeakReference<TextInputListener> delegate;
     protected Rect rect;
     protected Date recordingStart;
     protected Disposable toastUpdateDisposable;
@@ -69,7 +69,7 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         init();
     }
 
-    public void setDelegate(TextInputDelegate delegate) {
+    public void setListener(TextInputListener delegate) {
         this.delegate = new WeakReference<>(delegate);
     }
 

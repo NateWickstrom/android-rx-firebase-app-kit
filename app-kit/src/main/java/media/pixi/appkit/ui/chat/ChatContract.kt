@@ -6,7 +6,9 @@ import media.pixi.appkit.ui.BaseView
 interface ChatContract {
 
     interface View: BaseView<Presenter> {
+        var loading: Boolean
 
+        fun setResults(results: List<MessageListItem>)
     }
 
     interface Presenter: BasePresenter<View> {

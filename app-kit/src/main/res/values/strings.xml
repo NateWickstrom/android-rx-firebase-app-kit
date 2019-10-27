@@ -101,4 +101,11 @@
     <string name="permission_write_external_storage_title">Gallery Access</string>
     <string name="permission_write_external_storage_message">Grant permission to allow images to be saved to your phone</string>
 
+    <string name="copy">Copy</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="delete">Delete</string>
+    <string name="forward">Forward</string>
+    <string name="message_sent">Message sent!</string>
+    <string name="copy_failed">Copy failed!</string>
+
 </resources>
