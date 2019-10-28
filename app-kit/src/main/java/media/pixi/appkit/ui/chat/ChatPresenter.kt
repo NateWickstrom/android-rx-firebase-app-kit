@@ -49,7 +49,7 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
 
         val message1 = TextMessage(
             id = "1",
-            message = "Luca Brasi held a gun to his head, and my father assured him that either his brains or his signature would be on the contract. That's a true story.",
+            message = "That's a true story.",
             date = DateTime(),
             senderId = "1",
             messageSendStatus = MessageSendStatus.Sent,
@@ -63,7 +63,7 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
 
         val message2 = TextMessage(
             id = "2",
-            message = "What I want... what's most important to me is that I have a guarantee. No more attempts on my father's life.",
+            message = "What I want...",
             date = DateTime(),
             senderId = "2",
             messageSendStatus = MessageSendStatus.Sent,
@@ -90,9 +90,25 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
             sendIconUrl = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxNzkzMjIxMTMz/sting-9495433-1-402.jpg"
         )
 
+        val message4 = TextMessage(
+            id = "4",
+            message = "What I want... what's most important to me is that I have a guarantee. No more attempts on my father's life.",
+            date = DateTime(),
+            senderId = "2",
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ
+        )
+        val messageListItem4 = MessageListItem(
+            message = message4,
+            messageViewHolderType = MessageViewHolderType.MY_TEXT,
+            sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
+            isMe = true
+        )
+
         results.add(messageListItem1)
         results.add(messageListItem2)
         results.add(messageListItem3)
+        results.add(messageListItem4)
 
         onResult(results)
     }

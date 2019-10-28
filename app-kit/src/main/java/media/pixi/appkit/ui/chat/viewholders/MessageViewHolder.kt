@@ -23,7 +23,7 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     protected var messageImageView: SimpleDraweeView = itemView.findViewById(R.id.image_message_image)
     protected var messageBubble: ConstraintLayout = itemView.findViewById(R.id.image_message_bubble)
     protected var messageTextView: TextView = itemView.findViewById(R.id.text_content)
-    protected var messageIconView: SimpleDraweeView = itemView.findViewById(R.id.image_icon)
+//    protected var messageIconView: SimpleDraweeView = itemView.findViewById(R.id.image_icon)
     protected var extraLayout: LinearLayout = itemView.findViewById(R.id.layout_extra)
     //protected var readReceiptImageView: ImageView = itemView.findViewById(R.id.image_read_receipt)
     protected var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
@@ -123,19 +123,19 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     }
 
     fun setIconSize(width: Int, height: Int) {
-        messageIconView.layoutParams.width = width
-        messageIconView.layoutParams.height = height
-        messageIconView.requestLayout()
+//        messageIconView.layoutParams.width = width
+//        messageIconView.layoutParams.height = height
+//        messageIconView.requestLayout()
     }
 
     fun setIconMargins(start: Int, top: Int, end: Int, bottom: Int) {
-        (messageIconView.layoutParams as ConstraintLayout.LayoutParams).setMargins(
-            start,
-            top,
-            end,
-            bottom
-        )
-        messageIconView.requestLayout()
+//        (messageIconView.layoutParams as ConstraintLayout.LayoutParams).setMargins(
+//            start,
+//            top,
+//            end,
+//            bottom
+//        )
+//        messageIconView.requestLayout()
     }
 
     fun setImageSize(width: Int, height: Int) {
@@ -152,16 +152,16 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     }
 
     fun setIconHidden(hidden: Boolean) {
-        messageIconView.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
-        if (hidden) {
-            setIconSize(0, 0)
-        } else {
-            setIconSize(
-                itemView.getResources().getDimensionPixelSize(R.dimen.message_icon_max_width),
-                itemView.getResources().getDimensionPixelSize(R.dimen.message_icon_max_height)
-            )
-        }
-        messageBubble.requestLayout()
+//        messageIconView.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
+//        if (hidden) {
+//            setIconSize(0, 0)
+//        } else {
+//            setIconSize(
+//                itemView.getResources().getDimensionPixelSize(R.dimen.message_icon_max_width),
+//                itemView.getResources().getDimensionPixelSize(R.dimen.message_icon_max_height)
+//            )
+//        }
+//        messageBubble.requestLayout()
     }
 
     fun setImageHidden(hidden: Boolean) {
