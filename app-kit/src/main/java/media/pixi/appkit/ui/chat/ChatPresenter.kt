@@ -10,6 +10,9 @@ import javax.inject.Inject
 class ChatPresenter @Inject constructor() : ChatContract.Presenter {
 
     private var view: ChatContract.View? = null
+    private var results = mutableListOf<MessageListItem>()
+
+    var id = 5
 
     override fun takeView(view: ChatContract.View) {
         this.view = view
@@ -19,6 +22,27 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
 
     override fun dropView() {
         view = null
+    }
+
+    override fun send(text: String) {
+        val message2 = TextMessage(
+            id = id.toString(),
+            message = text,
+            date = DateTime(),
+            senderId = "2",
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ
+        )
+        val messageListItem2 = MessageListItem(
+            message = message2,
+            messageViewHolderType = MessageViewHolderType.MY_TEXT,
+            sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
+            isMe = true
+        )
+
+        id++
+        results.add(messageListItem2)
+        onResult(results)
     }
 
     override fun onTextClicked(position: Int, item: MessageListItem) {
@@ -45,7 +69,7 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
     }
 
     private fun showFakeChat() {
-        var results = mutableListOf<MessageListItem>()
+        results.clear()
 
         val message1 = TextMessage(
             id = "1",

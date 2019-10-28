@@ -36,6 +36,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     private var adapter: MessageAdapter? = null
     private var speedDialView: SpeedDialView? = null
+    private var textInputView: TextInputView? = null
 
     lateinit var presenter: ChatContract.Presenter
         @Inject set
@@ -48,8 +49,8 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         adapter = MessageAdapter(presenter)
         view.list.adapter = adapter
 
-        val textInput = view.findViewById(R.id.view_message_text_input) as TextInputView
-        textInput.setListener(this)
+        textInputView = view.findViewById(R.id.view_message_text_input) as TextInputView
+        textInputView?.setListener(this)
 
         //val speedDialOverlay = view.findViewById(R.id.messageOptionsOverlay) as SpeedDialOverlayLayout
         speedDialView = view.findViewById(R.id.speed_dial_message_actions)
@@ -105,7 +106,11 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun onSendPressed(text: String) {
+        ActivityUtils.hideKeyboard(activity!!)
 
+        textInputView?.clearText()
+
+        presenter.send(text)
     }
 
     override fun startTyping() {

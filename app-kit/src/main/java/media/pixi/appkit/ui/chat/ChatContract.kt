@@ -17,6 +17,8 @@ interface ChatContract {
     }
 
     interface Presenter: BasePresenter<View> {
+        fun send(text: String)
+
         fun onTextClicked(position: Int, item: MessageListItem)
 
         fun onImageClicked(position: Int, item: MessageListItem)
