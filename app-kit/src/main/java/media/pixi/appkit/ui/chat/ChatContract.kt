@@ -9,10 +9,19 @@ interface ChatContract {
         var loading: Boolean
 
         fun setResults(results: List<MessageListItem>)
+
+        fun showTextSpeedDial(messageListItem: MessageListItem)
+        fun showImageSpeedDial(messageListItem: MessageListItem)
+        fun showLocationSpeedDial(messageListItem: MessageListItem)
+
     }
 
     interface Presenter: BasePresenter<View> {
+        fun onTextClicked(position: Int, item: MessageListItem)
 
+        fun onImageClicked(position: Int, item: MessageListItem)
+
+        fun onLocationClicked(position: Int, item: MessageListItem)
     }
 
     interface Navigator {

@@ -12,7 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.chats.Message
 import media.pixi.appkit.domain.chats.MessageSendStatus
-import media.pixi.appkit.domain.chats.ReadStatus
 import media.pixi.appkit.ui.chat.MessageListItem
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,12 +25,12 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     protected var messageTextView: TextView = itemView.findViewById(R.id.text_content)
     protected var messageIconView: SimpleDraweeView = itemView.findViewById(R.id.image_icon)
     protected var extraLayout: LinearLayout = itemView.findViewById(R.id.layout_extra)
-    protected var readReceiptImageView: ImageView = itemView.findViewById(R.id.image_read_receipt)
+    //protected var readReceiptImageView: ImageView = itemView.findViewById(R.id.image_read_receipt)
     protected var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
 
     private lateinit var message: Message
 
-    fun bind(messageItem: MessageListItem) {
+    open fun bind(messageItem: MessageListItem) {
         this.message = messageItem.message
 
         setBubbleHidden(true)
@@ -47,7 +46,7 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
         val time = getTimeFormat(message).format(message.date.toDate()).toString()
         timeTextView.text = time
 
-        avatarImageView.setImageURI(messageItem.senderImageUrl)
+        avatarImageView.setImageURI(messageItem.sendIconUrl)
 
 //        if (messageItem.isMe) {
 //            messageBubble.background.setColorFilter(
@@ -71,19 +70,19 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
 //
 //        // Hide the read receipt for public threads
 //        if (message.getThread().typeIs(ThreadType.Public) || ChatSDK.readReceipts() == null) {
-//            status = ReadStatus.hide()
+//            status = MessageReadStatus.hide()
 //        }
 //
-//        if (status.`is`(ReadStatus.delivered())) {
+//        if (status.`is`(MessageReadStatus.delivered())) {
 //            resource = R.drawable.ic_done_24px
 //        }
-//        if (status.`is`(ReadStatus.read())) {
+//        if (status.`is`(MessageReadStatus.read())) {
 //            resource = R.drawable.ic_done_all_24px
 //        }
 //        if (readReceiptImageView != null) {
 //            readReceiptImageView.setImageResource(resource)
 //            readReceiptImageView.visibility =
-//                if (status.`is`(ReadStatus.hide())) View.INVISIBLE else View.VISIBLE
+//                if (status.`is`(MessageReadStatus.hide())) View.INVISIBLE else View.VISIBLE
 //        }
     }
 

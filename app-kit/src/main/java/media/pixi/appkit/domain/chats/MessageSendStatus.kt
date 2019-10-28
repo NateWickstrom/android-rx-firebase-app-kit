@@ -1,7 +1,7 @@
-package media.pixi.appkit.domain.chats;
+package media.pixi.appkit.domain.chats
 
 
-public enum MessageSendStatus {
+enum class MessageSendStatus {
     None,
     Created,
     WillUpload,
@@ -11,5 +11,5 @@ public enum MessageSendStatus {
     Sending,
     Sent,
     Delivered,
-    Failed,
+    Failed
 }

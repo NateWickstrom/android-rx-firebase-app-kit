@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
@@ -9,11 +9,14 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include layout="@layout/appkit__appbar_chat"/>
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/appkit__appbar_chat"/>
 
     <FrameLayout
             android:id="@+id/contentFrame"
+            android:layout_below="@id/appbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

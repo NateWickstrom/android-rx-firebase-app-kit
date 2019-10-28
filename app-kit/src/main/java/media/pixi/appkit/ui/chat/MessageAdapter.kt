@@ -8,12 +8,10 @@ import media.pixi.appkit.ui.chat.viewholders.ImageMessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.LocationMessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.MessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.TextMessageViewHolder
+import timber.log.Timber
 
 
-class MessageAdapter: RecyclerView.Adapter<MessageViewHolder>() {
-
-    var onClickListener: ((MessageListItem) -> Unit)? = null
-    var onLongClickListener: ((Int) -> Boolean)? = null
+class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerView.Adapter<MessageViewHolder>() {
 
     private val items = mutableListOf<MessageListItem>()
 
@@ -49,8 +47,17 @@ class MessageAdapter: RecyclerView.Adapter<MessageViewHolder>() {
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener { onClickListener?.invoke(item) }
-        holder.itemView.setOnLongClickListener { onLongClickListener?.invoke(position) ?: false}
+
+        when (holder) {
+            is TextMessageViewHolder ->
+                holder.itemView.setOnClickListener { presenter.onTextClicked(position, item) }
+            is ImageMessageViewHolder ->
+                holder.itemView.setOnClickListener { presenter.onImageClicked(position, item) }
+            is LocationMessageViewHolder ->
+                holder.itemView.setOnClickListener { presenter.onLocationClicked(position, item) }
+            else ->
+                Timber.w(TAG, "unhandled click event for: ${holder.javaClass.simpleName}")
+        }
     }
 
     override fun getItemCount(): Int {
@@ -58,17 +65,21 @@ class MessageAdapter: RecyclerView.Adapter<MessageViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return items[position].geMessageViewHolderType().id
+        return items[position].messageViewHolderType.id
     }
 
     override fun getItemId(position: Int): Long {
-        return items[position].getMessage().id.hashCode().toLong()
+        return items[position].message.id.hashCode().toLong()
     }
 
     fun set(results: List<MessageListItem>) {
         items.clear()
         items.addAll(results)
         notifyDataSetChanged()
+    }
+
+    companion object {
+        const val TAG = "MessageAdapter"
     }
 
 }
