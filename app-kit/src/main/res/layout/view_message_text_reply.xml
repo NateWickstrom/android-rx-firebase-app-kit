@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/message_root_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:padding="2dp">
+
+    <TextView
+        android:id="@+id/text_time"
+        style="@style/MessageDateStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:text="Time" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image_avatar"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_below="@id/text_time"
+        android:src="@drawable/ic_account_circle_24px"
+        fresco:fadeDuration="0"
+        fresco:failureImage="@drawable/ic_account_circle_24px"
+        fresco:placeholderImage="@drawable/ic_account_circle_24px"
+        fresco:roundAsCircle="true" />
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_time"
+        android:layout_marginEnd="68dp"
+        android:layout_toEndOf="@id/image_avatar"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@drawable/message_received_3"
+            tools:text="I want you to use all your powers, and all your skills. I don't want his mother to see him this way. [pulls sheet to reveal Sonny's bullet-ridden body] Look how they massacred my boy." />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

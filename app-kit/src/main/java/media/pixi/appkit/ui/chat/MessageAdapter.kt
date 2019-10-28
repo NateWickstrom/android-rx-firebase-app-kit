@@ -19,12 +19,14 @@ class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerVie
 
         val inflater = LayoutInflater.from(parent.context)
         val view  = when (viewType) {
-            MessageViewHolderType.MY_TEXT.id,
+            MessageViewHolderType.MY_TEXT.id ->
+                inflater.inflate(R.layout.view_message_text_me, parent, false)
             MessageViewHolderType.MY_IMAGE.id,
             MessageViewHolderType.MY_LOCATION.id ->
                 inflater.inflate(R.layout.view_message_me, parent, false)
 
-            MessageViewHolderType.THEIR_TEXT.id,
+            MessageViewHolderType.THEIR_TEXT.id ->
+                inflater.inflate(R.layout.view_message_text_reply, parent, false)
             MessageViewHolderType.THEIR_IMAGE.id,
             MessageViewHolderType.THEIR_LOCATION.id ->
                 inflater.inflate(R.layout.view_message_reply, parent, false)

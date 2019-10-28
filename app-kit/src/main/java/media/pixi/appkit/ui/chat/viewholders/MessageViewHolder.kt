@@ -1,5 +1,7 @@
 package media.pixi.appkit.ui.chat.viewholders
 
+import android.os.Build
+import android.text.Layout.JUSTIFICATION_MODE_INTER_WORD
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -20,11 +22,11 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
 
     protected var avatarImageView: SimpleDraweeView = itemView.findViewById(R.id.image_avatar)
     protected var timeTextView: TextView = itemView.findViewById(R.id.text_time)
-    protected var messageImageView: SimpleDraweeView = itemView.findViewById(R.id.image_message_image)
-    protected var messageBubble: ConstraintLayout = itemView.findViewById(R.id.image_message_bubble)
+//    protected var messageImageView: SimpleDraweeView = itemView.findViewById(R.id.image_message_image)
+//    protected var messageBubble: ConstraintLayout = itemView.findViewById(R.id.image_message_bubble)
     protected var messageTextView: TextView = itemView.findViewById(R.id.text_content)
 //    protected var messageIconView: SimpleDraweeView = itemView.findViewById(R.id.image_icon)
-    protected var extraLayout: LinearLayout = itemView.findViewById(R.id.layout_extra)
+//    protected var extraLayout: LinearLayout = itemView.findViewById(R.id.layout_extra)
     //protected var readReceiptImageView: ImageView = itemView.findViewById(R.id.image_read_receipt)
     protected var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
 
@@ -87,9 +89,9 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     }
 
     fun setAlpha(alpha: Float) {
-        messageImageView.alpha = alpha
+//        messageImageView.alpha = alpha
         messageTextView.alpha = alpha
-        extraLayout.alpha = alpha
+        //extraLayout.alpha = alpha
     }
 
     fun maxWidth(): Int {
@@ -139,16 +141,16 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     }
 
     fun setImageSize(width: Int, height: Int) {
-        messageImageView.layoutParams.width = width
-        messageImageView.layoutParams.height = height
-        messageImageView.requestLayout()
+//        messageImageView.layoutParams.width = width
+//        messageImageView.layoutParams.height = height
+//        messageImageView.requestLayout()
     }
 
     fun setBubbleHidden(hidden: Boolean) {
-        messageBubble.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
-        messageBubble.layoutParams.width = if (hidden) 0 else ViewGroup.LayoutParams.WRAP_CONTENT
-        messageBubble.layoutParams.height = if (hidden) 0 else ViewGroup.LayoutParams.WRAP_CONTENT
-        messageBubble.requestLayout()
+//        messageBubble.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
+//        messageBubble.layoutParams.width = if (hidden) 0 else ViewGroup.LayoutParams.WRAP_CONTENT
+//        messageBubble.layoutParams.height = if (hidden) 0 else ViewGroup.LayoutParams.WRAP_CONTENT
+//        messageBubble.requestLayout()
     }
 
     fun setIconHidden(hidden: Boolean) {
@@ -165,7 +167,7 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
     }
 
     fun setImageHidden(hidden: Boolean) {
-        messageImageView.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
+//        messageImageView.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
         if (hidden) {
             setImageSize(0, 0)
         } else {
@@ -177,17 +179,17 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
 
     fun setTextHidden(hidden: Boolean) {
         messageTextView.visibility = if (hidden) View.INVISIBLE else View.VISIBLE
-        val textLayoutParams = messageTextView.layoutParams as ConstraintLayout.LayoutParams
-        if (hidden) {
-            textLayoutParams.width = 0
-            textLayoutParams.height = 0
-        } else {
-            textLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
-            textLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        }
-        messageTextView.layoutParams = textLayoutParams
-        messageTextView.requestLayout()
-        messageBubble.requestLayout()
+//        val textLayoutParams = messageTextView.layoutParams as ConstraintLayout.LayoutParams
+//        if (hidden) {
+//            textLayoutParams.width = 0
+//            textLayoutParams.height = 0
+//        } else {
+//            textLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+//            textLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+//        }
+//        messageTextView.layoutParams = textLayoutParams
+//        messageTextView.requestLayout()
+//        messageBubble.requestLayout()
     }
 
     protected fun getTimeFormat(message: Message): SimpleDateFormat {
