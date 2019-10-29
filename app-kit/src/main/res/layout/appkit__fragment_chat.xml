@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/tasksContainer"
-    android:background="@color/material_color_green_50">
+    android:layout_height="match_parent">
 
     <media.pixi.appkit.ui.chat.textinput.TextInputView
         android:id="@+id/view_message_text_input"

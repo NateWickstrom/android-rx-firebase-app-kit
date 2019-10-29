@@ -15,10 +15,10 @@ import kotlinx.android.synthetic.main.appkit__fragment_list.view.progress_bar
 import media.pixi.appkit.R
 import media.pixi.appkit.data.audio.Recording
 import media.pixi.appkit.domain.chats.Message
-import media.pixi.appkit.ui.chat.actions.CopyMessageAction
-import media.pixi.appkit.ui.chat.actions.DeleteMessageAction
-import media.pixi.appkit.ui.chat.actions.ForwardMessageAction
-import media.pixi.appkit.ui.chat.actions.MessageAction
+import media.pixi.appkit.ui.chat.actions.*
+import media.pixi.appkit.ui.chat.options.ChatOption
+import media.pixi.appkit.ui.chat.options.ChatOptionsOnClickListener
+import media.pixi.appkit.ui.chat.options.ChatOptionsView
 import media.pixi.appkit.ui.chat.textinput.TextInputListener
 import media.pixi.appkit.ui.chat.textinput.TextInputView
 import media.pixi.appkit.utils.ActivityUtils
@@ -26,7 +26,8 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, TextInputListener,
-    SpeedDialView.OnActionSelectedListener, SpeedDialView.OnChangeListener {
+    SpeedDialView.OnActionSelectedListener, SpeedDialView.OnChangeListener,
+    ChatOptionsOnClickListener {
 
     override var loading: Boolean
         get() = progress_bar.visibility == View.INVISIBLE
@@ -78,8 +79,8 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     override fun showTextSpeedDial(messageListItem: MessageListItem) {
         ActivityUtils.hideKeyboard(activity!!)
-        clearActions()
-        addActions(getTextActions(messageListItem.isMe, messageListItem.message))
+        speedDialView?.close(false)
+        ActionUtils.setActions(speedDialView!!, getTextActions(messageListItem.isMe, messageListItem.message))
         speedDialView?.visibility = View.VISIBLE
         speedDialView?.open()
     }
@@ -97,7 +98,13 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        when (actionItem!!.id) {
+//            MessageAction.Type.Copy.ordinal ->
+//            MessageAction.Type.Delete.ordinal ->
+//            MessageAction.Type.Forward.ordinal ->
+//        }
+
+        return true
     }
 
     override fun onMainActionSelected(): Boolean {
@@ -110,8 +117,12 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         }
     }
 
-    override fun showOptions() {
+    override fun executeChatOption(option: ChatOption?) {
 
+    }
+
+    override fun showOptions() {
+        ChatOptionsView(this).show(activity!!)
     }
 
     override fun hideOptions() {
@@ -143,30 +154,6 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun onKeyboardHide() {
-
-    }
-
-    private fun clearActions() {
-        speedDialView?.let { view ->
-            for (item in view.actionItems) {
-                view.removeActionItem(item)
-            }
-            view.close(false)
-        }
-
-    }
-
-    private fun addActions(actions: List<MessageAction>) {
-        speedDialView?.let { view ->
-            for (i in actions.indices) {
-                val action = actions[i]
-                view.addActionItem(
-                    SpeedDialActionItem.Builder(i, action.iconResourceId)
-                        .setLabel(action.titleResourceId)
-                        .create()
-                )
-            }
-        }
 
     }
 
