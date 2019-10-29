@@ -1,27 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tasksContainer"
-    android:background="@color/material_color_green_50"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.leinardi.android.speeddial.SpeedDialOverlayLayout
-        android:id="@+id/messageOptionsOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <com.leinardi.android.speeddial.SpeedDialView
-        android:id="@+id/speed_dial_message_actions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:visibility="invisible"
-        app:sdMainFabClosedSrc="@drawable/ic_add_24px"
-        app:sdOverlayLayout="@id/messageOptionsOverlay"
-        app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"/>
+    android:id="@+id/tasksContainer"
+    android:background="@color/material_color_green_50">
 
     <media.pixi.appkit.ui.chat.textinput.TextInputView
         android:id="@+id/view_message_text_input"
@@ -30,28 +15,51 @@
         android:layout_alignParentBottom="true"
         />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <FrameLayout
+        android:layout_above="@+id/view_message_text_input"
         android:layout_width="match_parent"
-        android:id="@+id/layout_swipe_to_refresh"
-        android:layout_height="match_parent"
-        android:layout_above="@id/view_message_text_input">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+        <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+            android:id="@+id/messageOptionsOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speed_dial_message_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_gravity="bottom|end"
+            app:sdMainFabClosedSrc="@drawable/ic_add_24px"
+            app:sdOverlayLayout="@id/messageOptionsOverlay"
+            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout_swipe_to_refresh"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="always"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:indeterminateTintMode="src_in"
+            android:layout_marginTop="-6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:overScrollMode="always"/>
+            android:visibility="invisible"
+            android:indeterminate="true"/>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminateTintMode="src_in"
-        android:layout_marginTop="-6dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:indeterminate="true"/>
 
 </RelativeLayout>
+

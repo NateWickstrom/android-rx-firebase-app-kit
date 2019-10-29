@@ -52,7 +52,7 @@ class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerVie
 
         when (holder) {
             is TextMessageViewHolder ->
-                holder.itemView.setOnClickListener { presenter.onTextClicked(position, item) }
+                holder.setOnClickListener { presenter.onTextClicked(position, item) }
             is ImageMessageViewHolder ->
                 holder.itemView.setOnClickListener { presenter.onImageClicked(position, item) }
             is LocationMessageViewHolder ->

@@ -9,7 +9,9 @@ import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialOverlayLayout
 import com.leinardi.android.speeddial.SpeedDialView
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
+import kotlinx.android.synthetic.main.appkit__fragment_list.view.progress_bar
 import media.pixi.appkit.R
 import media.pixi.appkit.data.audio.Recording
 import media.pixi.appkit.domain.chats.Message
@@ -24,11 +26,11 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, TextInputListener,
-    SpeedDialView.OnActionSelectedListener {
+    SpeedDialView.OnActionSelectedListener, SpeedDialView.OnChangeListener {
 
     override var loading: Boolean
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
+        get() = progress_bar.visibility == View.INVISIBLE
+        set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     override var error: String
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
@@ -52,9 +54,9 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         textInputView = view.findViewById(R.id.view_message_text_input) as TextInputView
         textInputView?.setListener(this)
 
-        //val speedDialOverlay = view.findViewById(R.id.messageOptionsOverlay) as SpeedDialOverlayLayout
         speedDialView = view.findViewById(R.id.speed_dial_message_actions)
         speedDialView?.setOnActionSelectedListener(this)
+        speedDialView?.setOnChangeListener(this)
 
         return view
     }
@@ -78,7 +80,8 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         ActivityUtils.hideKeyboard(activity!!)
         clearActions()
         addActions(getTextActions(messageListItem.isMe, messageListItem.message))
-        speedDialView?.show()
+        speedDialView?.visibility = View.VISIBLE
+        speedDialView?.open()
     }
 
     override fun showImageSpeedDial(messageListItem: MessageListItem) {
@@ -95,6 +98,16 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onMainActionSelected(): Boolean {
+        return false
+    }
+
+    override fun onToggleChanged(isOpen: Boolean) {
+        if (isOpen.not()) {
+            speedDialView?.visibility = View.INVISIBLE
+        }
     }
 
     override fun showOptions() {

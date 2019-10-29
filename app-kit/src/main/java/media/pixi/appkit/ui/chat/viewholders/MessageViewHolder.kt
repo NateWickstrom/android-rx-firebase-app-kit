@@ -66,6 +66,10 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
 
     }
 
+    open fun setOnClickListener(onClickListener: (View) -> Unit) {
+
+    }
+
     protected fun updateReadStatus() {
 //        var resource = R.drawable.ic_done_24px
 //        var status = message.messageReadStatus

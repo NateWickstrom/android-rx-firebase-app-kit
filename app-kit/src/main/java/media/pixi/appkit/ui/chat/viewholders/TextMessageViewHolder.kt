@@ -11,4 +11,8 @@ class TextMessageViewHolder(itemView: View): MessageViewHolder (itemView) {
         setBubbleHidden(false)
         setTextHidden(false)
     }
+
+    override fun setOnClickListener(onClickListener: (View) -> Unit) {
+        messageTextView.setOnClickListener(onClickListener)
+    }
 }
