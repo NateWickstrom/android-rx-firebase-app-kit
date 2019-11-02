@@ -28,7 +28,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import media.pixi.appkit.R;
 import media.pixi.appkit.data.audio.Recording;
-import media.pixi.appkit.ui.chat.permissions.PermissionRequestHandler;
 import media.pixi.appkit.utils.InfiniteToast;
 import media.pixi.appkit.utils.ToastHelper;
 
@@ -114,22 +113,22 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         });
 
         // Handle recording when the record button is held down
-        btnSend.setOnTouchListener((view, motionEvent) ->  {
-            if(recordOnPress) {
-                Disposable d = PermissionRequestHandler.shared().requestRecordAudio(getActivity()).subscribe(() -> {
-                        // Start recording when we press down
-                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                            startRecording(view);
-                        }
-
-                        // Stop recording
-                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                            stopRecording(view, motionEvent);
-                        }
-                }, throwable -> ToastHelper.show(getContext(), throwable.getLocalizedMessage()));
-            }
-            return btnSend.onTouchEvent(motionEvent);
-        });
+//        btnSend.setOnTouchListener((view, motionEvent) ->  {
+//            if(recordOnPress) {
+//                Disposable d = PermissionRequestHandler.shared().requestRecordAudio(getActivity()).subscribe(() -> {
+//                        // Start recording when we press down
+//                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                            startRecording(view);
+//                        }
+//
+//                        // Stop recording
+//                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                            stopRecording(view, motionEvent);
+//                        }
+//                }, throwable -> ToastHelper.show(getContext(), throwable.getLocalizedMessage()));
+//            }
+//            return btnSend.onTouchEvent(motionEvent);
+//        });
 
         btnOptions.setOnClickListener(view -> showOption());
 

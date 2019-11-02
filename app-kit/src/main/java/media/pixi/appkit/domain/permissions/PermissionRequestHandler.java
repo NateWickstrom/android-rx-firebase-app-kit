@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chat.permissions;
+package media.pixi.appkit.domain.permissions;
 
 import android.Manifest;
 import android.app.Activity;
@@ -38,11 +38,11 @@ public class PermissionRequestHandler {
         return requestPermissions(activity, RECORD_AUDIO_REQUEST, recordAudio(), writeExternalStorage());
     }
 
-    private Permission recordAudio () {
+    private Permission recordAudio() {
         return new Permission(Manifest.permission.RECORD_AUDIO, R.string.permission_record_audio_title, R.string.permission_record_audio_message);
     }
 
-    private Permission writeExternalStorage () {
+    private Permission writeExternalStorage() {
         return new Permission(Manifest.permission.WRITE_EXTERNAL_STORAGE, R.string.permission_write_external_storage_title, R.string.permission_write_external_storage_message);
     }
 

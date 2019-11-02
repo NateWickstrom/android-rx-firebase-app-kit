@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
 import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
+import pub.devrel.easypermissions.EasyPermissions
 
 class ChatActivity : DaggerAppCompatActivity() {
 
@@ -29,6 +30,16 @@ class ChatActivity : DaggerAppCompatActivity() {
         ActivityUtils.addFragmentToActivity(
             supportFragmentManager, fragment, R.id.contentFrame
         )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     companion object {

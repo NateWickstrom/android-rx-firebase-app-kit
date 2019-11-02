@@ -21,8 +21,8 @@
 
     <integer name="chat_sdk_max_message_lines">5</integer>
 
-    <dimen name="message_image_max_width">300dp</dimen>
-    <dimen name="message_image_max_height">300dp</dimen>
+    <dimen name="message_image_max_width">240dp</dimen>
+    <dimen name="message_image_max_height">240dp</dimen>
     <dimen name="message_icon_max_width">48dp</dimen>
     <dimen name="message_icon_max_height">48dp</dimen>
 </resources>

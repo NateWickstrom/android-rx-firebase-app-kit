@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:id="@+id/message_root_layout"
+    android:animateLayoutChanges="true">
+
+    <TextView
+        android:id="@+id/text_time"
+        style="@style/MessageDateStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Time"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image_avatar"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_account_circle_24px"
+        fresco:roundAsCircle="true"
+        fresco:placeholderImage="@drawable/ic_account_circle_24px"
+        fresco:failureImage="@drawable/ic_account_circle_24px"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/text_time"
+        fresco:fadeDuration="0"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image_message_image"
+        android:layout_width="@dimen/message_image_max_width"
+        android:layout_height="@dimen/message_image_max_height"
+        android:layout_toStartOf="@id/image_avatar"
+        android:layout_below="@+id/text_time"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        fresco:failureImage="@drawable/icn_200_image_message_error"
+        fresco:placeholderImage="@drawable/icn_200_image_message_placeholder"
+        fresco:roundedCornerRadius="10dp"
+        fresco:fadeDuration="0"
+        tools:src="@drawable/icn_200_image_message_placeholder"/>
+
+    <ImageView
+        android:id="@+id/image_read_receipt"
+        android:layout_toStartOf="@id/image_message_image"
+        android:layout_alignBottom="@id/image_message_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_done_24px" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</RelativeLayout>

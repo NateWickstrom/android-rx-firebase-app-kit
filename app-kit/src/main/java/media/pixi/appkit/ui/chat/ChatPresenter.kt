@@ -1,5 +1,6 @@
 package media.pixi.appkit.ui.chat
 
+import media.pixi.appkit.domain.chats.ImageMessage
 import media.pixi.appkit.domain.chats.MessageReadStatus
 import media.pixi.appkit.domain.chats.MessageSendStatus
 import media.pixi.appkit.domain.chats.TextMessage
@@ -129,10 +130,42 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
             isMe = true
         )
 
+        val message5 = ImageMessage(
+            id = "4",
+            message = "https://steamuserimages-a.akamaihd.net/ugc/952972064286659591/0A22C2617B3DD874D6B18D42ACED0D683DD38EB6/",
+            date = DateTime(),
+            senderId = "2",
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ
+        )
+        val messageListItem5 = MessageListItem(
+            message = message5,
+            messageViewHolderType = MessageViewHolderType.MY_IMAGE,
+            sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
+            isMe = true
+        )
+
+        val message6 = ImageMessage(
+            id = "6",
+            message = "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg",
+            date = DateTime(),
+            senderId = "1",
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ
+        )
+        val messageListItem6 = MessageListItem(
+            message = message6,
+            messageViewHolderType = MessageViewHolderType.THEIR_IMAGE,
+            sendIconUrl = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxNzkzMjIxMTMz/sting-9495433-1-402.jpg",
+            isMe = false
+        )
+
         results.add(messageListItem1)
         results.add(messageListItem2)
         results.add(messageListItem3)
         results.add(messageListItem4)
+        results.add(messageListItem5)
+        results.add(messageListItem6)
 
         onResult(results)
     }

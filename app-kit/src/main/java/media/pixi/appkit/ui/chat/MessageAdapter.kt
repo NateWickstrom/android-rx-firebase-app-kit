@@ -23,13 +23,13 @@ class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerVie
                 inflater.inflate(R.layout.view_message_text_me, parent, false)
             MessageViewHolderType.MY_IMAGE.id,
             MessageViewHolderType.MY_LOCATION.id ->
-                inflater.inflate(R.layout.view_message_me, parent, false)
+                inflater.inflate(R.layout.view_message_image_me, parent, false)
 
             MessageViewHolderType.THEIR_TEXT.id ->
                 inflater.inflate(R.layout.view_message_text_reply, parent, false)
             MessageViewHolderType.THEIR_IMAGE.id,
             MessageViewHolderType.THEIR_LOCATION.id ->
-                inflater.inflate(R.layout.view_message_reply, parent, false)
+                inflater.inflate(R.layout.view_message_image_reply, parent, false)
 
             else -> throw IllegalArgumentException("Unknown view type")
         }
@@ -38,9 +38,9 @@ class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerVie
             MessageViewHolderType.MY_TEXT.id,
             MessageViewHolderType.THEIR_TEXT.id -> TextMessageViewHolder(view)
             MessageViewHolderType.MY_IMAGE.id,
-            MessageViewHolderType.THEIR_IMAGE.id -> ImageMessageViewHolder(view)
+            MessageViewHolderType.THEIR_IMAGE.id,
             MessageViewHolderType.MY_LOCATION.id,
-            MessageViewHolderType.THEIR_LOCATION.id -> LocationMessageViewHolder(view)
+            MessageViewHolderType.THEIR_LOCATION.id -> ImageMessageViewHolder(view)
 
             else -> throw IllegalArgumentException("Unknown view type")
         }

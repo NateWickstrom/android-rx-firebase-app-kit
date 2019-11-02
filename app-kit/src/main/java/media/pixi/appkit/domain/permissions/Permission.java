@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chat.permissions;
+package media.pixi.appkit.domain.permissions;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
