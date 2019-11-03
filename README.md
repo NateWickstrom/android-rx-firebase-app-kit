@@ -16,6 +16,7 @@ Messaging
 - send image
 - send audio
 - send file
+- send location
 - remove text/image/audio
 - pagination
 
@@ -37,6 +38,8 @@ Utils
 - no network
 - notification channels
 - dark mode
+- server side search keys
+- server side maps keys
 
 Polish
 - better profile page
