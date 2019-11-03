@@ -17,6 +17,7 @@ interface ChatOptionsContract {
     }
 
     interface Navigator {
-
+        fun showGallery(activity: Activity)
+        fun showCamera(activity: Activity)
     }
 }
