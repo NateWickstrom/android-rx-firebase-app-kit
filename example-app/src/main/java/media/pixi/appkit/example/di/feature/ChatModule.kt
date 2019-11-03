@@ -9,6 +9,9 @@ import media.pixi.appkit.ui.chat.ChatContract
 import media.pixi.appkit.ui.chat.ChatFragment
 import media.pixi.appkit.ui.chat.ChatNavigator
 import media.pixi.appkit.ui.chat.ChatPresenter
+import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
+import media.pixi.appkit.ui.chatoptions.ChatOptionsNavigator
+import media.pixi.appkit.ui.chatoptions.ChatOptionsPresenter
 
 @Module
 abstract class ChatModule {
@@ -25,4 +28,11 @@ abstract class ChatModule {
     @Binds
     internal abstract fun chatNavigator(navigator: ChatNavigator): ChatContract.Navigator
 
+    @ActivityScoped
+    @Binds
+    internal abstract fun chatOptionsPresenter(presenter: ChatOptionsPresenter): ChatOptionsContract.Presenter
+
+    @ActivityScoped
+    @Binds
+    internal abstract fun chatOptionsNavigator(navigator: ChatOptionsNavigator): ChatOptionsContract.Navigator
 }

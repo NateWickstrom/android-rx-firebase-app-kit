@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import media.pixi.appkit.R
 import media.pixi.appkit.ui.chat.viewholders.ImageMessageViewHolder
-import media.pixi.appkit.ui.chat.viewholders.LocationMessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.MessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.TextMessageViewHolder
-import timber.log.Timber
 
 
-class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerView.Adapter<MessageViewHolder>() {
+class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClicked?): RecyclerView.Adapter<MessageViewHolder>() {
+
+    interface OnMessageListItemClicked {
+        fun onMessageListItemClicked(position: Int, item: MessageListItem)
+    }
 
     private val items = mutableListOf<MessageListItem>()
 
@@ -49,17 +51,7 @@ class MessageAdapter(private val presenter: ChatContract.Presenter): RecyclerVie
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
-
-        when (holder) {
-            is TextMessageViewHolder ->
-                holder.setOnClickListener { presenter.onTextClicked(position, item) }
-            is ImageMessageViewHolder ->
-                holder.itemView.setOnClickListener { presenter.onImageClicked(position, item) }
-            is LocationMessageViewHolder ->
-                holder.itemView.setOnClickListener { presenter.onLocationClicked(position, item) }
-            else ->
-                Timber.w(TAG, "unhandled click event for: ${holder.javaClass.simpleName}")
-        }
+        holder.setOnClickListener { onMessageListItemClicked?.onMessageListItemClicked(position, item) }
     }
 
     override fun getItemCount(): Int {

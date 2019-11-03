@@ -105,6 +105,9 @@ dependencies {
     implementation deps.rxjava2
     implementation deps.rx_android
 
+    implementation 'com.github.piasy:BigImageViewer:1.6.1'
+    implementation 'com.github.piasy:GlideImageLoader:1.6.1'
+
     implementation 'com.facebook.fresco:fresco:1.11.0'
     implementation deps.glide
     implementation deps.image_cropper

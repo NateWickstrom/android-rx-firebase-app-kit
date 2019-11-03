@@ -13,6 +13,7 @@ import media.pixi.appkit.ui.chats.ChatsActivity
 import media.pixi.appkit.ui.develop.DevelopActivity
 import media.pixi.appkit.ui.devices.DevicesActivity
 import media.pixi.appkit.ui.friends.FriendsActivity
+import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import media.pixi.appkit.ui.myprofile.ProfileActivity
 import media.pixi.appkit.ui.notifications.NotificationsActivity
 import media.pixi.appkit.ui.passwordforgot.PasswordForgotActivity
@@ -103,4 +104,7 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [PasswordResetModule::class])
     internal abstract fun passwordResetActivity(): PasswordResetActivity
 
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [ImageViewerModule::class])
+    internal abstract fun imageViewerActivity(): ImageViewerActivity
 }

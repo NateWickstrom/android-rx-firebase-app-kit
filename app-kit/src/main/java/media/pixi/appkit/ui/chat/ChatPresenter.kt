@@ -1,5 +1,6 @@
 package media.pixi.appkit.ui.chat
 
+import android.app.Activity
 import media.pixi.appkit.domain.chats.ImageMessage
 import media.pixi.appkit.domain.chats.MessageReadStatus
 import media.pixi.appkit.domain.chats.MessageSendStatus
@@ -8,7 +9,7 @@ import org.joda.time.DateTime
 import timber.log.Timber
 import javax.inject.Inject
 
-class ChatPresenter @Inject constructor() : ChatContract.Presenter {
+class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navigator) : ChatContract.Presenter {
 
     private var view: ChatContract.View? = null
     private var results = mutableListOf<MessageListItem>()
@@ -51,11 +52,15 @@ class ChatPresenter @Inject constructor() : ChatContract.Presenter {
     }
 
     override fun onImageClicked(position: Int, item: MessageListItem) {
-        view?.showImageSpeedDial(item)
+
     }
 
     override fun onLocationClicked(position: Int, item: MessageListItem) {
         view?.showLocationSpeedDial(item)
+    }
+
+    override fun onOptionsClicked(activity: Activity) {
+        navigator.showOptions(activity)
     }
 
     private fun onResult(results: List<MessageListItem>) {

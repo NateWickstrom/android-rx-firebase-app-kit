@@ -1,5 +1,6 @@
 package media.pixi.appkit.ui.chat
 
+import android.app.Activity
 import media.pixi.appkit.ui.BasePresenter
 import media.pixi.appkit.ui.BaseView
 
@@ -24,9 +25,15 @@ interface ChatContract {
         fun onImageClicked(position: Int, item: MessageListItem)
 
         fun onLocationClicked(position: Int, item: MessageListItem)
+
+        fun onOptionsClicked(activity: Activity)
     }
 
     interface Navigator {
+
+        fun showOptions(activity: Activity)
+
+        fun showImage(activity: Activity)
 
     }
 }

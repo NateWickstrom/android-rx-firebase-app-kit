@@ -123,6 +123,12 @@
             android:name="media.pixi.appkit.ui.chatcreator.ChatCreatorActivity"/>
 
         <activity
+            android:label="@string/image_viewer"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.splash.SplashActivity"
+            android:name="media.pixi.appkit.ui.imageviewer.ImageViewerActivity"/>
+
+        <activity
                 android:theme="@style/AppTheme.NoActionBar"
                 android:name="media.pixi.appkit.ui.signin.SignInActivity"/>
 

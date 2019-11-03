@@ -79,6 +79,7 @@
     <string name="my_friends">My Friends</string>
     <string name="chat">Chat</string>
     <string name="chats">Chats</string>
+    <string name="image_viewer">Image Viewer</string>
     <string name="new_conversation">New Conversation</string>
     <string name="new_conversation_hint">type a name&#8230;</string>
 

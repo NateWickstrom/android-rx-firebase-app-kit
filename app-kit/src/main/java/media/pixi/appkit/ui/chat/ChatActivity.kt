@@ -6,6 +6,7 @@ import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
+import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
 import media.pixi.appkit.utils.ActivityUtils
 import javax.inject.Inject
 import pub.devrel.easypermissions.EasyPermissions
@@ -15,6 +16,8 @@ class ChatActivity : DaggerAppCompatActivity() {
     lateinit var fragment: ChatFragment
         @Inject set
     lateinit var presenter: ChatPresenter
+        @Inject set
+    lateinit var optionsPresenter: ChatOptionsContract.Presenter
         @Inject set
     lateinit var navigator: ChatContract.Navigator
         @Inject set

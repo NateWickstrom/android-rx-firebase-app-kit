@@ -1,6 +1,8 @@
 package media.pixi.appkit.example
 
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -30,6 +32,7 @@ class App : DaggerApplication(), AppKitInjector {
         super.onCreate()
         FirebaseApp.initializeApp(this)
         Fresco.initialize(this)
+        BigImageViewer.initialize(GlideImageLoader.with(this))
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

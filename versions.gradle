@@ -147,6 +147,7 @@ deps.firebase = firebase
 ext.deps = deps
 
 def addRepos(RepositoryHandler handler) {
+    handler.maven { url  "http://dl.bintray.com/piasy/maven" }
     handler.google()
     handler.jcenter()
     handler.maven { url "https://jitpack.io" }
