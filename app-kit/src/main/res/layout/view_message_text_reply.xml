@@ -46,8 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoLink="all"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:background="@drawable/message_received_3"
+            android:textIsSelectable="true"
             tools:text="I want you to use all your powers, and all your skills. I don't want his mother to see him this way. [pulls sheet to reveal Sonny's bullet-ridden body] Look how they massacred my boy." />
 
     </LinearLayout>
