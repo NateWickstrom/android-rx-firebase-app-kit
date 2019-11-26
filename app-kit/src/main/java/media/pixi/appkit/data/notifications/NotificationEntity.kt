@@ -1,3 +1,5 @@
 package media.pixi.appkit.data.notifications
 
-data class NotificationEntity(val type: NotificationType, val id: String, val userId: String)
+import com.google.firebase.Timestamp
+
+data class NotificationEntity(val type: NotificationType, val id: String, val userId: String, val timestamp: Timestamp)

@@ -1,6 +1,6 @@
 package media.pixi.appkit.data.notifications
 
-enum class NotificationType(private val type: String) {
+enum class NotificationType(val type: String) {
     UNKNOWN("unknown"),
     FRIEND_REQUEST("friend_request"),
     NEW_FRIEND("new_friend");

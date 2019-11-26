@@ -5,12 +5,14 @@ import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.notifications.NotificationProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.domain.notifications.AcceptFriendRequest
+import media.pixi.appkit.domain.notifications.AddNotifications
 import media.pixi.appkit.domain.notifications.GetNotifications
 import media.pixi.appkit.domain.notifications.Notification
 import timber.log.Timber
 import javax.inject.Inject
 
 class NotificationsPresenter @Inject constructor(private var getNotifications: GetNotifications,
+                                                 private val addNotifications: AddNotifications,
                                                  private val notificationProvider: NotificationProvider,
                                                  private val acceptFriendRequest: AcceptFriendRequest,
                                                  private var userProfileProvider: UserProfileProvider,
@@ -82,8 +84,13 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
     private fun add(notification: Notification, position: Int) {
         notifications?.add(position, notification)
         view?.setResults(notifications!!)
-        view?.loading = false
+        view?.loading = true
         view?.hasResults = notifications.isNullOrEmpty().not()
+        disposable.add(addNotifications.addNotification(notification)
+            .subscribe(
+                { onRestoreComplete() },
+                this::onError
+            ))
     }
 
     private fun onAcceptFriendRequestComplete(notification: Notification, position: Int) {
@@ -108,6 +115,11 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
     private fun onError(error: Throwable) {
         Timber.e(error)
         view?.error = error.message?: "Oops, error"
+        view?.loading = false
+        view?.hasResults = notifications.isNullOrEmpty().not()
+    }
+
+    private fun onRestoreComplete() {
         view?.loading = false
         view?.hasResults = notifications.isNullOrEmpty().not()
     }

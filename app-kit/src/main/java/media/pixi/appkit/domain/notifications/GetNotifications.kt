@@ -41,14 +41,16 @@ class GetNotifications @Inject constructor(private val notificationProvider: Not
                 imageUrl = userProfile.imageUrl,
                 title = "Friend Request",
                 subtitle = "${userProfile.firstName} ${userProfile.lastName}",
-                userProfile = userProfile)
+                userProfile = userProfile,
+                entity = entity)
             (NotificationType.NEW_FRIEND) ->
                 NewFriendNotification(
                     id = entity.id,
                     imageUrl = userProfile.imageUrl,
                     title = "New Friend",
                     subtitle = "${userProfile.firstName} ${userProfile.lastName}",
-                    userProfile = userProfile)
+                    userProfile = userProfile,
+                    entity = entity)
 
             else -> throw IllegalArgumentException("unknown NotificationEntity type: $entity")
         }

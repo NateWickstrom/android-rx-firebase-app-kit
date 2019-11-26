@@ -8,4 +8,7 @@ interface NotificationProvider {
     fun getNotifications(): Flowable<List<NotificationEntity>>
 
     fun deleteNotification(notificationId: String): Completable
+
+    fun addNotification(notification: NotificationEntity): Completable
+
 }
