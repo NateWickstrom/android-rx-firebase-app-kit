@@ -2,19 +2,8 @@ Work in progress for building a bunch of reusable app components for working wit
 
 TODOs:
 
-Various bug/todos
+Various bugs/todos
 - notification types (new friend / friend request)
-
-- handle pull to refresh
-    - search
-    - friends
-    - notifications
-
-- pagination
-    - search
-    - friends
-    - notifications
-
 - no network
 - 'Add friend' checks if request sent
 
@@ -60,3 +49,11 @@ Polish
 - more settings
 - standard error messaging
 - theme color changing
+- handle pull to refresh
+    - search
+    - friends
+    - notifications
+- pagination
+    - search
+    - friends
+    - notifications

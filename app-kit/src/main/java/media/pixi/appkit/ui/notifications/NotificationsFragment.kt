@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
-import media.pixi.appkit.domain.notifications.Notification
+import media.pixi.appkit.domain.notifications.MyNotification
 import media.pixi.appkit.ui.SwipeToDeleteCallback
 import javax.inject.Inject
 
@@ -75,11 +75,11 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
         presenter.takeView(this)
     }
 
-    override fun setResults(results: List<Notification>) {
+    override fun setResults(results: List<MyNotification>) {
         adapter.add(results)
     }
 
-    override fun set(position: Int, notification: Notification) {
+    override fun set(position: Int, notification: MyNotification) {
         adapter.set(position, notification)
     }
 

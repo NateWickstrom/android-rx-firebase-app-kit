@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.appkit__item_notification_friend_request.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.notifications.FriendRequestNotification
-import media.pixi.appkit.domain.notifications.Notification
+import media.pixi.appkit.domain.notifications.MyNotification
 import media.pixi.appkit.utils.ImageUtils
 import java.util.*
 
 class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.NotificationListItemViewHolder>() {
 
-    var onClickListener: ((Notification, Int) -> Unit)? = null
-    var onLongClickListener: ((Notification, Int) -> Unit)? = null
-    var onActionClickListener: ((Notification, Int) -> Unit)? = null
+    var onClickListener: ((MyNotification, Int) -> Unit)? = null
+    var onLongClickListener: ((MyNotification, Int) -> Unit)? = null
+    var onActionClickListener: ((MyNotification, Int) -> Unit)? = null
 
-    private val hits = ArrayList<Notification>()
+    private val hits = ArrayList<MyNotification>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationListItemViewHolder {
         val layout = when(viewType) {
@@ -47,17 +47,17 @@ class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.Notifica
         }
     }
 
-    fun add(result: Notification) {
+    fun add(result: MyNotification) {
         hits.add(result)
         notifyDataSetChanged()
     }
 
-    fun set(position: Int, result: Notification) {
+    fun set(position: Int, result: MyNotification) {
         hits[position] = result
         notifyDataSetChanged()
     }
 
-    fun add(results: List<Notification>) {
+    fun add(results: List<MyNotification>) {
         hits.addAll(results)
         notifyDataSetChanged()
     }
@@ -67,17 +67,17 @@ class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.Notifica
         notifyItemRemoved(position)
     }
 
-    private fun getItemAt(position: Int): Notification {
+    private fun getItemAt(position: Int): MyNotification {
         return hits[position]
     }
 
     abstract class NotificationListItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        abstract fun bind(item: Notification)
+        abstract fun bind(item: MyNotification)
     }
 
     inner class FriendRequest(itemView: View): NotificationListItemViewHolder(itemView) {
 
-        override fun bind(item: Notification) = with(itemView) {
+        override fun bind(item: MyNotification) = with(itemView) {
             ImageUtils.setUserImage(itemView.image, item.imageUrl)
             itemView.title.text = item.title
             itemView.subtitle.text = item.subtitle
@@ -95,7 +95,7 @@ class NotificationsAdapter(): RecyclerView.Adapter<NotificationsAdapter.Notifica
 
     inner class NewFriend(itemView: View): NotificationListItemViewHolder(itemView) {
 
-        override fun bind(item: Notification) = with(itemView) {
+        override fun bind(item: MyNotification) = with(itemView) {
             ImageUtils.setUserImage(itemView.image, item.imageUrl)
             itemView.title.text = item.title
             itemView.subtitle.text = item.subtitle

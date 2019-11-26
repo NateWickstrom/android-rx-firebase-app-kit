@@ -8,6 +8,8 @@ import com.google.firebase.firestore.QuerySnapshot
 import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Single
 
 class FirebaseNotificationProvider: NotificationProvider {
 
@@ -23,6 +25,17 @@ class FirebaseNotificationProvider: NotificationProvider {
         return RxFirestore.getCollection(ref)
             .toFlowable()
             .map { toList(it) }
+    }
+
+    override fun getNotification(notificationId: String): Maybe<NotificationEntity> {
+        val userId = auth.currentUser!!.uid
+        val ref = firestore.
+            collection(NOTIFICATIONS)
+            .document(userId)
+            .collection(NOTIFICATIONS)
+            .document(notificationId)
+
+        return RxFirestore.getDocument(ref).map { toNotificationEntity(it) }
     }
 
     override fun deleteNotification(notificationId: String): Completable {

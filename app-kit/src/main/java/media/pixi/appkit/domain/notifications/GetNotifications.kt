@@ -12,16 +12,22 @@ import javax.inject.Inject
 class GetNotifications @Inject constructor(private val notificationProvider: NotificationProvider,
                                            private val userProfileProvider: UserProfileProvider) {
 
-    fun getNotifications(): Flowable<List<Notification>> {
+    fun getNotifications(): Flowable<List<MyNotification>> {
         return notificationProvider.getNotifications()
             .flatMap { toProfiles(it) }
     }
 
-    private fun toProfiles(notes: List<NotificationEntity>) : Flowable<List<Notification>> {
+    fun getNotification(notificationId: String): Flowable<MyNotification> {
+        return notificationProvider.getNotification(notificationId)
+            .toFlowable()
+            .flatMap { createNote(it) }
+    }
+
+    private fun toProfiles(notes: List<NotificationEntity>) : Flowable<List<MyNotification>> {
         return zip(notes.map(this::createNote))
     }
 
-    private fun createNote(note: NotificationEntity): Flowable<Notification> {
+    private fun createNote(note: NotificationEntity): Flowable<MyNotification> {
         return Flowable.zip(
             userProfileProvider.observerUserProfile(note.userId),
             Flowable.just(note),
@@ -29,11 +35,11 @@ class GetNotifications @Inject constructor(private val notificationProvider: Not
         )
     }
 
-    private fun zip(list: List<Flowable<Notification>>): Flowable<List<Notification>> {
-        return Flowable.zipIterable(list, { it.map { it as Notification } }, true, 1)
+    private fun zip(list: List<Flowable<MyNotification>>): Flowable<List<MyNotification>> {
+        return Flowable.zipIterable(list, { it.map { it as MyNotification } }, true, 1)
     }
 
-    private fun toNotification(userProfile: UserProfile, entity: NotificationEntity): Notification {
+    private fun toNotification(userProfile: UserProfile, entity: NotificationEntity): MyNotification {
         return when (entity.type) {
             (NotificationType.FRIEND_REQUEST) ->
                 FriendRequestNotification(
@@ -56,9 +62,9 @@ class GetNotifications @Inject constructor(private val notificationProvider: Not
         }
     }
 
-    private inner class MyZipper: BiFunction<UserProfile, NotificationEntity, Notification> {
+    private inner class MyZipper: BiFunction<UserProfile, NotificationEntity, MyNotification> {
 
-        override fun apply(user: UserProfile, entity: NotificationEntity): Notification {
+        override fun apply(user: UserProfile, entity: NotificationEntity): MyNotification {
             return toNotification(user, entity)
         }
     }

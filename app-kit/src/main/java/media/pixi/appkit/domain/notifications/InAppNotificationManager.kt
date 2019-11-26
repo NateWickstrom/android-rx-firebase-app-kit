@@ -1,4 +1,4 @@
-package media.pixi.appkit.data.notifications
+package media.pixi.appkit.domain.notifications
 
 import android.annotation.TargetApi
 import android.app.Notification
@@ -10,29 +10,21 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import media.pixi.appkit.R
+import timber.log.Timber
 import javax.inject.Inject
 
 
-class InAppNotificationManager @Inject constructor(private val context: Context) {
+class InAppNotificationManager @Inject constructor(private val context: Context,
+                                                   private val getNotifications: GetNotifications) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
-    fun sendNotification(title: String, content: String, priority: Int) {
-
-        val notification =
-            NotificationCompat.Builder(context, PUSH_DEFAULT_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_build_24px)
-                .setTicker(content)
-                .setContentText(content)
-                .setContentTitle(title)
-                .setAutoCancel(true)
-                //.setLargeIcon(thumbnailBitmap)
-                .setContentIntent(intent())
-                .setWhen(System.currentTimeMillis())
-                .setPriority(priority)
-                .build()
-
-        createNotification(PUSH_DEFAULT_ID, notification)
+    fun sendNotification(notificationId: String) {
+        getNotifications.getNotification(notificationId)
+            .subscribe(
+                this::onNotificationResult,
+                this::onError
+            )
     }
 
     fun clearNotification() {
@@ -71,6 +63,28 @@ class InAppNotificationManager @Inject constructor(private val context: Context)
         // Register the channel with the system; you can't change the importance
         // or other notification behaviors after this
         notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun onNotificationResult(notification: MyNotification) {
+
+        val notification =
+            NotificationCompat.Builder(context, PUSH_DEFAULT_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_build_24px)
+                .setTicker(notification.title)
+                .setContentText(notification.subtitle)
+                .setContentTitle(notification.title)
+                .setAutoCancel(true)
+                //.setLargeIcon(thumbnailBitmap)
+                .setContentIntent(intent())
+                .setWhen(System.currentTimeMillis())
+                .setPriority(0)
+                .build()
+
+        createNotification(PUSH_DEFAULT_ID, notification)
+    }
+
+    private fun onError(error: Throwable) {
+        Timber.e(error)
     }
 
     companion object {

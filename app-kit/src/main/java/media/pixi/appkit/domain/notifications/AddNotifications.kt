@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class AddNotifications @Inject constructor(private val notificationProvider: NotificationProvider) {
 
-    fun addNotification(notification: Notification): Completable {
+    fun addNotification(notification: MyNotification): Completable {
         return notificationProvider.addNotification(notification.entity)
     }
 }

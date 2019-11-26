@@ -3,7 +3,7 @@ package media.pixi.appkit.domain
 import io.reactivex.Completable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.devices.DevicesProvider
-import media.pixi.appkit.data.notifications.InAppNotificationManager
+import media.pixi.appkit.domain.notifications.InAppNotificationManager
 import javax.inject.Inject
 
 class SignOut @Inject constructor(private var notificationManager: InAppNotificationManager,

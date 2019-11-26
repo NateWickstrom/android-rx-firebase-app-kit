@@ -7,7 +7,7 @@ import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.domain.notifications.AcceptFriendRequest
 import media.pixi.appkit.domain.notifications.AddNotifications
 import media.pixi.appkit.domain.notifications.GetNotifications
-import media.pixi.appkit.domain.notifications.Notification
+import media.pixi.appkit.domain.notifications.MyNotification
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
     private val disposable = CompositeDisposable()
 
     private var view: NotificationsContract.View? = null
-    private var notifications: ArrayList<Notification>? = null
+    private var notifications: ArrayList<MyNotification>? = null
 
     override fun takeView(view: NotificationsContract.View) {
         this.view = view
@@ -40,15 +40,15 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         disposable.dispose()
     }
 
-    override fun onItemClicked(activity: Activity, notification: Notification, position: Int) {
+    override fun onItemClicked(activity: Activity, notification: MyNotification, position: Int) {
         navigator.showProfile(activity, notification.userProfile)
     }
 
-    override fun onItemLongClicked(activity: Activity, notification: Notification, position: Int) {
+    override fun onItemLongClicked(activity: Activity, notification: MyNotification, position: Int) {
         navigator.showProfile(activity, notification.userProfile)
     }
 
-    override fun onAcceptFriendRequestClicked(notification: Notification, position: Int) {
+    override fun onAcceptFriendRequestClicked(notification: MyNotification, position: Int) {
         view?.loading = true
         disposable.add(userProfileProvider.addFriend(notification.userProfile.id)
             .subscribe(
@@ -63,7 +63,7 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
             val notification = it[position]
             it.removeAt(position)
 
-            view?.showMessage("Deleted Notification") {
+            view?.showMessage("Deleted MyNotification") {
                 add(notification, position)
             }
 
@@ -76,12 +76,12 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         }
     }
 
-    private fun onDeleteComplete(notification: Notification, position: Int) {
+    private fun onDeleteComplete(notification: MyNotification, position: Int) {
         view?.loading = false
         view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
-    private fun add(notification: Notification, position: Int) {
+    private fun add(notification: MyNotification, position: Int) {
         notifications?.add(position, notification)
         view?.setResults(notifications!!)
         view?.loading = true
@@ -93,13 +93,13 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
             ))
     }
 
-    private fun onAcceptFriendRequestComplete(notification: Notification, position: Int) {
+    private fun onAcceptFriendRequestComplete(notification: MyNotification, position: Int) {
         view?.loading = false
         notifications?.removeAt(position)
         view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
-    private fun onResult(results: List<Notification>) {
+    private fun onResult(results: List<MyNotification>) {
         notifications?.clear()
         notifications = ArrayList(results)
         view?.setResults(results)

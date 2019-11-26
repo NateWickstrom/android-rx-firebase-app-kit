@@ -8,7 +8,7 @@ import media.pixi.appkit.AppKitInjector
 import media.pixi.appkit.data.MessageBus
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.devices.DevicesProvider
-import media.pixi.appkit.data.notifications.InAppNotificationManager
+import media.pixi.appkit.domain.notifications.InAppNotificationManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -67,7 +67,13 @@ class AppKitNotificationService: FirebaseMessagingService() {
         val content = remoteMessage.notification?.body!!
         val priority = remoteMessage.priority
 
-        notificationManager.sendNotification(title, content, priority)
+        val data = remoteMessage.data
+        val notificationId = data[NOTIFICATION_ID]
+        notificationManager.sendNotification(notificationId!!)
+    }
+
+    companion object {
+        private const val NOTIFICATION_ID = "notificationId"
     }
 
 }

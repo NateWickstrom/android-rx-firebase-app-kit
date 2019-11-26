@@ -10,4 +10,4 @@ data class FriendRequestNotification(
     override val subtitle: String,
     override val userProfile: UserProfile,
     override val entity: NotificationEntity
-) : Notification
+) : MyNotification
