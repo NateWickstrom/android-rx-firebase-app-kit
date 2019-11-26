@@ -3,7 +3,6 @@ Work in progress for building a bunch of reusable app components for working wit
 TODOs:
 
 Various bug/todos
-- signout removes all notifications
 - on register device for notifications errors
 - notification types (new friend / friend request)
 - handle empty states
