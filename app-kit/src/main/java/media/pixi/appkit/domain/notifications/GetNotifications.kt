@@ -23,7 +23,7 @@ class GetNotifications @Inject constructor(private val notificationProvider: Not
 
     private fun createNote(note: NotificationEntity): Flowable<Notification> {
         return Flowable.zip(
-            userProfileProvider.observerUserProfile(note.id),
+            userProfileProvider.observerUserProfile(note.userId),
             Flowable.just(note),
             MyZipper()
         )

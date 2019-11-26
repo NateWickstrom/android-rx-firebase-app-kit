@@ -41,8 +41,8 @@ class FirebaseNotificationProvider: NotificationProvider {
     private fun toNotificationEntity(doc: DocumentSnapshot): NotificationEntity {
         val type = doc.getString("type") ?: "unkown"
         val noteType = NotificationType.toEnum(type)
-        val id = doc.getString("user_id") ?: "unknown"
-        return NotificationEntity(type = noteType, id = id)
+        val userId = doc.getString("user_id") ?: "unknown"
+        return NotificationEntity(type = noteType, id = doc.id, userId = userId)
     }
 
     companion object {

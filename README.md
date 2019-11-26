@@ -4,7 +4,7 @@ TODOs:
 
 Various bug/todos
 - notification types (new friend / friend request)
-- delete notifications
+- undo delete notifications
 
 - handle pull to refresh
     - search
