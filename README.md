@@ -5,6 +5,7 @@ TODOs:
 Various bug/todos
 - signout removes all notifications
 - on register device for notifications errors
+- notification types (new friend / friend request)
 - handle empty states
 - handle pull to refresh
 - handle notification types
