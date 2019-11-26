@@ -2,13 +2,20 @@ Work in progress for building a bunch of reusable app components for working wit
 
 TODOs:
 
+Various bug/todos
+- signout removes all notifications
+- on register device for notifications errors
+- handle empty states
+- handle pull to refresh
+- handle notification types
+- no network
+- better app icon
+- better notification icon
+- pagination
+- 'Add friend' checks if request sent
+
 Social
-- accept friend request
-- deny friend request
-- block friend request
-- cancel friend request
-- view friends
-- friends count
+- server side friend cnt
 
 Messaging
 - start chat
@@ -35,7 +42,6 @@ Backend
 
 Utils
 - force update
-- no network
 - notification channels
 - dark mode
 - server side search keys

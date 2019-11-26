@@ -38,12 +38,6 @@ class FirebaseUserProfileProvider: UserProfileProvider {
         return RxFirestore.deleteDocument(ref)
     }
 
-    override fun block(userId: String): Completable {
-        val request = request(userId)
-        val ref = firestore.collection(BLOCKED_REQUEST).document()
-        return RxFirestore.setDocument(ref, request)
-    }
-
     override fun isFriend(userId: String): Flowable<Boolean> {
         val ref = firestore.collection(FRIENDS)
             .document(currentUserId())
@@ -92,6 +86,5 @@ class FirebaseUserProfileProvider: UserProfileProvider {
         private const val BLOCKED = "blocked"
 
         private const val FRIEND_REQUEST = "friend_requests"
-        private const val BLOCKED_REQUEST = "block_request"
     }
 }

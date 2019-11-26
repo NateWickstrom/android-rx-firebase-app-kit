@@ -11,8 +11,6 @@ interface UserProfileProvider {
 
     fun unFriend(userId: String): Completable
 
-    fun block(userId: String): Completable
-
     fun isFriend(userId: String): Flowable<Boolean>
 
     fun isBlocked(userId: String): Flowable<Boolean>
