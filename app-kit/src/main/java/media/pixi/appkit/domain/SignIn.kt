@@ -11,7 +11,8 @@ class SignIn @Inject constructor(private var authProvider: AuthProvider,
 
     fun signIn(email: String, password: String): Completable {
         return authProvider.signIn(email, password)
-            // TODO bug with completion before signed in user actually available
+            // there is a bug with completion before the signed in user is actually available,
+            // so we have to wait for it to sync-up
             .delay(DELAY, TimeUnit.SECONDS)
             .andThen(devicesProvider.registerDevice())
             .doOnError { authProvider.signOut() }

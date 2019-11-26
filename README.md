@@ -13,6 +13,7 @@ Various bug/todos
 - better notification icon
 - pagination
 - 'Add friend' checks if request sent
+- better login error handling
 
 Social
 - server side friend cnt
