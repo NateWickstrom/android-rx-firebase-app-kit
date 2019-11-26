@@ -13,8 +13,6 @@ interface SearchContract {
         fun addHits(results: PeopleSearchResult)
         fun clear(shouldNotify: Boolean)
         fun showNoResults(show: Boolean)
-        fun showEmptyState(show: Boolean)
-        fun showResults(show: Boolean)
     }
 
     interface Presenter {

@@ -76,17 +76,20 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
 
     private fun onDeleteComplete(notification: Notification, position: Int) {
         view?.loading = false
+        view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
     private fun add(notification: Notification, position: Int) {
         notifications?.add(position, notification)
         view?.setResults(notifications!!)
         view?.loading = false
+        view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
     private fun onAcceptFriendRequestComplete(notification: Notification, position: Int) {
         view?.loading = false
         notifications?.removeAt(position)
+        view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
     private fun onResult(results: List<Notification>) {
@@ -94,15 +97,18 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         notifications = ArrayList(results)
         view?.setResults(results)
         view?.loading = false
+        view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
     private fun onComplete() {
         view?.loading = false
+        view?.hasResults = notifications.isNullOrEmpty().not()
     }
 
     private fun onError(error: Throwable) {
         Timber.e(error)
         view?.error = error.message?: "Oops, error"
         view?.loading = false
+        view?.hasResults = notifications.isNullOrEmpty().not()
     }
 }

@@ -30,6 +30,8 @@ class SearchPresenter @Inject constructor(private val searchProvider: SearchProv
     }
 
     override fun search(query: String) {
+        view?.showNoResults(false)
+
         if (query.isBlank()) {
             view?.clear(true)
         } else {

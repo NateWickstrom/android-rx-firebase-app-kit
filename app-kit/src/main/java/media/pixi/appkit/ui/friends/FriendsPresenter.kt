@@ -1,7 +1,6 @@
 package media.pixi.appkit.ui.friends
 
 import android.app.Activity
-import android.util.Log
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.profile.UserProfile
@@ -18,6 +17,8 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
     private var view: FriendsContract.View? = null
     private var disposables = CompositeDisposable()
 
+    private var friends: List<UserProfile>? = null
+
     override fun takeView(view: FriendsContract.View) {
         this.view = view
         view.loading = true
@@ -25,7 +26,8 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
         userId?.let { userId ->
             disposables.add(getFriends.getFriendsForUser(userId).subscribe(
                 { onResult(it) },
-                { onError(it) }
+                { onError(it) },
+                { onComplete() }
             ))
         }
     }
@@ -43,14 +45,21 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
         }
     }
 
+    private fun onComplete() {
+        view?.loading = false
+        view?.showNoResults(friends?.isEmpty() ?: true)
+    }
+
     private fun onResult(friends: List<UserProfile>) {
         view?.loading = false
         view?.setResults(friends)
+        view?.showNoResults(friends.isEmpty())
     }
 
     private fun onError(error: Throwable) {
         view?.loading = false
         view?.error = error.message.toString()
+        view?.showNoResults(true)
         Timber.e(error)
     }
 

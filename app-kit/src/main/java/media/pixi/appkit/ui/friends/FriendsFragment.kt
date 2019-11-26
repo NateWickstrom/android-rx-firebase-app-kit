@@ -65,4 +65,9 @@ class FriendsFragment @Inject constructor(): DaggerFragment(), FriendsContract.V
             adapter.addAll(results)
         }
     }
+
+    override fun showNoResults(show: Boolean) {
+        empty_message.setText(R.string.no_friends)
+        empty_message.visibility = if (show) View.VISIBLE else View.GONE
+    }
 }

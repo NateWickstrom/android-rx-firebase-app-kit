@@ -55,14 +55,7 @@ class SearchFragment @Inject constructor(): DaggerFragment(), SearchContract.Vie
     }
 
     override fun showNoResults(show: Boolean) {
+        empty_message.setText(R.string.search__no_results)
         empty_message.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun showEmptyState(show: Boolean) {
-
-    }
-
-    override fun showResults(show: Boolean) {
-
     }
 }

@@ -12,7 +12,7 @@ interface FriendsContract {
         var loading: Boolean
 
         fun setResults(results: List<UserProfile>)
-
+        fun showNoResults(show: Boolean)
     }
 
     interface Presenter: BasePresenter<View> {

@@ -21,6 +21,7 @@ class NotificationsFragment @Inject constructor(): DaggerFragment(), Notificatio
     override var hasResults: Boolean
         get() = false
         set(value) {
+            viewOfLayout.empty_message.setText(R.string.no_notifications)
             viewOfLayout.empty_message.visibility = if (value) View.GONE else View.VISIBLE
         }
 
