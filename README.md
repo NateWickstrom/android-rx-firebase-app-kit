@@ -3,7 +3,6 @@ Work in progress for building a bunch of reusable app components for working wit
 TODOs:
 
 Various bug/todos
-- on register device for notifications errors
 - notification types (new friend / friend request)
 - handle empty states
 - handle pull to refresh
@@ -13,7 +12,7 @@ Various bug/todos
 - better notification icon
 - pagination
 - 'Add friend' checks if request sent
-- better login error handling
+- better login error messaging
 
 Social
 - server side friend cnt
