@@ -17,6 +17,8 @@ class FirebaseNotificationProvider: NotificationProvider {
         val userId = auth.currentUser!!.uid
         val ref = firestore.collection(NOTIFICATIONS)
             .document(userId).collection(NOTIFICATIONS)
+            .orderBy(TIMESTAMP)
+
         return RxFirestore.getCollection(ref)
             .toFlowable()
             .map { toList(it) }
@@ -45,5 +47,8 @@ class FirebaseNotificationProvider: NotificationProvider {
 
     companion object {
         private const val NOTIFICATIONS = "notifications"
+
+        private const val TIMESTAMP = "timestamp"
+
     }
 }

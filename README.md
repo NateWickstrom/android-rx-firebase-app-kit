@@ -5,14 +5,22 @@ TODOs:
 Various bug/todos
 - notification types (new friend / friend request)
 - handle empty states
+    - friends
+    - search
+    - notifications
+
 - handle pull to refresh
-- handle notification types
-- no network
-- better app icon
-- better notification icon
+    - search
+    - friends
+    - notifications
+
 - pagination
+    - search
+    - friends
+    - notifications
+
+- no network
 - 'Add friend' checks if request sent
-- better login error messaging
 
 Social
 - server side friend cnt
@@ -48,8 +56,11 @@ Utils
 - server side maps keys
 
 Polish
+- better app icon
+- better notification icon
 - better profile page
 - better landing page
+- better login error messaging
 - more settings
 - standard error messaging
 - theme color changing

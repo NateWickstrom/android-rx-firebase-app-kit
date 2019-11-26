@@ -23,6 +23,7 @@ class AccountPresenter @Inject constructor(
     override fun takeView(view: AccountContract.View) {
         this.view = view
 
+        view.loading = true
         disposables.add(authProvider.observerLoggedInUser()
             .subscribe(
                 { onResult(it) },
