@@ -17,6 +17,8 @@ interface ChatsContract {
         fun onNewChatClicked(activity: Activity)
 
         fun onListItemClicked(activity: Activity, chat: Chat)
+
+        fun onRefresh()
     }
 
     interface Navigator {

@@ -1,6 +1,6 @@
 Work in progress for building a bunch of reusable app components for working with Firebase.
 
-TODOs:
+BUGs:
 when no device id for user
 
 Social
@@ -32,7 +32,6 @@ Backend
 
 Utils
 - force update
-- notification channels
 - dark mode
 - server side search keys
 - server side maps keys

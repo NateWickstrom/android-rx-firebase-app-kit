@@ -26,6 +26,11 @@ class ChatsPresenter @Inject constructor(val navigator: ChatsNavigator) : ChatsC
         navigator.showChat(activity, chat.id)
     }
 
+    override fun onRefresh() {
+        view?.loading = true
+        loadFakeChats()
+    }
+
     private fun onResult(results: List<Chat>) {
         view?.loading = false
         view?.setResults(results)
