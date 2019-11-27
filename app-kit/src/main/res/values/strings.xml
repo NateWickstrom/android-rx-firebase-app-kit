@@ -10,8 +10,12 @@
     <string name="ok">OK</string>
     <string name="to">TO:</string>
 
-    <string name="notification_channel_title">General</string>
-    <string name="notification_channel_description">These are general notifications</string>
+    <string name="general_notification_channel_title">General</string>
+    <string name="general_notification_channel_description">These are general notifications</string>
+    <string name="friend_request_notification_channel_title">Friendship Requests</string>
+    <string name="friend_request_notification_channel_description">These are notifications regarding connected friends</string>
+    <string name="messages_notification_channel_title">New Messages</string>
+    <string name="messages_notification_channel_description">These are notifications regarding messaging</string>
 
     <string name="account">Account</string>
     <string name="sign_in">Sign In</string>

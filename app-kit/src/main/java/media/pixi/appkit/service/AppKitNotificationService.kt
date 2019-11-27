@@ -8,7 +8,7 @@ import media.pixi.appkit.AppKitInjector
 import media.pixi.appkit.data.MessageBus
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.devices.DevicesProvider
-import media.pixi.appkit.domain.notifications.InAppNotificationManager
+import media.pixi.appkit.domain.notifications.NotificationHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ class AppKitNotificationService: FirebaseMessagingService() {
     @Inject lateinit var devicesProvider: DevicesProvider
     @Inject lateinit var authProvider: AuthProvider
     @Inject lateinit var messageBus: MessageBus
-    @Inject lateinit var notificationManager: InAppNotificationManager
+    @Inject lateinit var notificationHelper: NotificationHelper
 
     override fun onCreate() {
         super.onCreate()
@@ -63,13 +63,9 @@ class AppKitNotificationService: FirebaseMessagingService() {
     }
 
     private fun sendNotification(remoteMessage: RemoteMessage) {
-        val title = remoteMessage.notification?.title!!
-        val content = remoteMessage.notification?.body!!
-        val priority = remoteMessage.priority
-
         val data = remoteMessage.data
         val notificationId = data[NOTIFICATION_ID]
-        notificationManager.sendNotification(notificationId!!)
+        notificationHelper.sendNotification(notificationId!!)
     }
 
     companion object {

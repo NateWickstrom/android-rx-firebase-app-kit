@@ -1,14 +1,11 @@
 Work in progress for building a bunch of reusable app components for working with Firebase.
 
 TODOs:
-
-Various bugs/todos
-- notification types (new friend / friend request)
-- no network
-- 'Add friend' checks if request sent
+when no device id for user
 
 Social
 - server side friend cnt
+- 'Add friend' checks if request sent
 
 Messaging
 - start chat
@@ -41,6 +38,7 @@ Utils
 - server side maps keys
 
 Polish
+- no network
 - better app icon
 - better notification icon
 - better profile page

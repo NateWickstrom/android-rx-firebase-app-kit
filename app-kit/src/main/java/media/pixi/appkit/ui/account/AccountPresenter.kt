@@ -2,7 +2,9 @@ package media.pixi.appkit.ui.account
 
 import android.app.Activity
 import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.AuthUserModel
 import media.pixi.appkit.domain.SignOut
@@ -43,10 +45,13 @@ class AccountPresenter @Inject constructor(
         view?.loading = true
 
         //disposables.set(
-            signOut.signOut().subscribe(
-                { onSignOutResult(WeakReference(activity)) },
-                { onError(it) }
-            )
+            signOut.signOut()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { onSignOutResult(WeakReference(activity)) },
+                    { onError(it) }
+                )
         //)
     }
 

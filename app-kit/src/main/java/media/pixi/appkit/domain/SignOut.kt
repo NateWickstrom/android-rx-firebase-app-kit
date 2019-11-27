@@ -3,10 +3,10 @@ package media.pixi.appkit.domain
 import io.reactivex.Completable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.devices.DevicesProvider
-import media.pixi.appkit.domain.notifications.InAppNotificationManager
+import media.pixi.appkit.domain.notifications.NotificationHelper
 import javax.inject.Inject
 
-class SignOut @Inject constructor(private var notificationManager: InAppNotificationManager,
+class SignOut @Inject constructor(private var notificationHelper: NotificationHelper,
                                   private var authProvider: AuthProvider,
                                   private var devicesProvider: DevicesProvider) {
 
@@ -18,7 +18,7 @@ class SignOut @Inject constructor(private var notificationManager: InAppNotifica
 
     private fun signOutCompletable(): Completable {
         return Completable.fromCallable {
-            notificationManager.clearNotification()
+            notificationHelper.clearNotification()
             authProvider.signOut()
         }
     }
