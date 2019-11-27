@@ -12,13 +12,13 @@ class SignOut @Inject constructor(private var notificationHelper: NotificationHe
 
     fun signOut(): Completable {
         return devicesProvider.unregisterDevice()
+            .andThen(notificationHelper.clearNotification())
             .andThen(signOutCompletable())
             .doOnError { devicesProvider.registerDevice() }
     }
 
     private fun signOutCompletable(): Completable {
         return Completable.fromCallable {
-            notificationHelper.clearNotification()
             authProvider.signOut()
         }
     }

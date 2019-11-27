@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import io.reactivex.Completable
 import media.pixi.appkit.R
 import media.pixi.appkit.data.notifications.NotificationEntity
 import media.pixi.appkit.data.notifications.NotificationProvider
@@ -44,11 +45,16 @@ class NotificationHelper @Inject constructor(private val context: Context,
     }
 
     @WorkerThread
-    fun clearNotification() {
-//        val notifications = notificationProvider.getNotifications().blockingFirst()
-//        notifications.forEach {
-//            notificationManager.cancel(getIntId(it))
-//        }
+    fun clearNotification(): Completable {
+        return notificationProvider.getNotifications()
+            .concatMapCompletable { cancelAll(it) }
+    }
+
+    private fun cancelAll(notifications: List<NotificationEntity>): Completable {
+        notifications.forEach {
+            notificationManager.cancel(getIntId(it))
+        }
+        return Completable.complete()
     }
 
     private fun createNotification(id: Int, notification: Notification) {
