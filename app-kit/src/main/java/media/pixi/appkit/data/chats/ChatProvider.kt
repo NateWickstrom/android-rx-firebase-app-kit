@@ -18,5 +18,7 @@ interface ChatProvider {
 
     fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity>
 
+    fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity>
+
     fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<ChatMessageEntity>
 }

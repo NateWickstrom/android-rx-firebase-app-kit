@@ -67,7 +67,7 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
     }
 
     private fun toMessageListItem(message: ChatMessageEntity): MessageListItem {
-        val message2 = TextMessage(
+        val textMessage = TextMessage(
             id = message.id,
             message = message.text,
             date = DateTime(),
@@ -75,17 +75,17 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
             messageSendStatus = MessageSendStatus.Sent,
             messageReadStatus = MessageReadStatus.READ
         )
-        val isMe = authProvider.getUserId() === message.senderId
+        val sender = message.senderId
+        val me = authProvider.getUserId()
+        val isMe = me.equals(sender)
 
-        val messageListItem2 = MessageListItem(
-            message = message2,
+        return MessageListItem(
+            message = textMessage,
             messageViewHolderType = if (isMe)
                     MessageViewHolderType.MY_TEXT else MessageViewHolderType.THEIR_TEXT,
             sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
             isMe = isMe
         )
-
-        return messageListItem2
     }
 
 }

@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Flowable
@@ -19,27 +20,16 @@ class FirebaseChatProvider: ChatProvider {
 
     override fun getChats(): Flowable<List<ChatEntity>> {
         val currentUserId = auth.currentUser!!.uid
-//        val ref = firestore
-//            .collection(MESSAGING)
-//            .document(THREADS_FOR_USERS)
-//            .collection(THREADS_FOR_USERS)
-//            .document(currentUserId)
-//            .collection(THREADS)
-//
-//        return RxFirestore.getCollection(ref)
-//            .toFlowable()
-//            .map { toStringsList(it) }
-//            .flatMap { getThreadMetadata(it) }
-//            .map { sort(it) }
-
         val ref = firestore
             .collection(MESSAGING)
             .document(THREADS_METADATA)
             .collection(THREADS_METADATA)
             .whereArrayContains(THREAD_USERS, currentUserId)
+//            .orderBy(THREAD_TIMESTAMP, Query.Direction.DESCENDING)
 
         return RxFirestore.getCollection(ref)
             .map { toChatEntities(it.documents) }
+            .map { sort(it) }
             .toFlowable()
     }
 
@@ -107,6 +97,21 @@ class FirebaseChatProvider: ChatProvider {
         return RxFirestore.getDocument(ref).map { toChatMessage(chatId, it) }
     }
 
+    override fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity> {
+        val ref = firestore
+            .collection(MESSAGING)
+            .document(THREADS)
+            .collection(MESSAGES)
+            .document(chatId)
+            .collection(MESSAGES)
+            .orderBy(THREAD_TIMESTAMP, Query.Direction.DESCENDING)
+            .limit(1)
+
+        return RxFirestore.observeQueryRef(ref)
+            .map { toMessageList(chatId, it) }
+            .map { it[0] }
+    }
+
     override fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<ChatMessageEntity> {
         // create chat request
         val map = hashMapOf<String, Any>()
@@ -153,6 +158,7 @@ class FirebaseChatProvider: ChatProvider {
     private fun sort(chats: List<ChatEntity>): List<ChatEntity> {
         val mutableChats = chats.toMutableList()
         mutableChats.sortWith(ComparatorChatEntity())
+        mutableChats.reverse()
         return mutableChats
     }
 

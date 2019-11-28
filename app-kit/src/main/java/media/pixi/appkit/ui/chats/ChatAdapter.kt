@@ -49,6 +49,9 @@ class ChatAdapter: RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
             //ImageUtils.setUserImage(item_image, item.item_image)
             title.text = item.title
             subtitle.text = item.subtitle
+
+            // get latest message
+            // get user profile pics
         }
     }
 }
