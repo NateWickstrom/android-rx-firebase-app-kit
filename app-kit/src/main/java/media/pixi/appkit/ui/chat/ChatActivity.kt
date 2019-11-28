@@ -28,6 +28,12 @@ class ChatActivity : DaggerAppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val chatId = intent.extras?.getString(BUNDLE_CHAT)
+        val userIds = intent.extras?.getCharSequenceArrayList(BUNDLE_USERS)
+
+        presenter.chatId = chatId
+        presenter.userIds = userIds
+
         fragment.presenter = presenter
 
         ActivityUtils.addFragmentToActivity(
@@ -47,10 +53,12 @@ class ChatActivity : DaggerAppCompatActivity() {
 
     companion object {
         private const val BUNDLE_CHAT = "chat_id"
+        private const val BUNDLE_USERS = "users"
 
-        fun launch(activity: Activity, chatId: String) {
+        fun launch(activity: Activity, chatId: String? = null, userIds: ArrayList<CharSequence>? = null) {
             val intent = Intent(activity, ChatActivity::class.java)
-            //intent.putExtra(BUNDLE_CHAT, )
+            intent.putExtra(BUNDLE_CHAT, chatId)
+            intent.putCharSequenceArrayListExtra(BUNDLE_USERS, userIds)
             activity.startActivity(intent)
         }
     }

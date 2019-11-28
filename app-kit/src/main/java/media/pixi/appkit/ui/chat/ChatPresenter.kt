@@ -14,12 +14,18 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
     private var view: ChatContract.View? = null
     private var results = mutableListOf<MessageListItem>()
 
+    var chatId: String? = null
+    var userIds: List<CharSequence>? = null
+
     var id = 5
 
     override fun takeView(view: ChatContract.View) {
         this.view = view
         view.loading = true
         showFakeChat()
+
+        // see if chat exists
+        // if so load it
     }
 
     override fun dropView() {
@@ -27,6 +33,10 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
     }
 
     override fun send(text: String) {
+        // see if chat exists
+        // if so, send message
+        // if not, create it
+
         val message2 = TextMessage(
             id = id.toString(),
             message = text,

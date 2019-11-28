@@ -25,7 +25,7 @@ interface ChatCreatorContract {
     }
 
     interface Navigator {
-        fun showNewChat(activity: Activity)
+        fun showNewChat(activity: Activity, userIds: ArrayList<CharSequence>)
         fun showUserProfile(activity: Activity, userId: String)
     }
 }

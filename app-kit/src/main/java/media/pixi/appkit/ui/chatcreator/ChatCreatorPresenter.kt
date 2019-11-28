@@ -2,6 +2,7 @@ package media.pixi.appkit.ui.chatcreator
 
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
+import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.ComparatorUserProfile
 import media.pixi.appkit.domain.GetFriends
@@ -9,6 +10,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriends,
+                                               private var authProvider: AuthProvider,
                                                private var navigator: ChatCreatorContract.Navigator): ChatCreatorContract.Presenter {
 
     private val selected: MutableSet<UserProfile> = mutableSetOf()
@@ -58,7 +60,10 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
     }
 
     override fun onCreateChatClicked(activity: Activity) {
-        navigator.showNewChat(activity)
+        val userIds = arrayListOf<CharSequence>()
+        userIds.addAll(selected.map { it.id })
+        userIds.add(authProvider.getUserId()!!)
+        navigator.showNewChat(activity, userIds)
     }
 
     override fun onTextChanged(query: String) {
