@@ -19,18 +19,28 @@ class FirebaseChatProvider: ChatProvider {
 
     override fun getChats(): Flowable<List<ChatEntity>> {
         val currentUserId = auth.currentUser!!.uid
+//        val ref = firestore
+//            .collection(MESSAGING)
+//            .document(THREADS_FOR_USERS)
+//            .collection(THREADS_FOR_USERS)
+//            .document(currentUserId)
+//            .collection(THREADS)
+//
+//        return RxFirestore.getCollection(ref)
+//            .toFlowable()
+//            .map { toStringsList(it) }
+//            .flatMap { getThreadMetadata(it) }
+//            .map { sort(it) }
+
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_FOR_USERS)
-            .collection(THREADS_FOR_USERS)
-            .document(currentUserId)
-            .collection(THREADS)
+            .document(THREADS_METADATA)
+            .collection(THREADS_METADATA)
+            .whereArrayContains(THREAD_USERS, currentUserId)
 
         return RxFirestore.getCollection(ref)
+            .map { toChatEntities(it.documents) }
             .toFlowable()
-            .map { toStringsList(it) }
-            .flatMap { getThreadMetadata(it) }
-            .map { sort(it) }
     }
 
     override fun getChat(chatId: String): Maybe<ChatEntity> {

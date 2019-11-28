@@ -1,20 +1,32 @@
 package media.pixi.appkit.ui.chats
 
 import android.app.Activity
+import io.reactivex.disposables.CompositeDisposable
+import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.domain.chats.Chat
+import media.pixi.appkit.domain.chats.GetChats
 import javax.inject.Inject
 
-class ChatsPresenter @Inject constructor(val navigator: ChatsNavigator) : ChatsContract.Presenter {
+class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
+                                         private val getChats: GetChats) : ChatsContract.Presenter {
 
     private var view: ChatsContract.View? = null
+
+    private var disposables = CompositeDisposable()
 
     override fun takeView(view: ChatsContract.View) {
         this.view = view
         view.loading = true
-        loadFakeChats()
+
+        disposables.add(getChats.getChats().subscribe(
+            { onResult(it) },
+            { onError(it) },
+            { onComplete() }
+        ))
     }
 
     override fun dropView() {
+        disposables.clear()
         view = null
     }
 
@@ -28,7 +40,6 @@ class ChatsPresenter @Inject constructor(val navigator: ChatsNavigator) : ChatsC
 
     override fun onRefresh() {
         view?.loading = true
-        loadFakeChats()
     }
 
     private fun onResult(results: List<Chat>) {
@@ -40,8 +51,7 @@ class ChatsPresenter @Inject constructor(val navigator: ChatsNavigator) : ChatsC
         view?.loading = false
     }
 
-    private fun loadFakeChats() {
-        val chats = mutableListOf(Chat(id = "some_id", title = "Chat Title", subtitle = "subtitle"))
-        onResult(chats)
+    private fun onComplete() {
+
     }
 }

@@ -17,6 +17,11 @@ import javax.inject.Inject
 class GetChats @Inject constructor(private val chatProvider: ChatProvider,
                                    private val authProvider: AuthProvider) {
 
+    fun getChats(): Flowable<List<Chat>> {
+        return chatProvider.getChats()
+            .map { toChats(it) }
+    }
+
     fun getChat(chatId: String): Flowable<List<MessageListItem>> {
         return chatProvider.observerMessages(chatId)
             .map { toMessageListItems(it) }
@@ -47,6 +52,18 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
 
     private fun toMessageListItems(messages: List<ChatMessageEntity>): List<MessageListItem> {
         return messages.map { toMessageListItem(it) }
+    }
+
+    private fun toChats(entities: List<ChatEntity>): List<Chat> {
+        return entities.map { toChat(it) }
+    }
+
+    private fun toChat(entity: ChatEntity): Chat {
+        return Chat(
+            id = entity.id,
+            title = entity.title ?: "no title",
+            subtitle = "no subtitle"
+        )
     }
 
     private fun toMessageListItem(message: ChatMessageEntity): MessageListItem {
