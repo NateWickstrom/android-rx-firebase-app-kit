@@ -22,10 +22,10 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
 
         view.loading = true
 
-//        disposables.add(getFriends.getFriends().subscribe(
-//            { onResult(it) },
-//            { onError(it) }
-//        ))
+        disposables.add(getFriends.getFriends().subscribe(
+            { onResult(it) },
+            { onError(it) }
+        ))
 
         loadFakeContacts()
     }

@@ -26,8 +26,7 @@ class FriendsPresenter @Inject constructor(private var getFriends: GetFriends,
         userId?.let { userId ->
             disposables.add(getFriends.getFriendsForUser(userId).subscribe(
                 { onResult(it) },
-                { onError(it) },
-                { onComplete() }
+                { onError(it) }
             ))
         }
     }

@@ -13,8 +13,11 @@ class FirebaseFriendsProvider: FriendsProvider {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun getFriendsForUser(userId: String): Flowable<List<String>> {
-        val ref = firestore.collection(FRIENDS)
-            .document(userId).collection(FRIENDS)
+        val ref = firestore.
+            collection(FRIENDS)
+            .document(userId)
+            .collection(FRIENDS)
+
         return RxFirestore.getCollection(ref)
             .toFlowable()
             .map { toList(it) }
