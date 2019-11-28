@@ -12,11 +12,13 @@ class GetFriends @Inject constructor(private val userProfileProvider: UserProfil
     fun getFriends() : Flowable<List<UserProfile>> {
         return friendsProvider.getFriends()
             .concatMap { toProfiles(it) }
+            .map { sort(it) }
     }
 
     fun getFriendsForUser(userId: String) : Flowable<List<UserProfile>> {
         return friendsProvider.getFriendsForUser(userId)
             .concatMap { toProfiles(it) }
+            .map { sort(it) }
     }
 
     private fun toProfiles(userIds: Iterable<String>) : Flowable<List<UserProfile>> {
@@ -25,4 +27,11 @@ class GetFriends @Inject constructor(private val userProfileProvider: UserProfil
         return Flowable.zipIterable(flowables, { list ->
             list.map { it as UserProfile } }, true, 1)
     }
+
+    private fun sort(chats: List<UserProfile>): List<UserProfile> {
+        val mutableChats = chats.toMutableList()
+        mutableChats.sortWith(ComparatorUserProfile())
+        return mutableChats
+    }
+
 }

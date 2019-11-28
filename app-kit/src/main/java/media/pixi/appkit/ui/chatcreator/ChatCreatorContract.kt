@@ -13,7 +13,7 @@ interface ChatCreatorContract {
 
         fun setContacts(results: List<UserProfile>)
         fun setSelectedContacts(results: Set<UserProfile>)
-
+        fun showNoResults(show: Boolean)
     }
 
     interface Presenter: BasePresenter<View> {

@@ -6,7 +6,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.appkit__fragment_create_chat.*
 import kotlinx.android.synthetic.main.appkit__fragment_create_chat.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
@@ -16,6 +15,8 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import android.view.LayoutInflater
 import android.widget.EditText
+import kotlinx.android.synthetic.main.appkit__fragment_create_chat.empty_message
+import kotlinx.android.synthetic.main.appkit__fragment_create_chat.progress_bar
 import media.pixi.appkit.utils.ImageUtils
 import media.pixi.appkit.utils.TextChangeListner
 
@@ -107,8 +108,12 @@ class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorCo
     }
 
     override fun setSelectedContacts(results: Set<UserProfile>) {
-        //adapter?.setSelectedContacts(results)
         setChips(results)
+    }
+
+    override fun showNoResults(show: Boolean) {
+        empty_message.setText(R.string.no_friends)
+        empty_message.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

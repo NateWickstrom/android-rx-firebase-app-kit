@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.appkit__item_person.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
+import media.pixi.appkit.utils.ImageUtils
 
 class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
     var onClickListener: ((UserProfile) -> Unit)? = null
     var onLongClickListener: ((Int) -> Boolean)? = null
 
-    private val items = mutableListOf<UserProfile>()
+    private var items = listOf<UserProfile>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view  = LayoutInflater.from(parent.context)
@@ -37,15 +38,14 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
     }
 
     fun set(results: List<UserProfile>) {
-        items.clear()
-        items.addAll(results)
+        items = results
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: UserProfile) = with(itemView) {
-            //ImageUtils.setUserImage(item_image, item.item_image)
+            ImageUtils.setUserImage(user_image, item.imageUrl)
             username.text = item.username
             name.text = item.firstName
         }

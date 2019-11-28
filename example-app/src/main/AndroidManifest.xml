@@ -120,7 +120,8 @@
             android:label="@string/new_conversation"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.splash.SplashActivity"
-            android:name="media.pixi.appkit.ui.chatcreator.ChatCreatorActivity"/>
+            android:name="media.pixi.appkit.ui.chatcreator.ChatCreatorActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
             android:label="@string/image_viewer"

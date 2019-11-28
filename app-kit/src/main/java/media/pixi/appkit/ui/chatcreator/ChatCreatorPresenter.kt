@@ -3,6 +3,7 @@ package media.pixi.appkit.ui.chatcreator
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.profile.UserProfile
+import media.pixi.appkit.domain.ComparatorUserProfile
 import media.pixi.appkit.domain.GetFriends
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,10 +25,11 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
 
         disposables.add(getFriends.getFriends().subscribe(
             { onResult(it) },
-            { onError(it) }
+            { onError(it) },
+            { onComplete() }
         ))
 
-        loadFakeContacts()
+        //loadFakeContacts()
     }
 
     override fun dropView() {
@@ -68,6 +70,7 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
         view?.loading = false
         contacts.clear()
         contacts.addAll(friends)
+        view?.showNoResults(friends.isEmpty())
 
         view?.setContacts(friends)
 
@@ -78,7 +81,13 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
     private fun onError(error: Throwable) {
         view?.loading = false
         view?.error = error.message.toString()
+        view?.showNoResults(contacts.isEmpty())
         Timber.e(error)
+    }
+
+    private fun onComplete() {
+        view?.loading = false
+        view?.showNoResults(contacts.isEmpty())
     }
 
     private fun filterContacts() {
@@ -87,6 +96,12 @@ class ChatCreatorPresenter @Inject constructor(private var getFriends: GetFriend
             view?.setContacts(filtered)
         }
 
+    }
+
+    private fun sort(users: List<UserProfile>): List<UserProfile> {
+        val mutableChats = users.toMutableList()
+        mutableChats.sortWith(ComparatorUserProfile())
+        return mutableChats
     }
 
     private fun loadFakeContacts() {
