@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
+import media.pixi.appkit.data.chats.ChatProvider
+import media.pixi.appkit.data.chats.FirebaseChatProvider
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.devices.DevicesProvider
@@ -96,6 +98,13 @@ abstract class AppModule {
         @JvmStatic
         fun provideFriendsProvider(): FriendsProvider {
             return FirebaseFriendsProvider()
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideChatProvider(): ChatProvider {
+            return FirebaseChatProvider()
         }
     }
 }

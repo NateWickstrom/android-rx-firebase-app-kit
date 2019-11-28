@@ -47,7 +47,7 @@ class FirebaseChatProvider: ChatProvider {
 
     override fun sendMessage(
         chatId: String,
-        message: ChatMessageEntity
+        message: ChatMessageRequest
     ): Single<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
@@ -73,8 +73,12 @@ class FirebaseChatProvider: ChatProvider {
         return RxFirestore.getDocument(ref).map { toChatMessage(it) }
     }
 
-    override fun createChat(initialMessage: ChatMessageEntity, userIds: List<String>): Single<Int> {
+    override fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<Int> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        // create chat request
+        // wait for chat id
+        // send message to chat
     }
 
     private fun sort(chats: List<ChatEntity>): List<ChatEntity> {
@@ -106,7 +110,7 @@ class FirebaseChatProvider: ChatProvider {
         return snapshot.documents.map { toChatMessage(it) }
     }
 
-    private fun toMap(message: ChatMessageEntity): Map<String, Any> {
+    private fun toMap(message: ChatMessageRequest): Map<String, Any> {
         val map = hashMapOf<String, Any>()
         return map
     }
