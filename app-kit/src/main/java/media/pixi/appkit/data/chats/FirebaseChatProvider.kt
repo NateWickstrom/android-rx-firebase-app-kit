@@ -33,16 +33,40 @@ class FirebaseChatProvider: ChatProvider {
             .map { sort(it) }
     }
 
+    override fun getChat(chatId: String): Maybe<ChatEntity> {
+        val ref = firestore
+            .collection(MESSAGING)
+            .document(THREADS_METADATA)
+            .collection(THREADS_METADATA)
+            .document(chatId)
+
+        return RxFirestore.getDocument(ref)
+            .map { toChatEntity(it) }
+    }
+
+    override fun hasChat(userIds: List<String>): Maybe<ChatEntity> {
+        val hashcode = userHashcode(userIds)
+        val ref = firestore
+            .collection(MESSAGING)
+            .document(THREADS_METADATA)
+            .collection(THREADS_METADATA)
+            .whereEqualTo(THREAD_USERS_HASHCODE, hashcode)
+
+        return RxFirestore.getCollection(ref)
+            .map { toChatEntities(it.documents) }
+            .flatMap { filter(it, userIds) }
+    }
+
     override fun observerMessages(chatId: String): Flowable<List<ChatMessageEntity>> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_FOR_USERS)
-            .collection(THREADS_FOR_USERS)
+            .document(THREADS)
+            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
             .orderBy(THREAD_TIMESTAMP)
 
-        return RxFirestore.observeQueryRef(ref).map { toMessageList(it) }
+        return RxFirestore.observeQueryRef(ref).map { toMessageList(chatId, it) }
     }
 
     override fun sendMessage(
@@ -51,14 +75,14 @@ class FirebaseChatProvider: ChatProvider {
     ): Single<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_FOR_USERS)
-            .collection(THREADS_FOR_USERS)
+            .document(THREADS)
+            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
 
         return RxFirestore.addDocument(ref, toMap(message))
             .flatMap { RxFirestore.getDocument(it).toSingle() }
-            .map { toChatMessage(it) }
+            .map { toChatMessage(chatId, it) }
     }
 
     override fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity> {
@@ -70,15 +94,50 @@ class FirebaseChatProvider: ChatProvider {
             .collection(MESSAGES)
             .document(messageId)
 
-        return RxFirestore.getDocument(ref).map { toChatMessage(it) }
+        return RxFirestore.getDocument(ref).map { toChatMessage(chatId, it) }
     }
 
-    override fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
+    override fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<ChatMessageEntity> {
         // create chat request
+        val map = hashMapOf<String, Any>()
+        map[THREAD_USERS] = userIds
+        map[THREAD_USERS_HASHCODE] = userHashcode(userIds)
+
         // wait for chat id
         // send message to chat
+        val ref = firestore
+            .collection(MESSAGING)
+            .document(THREADS_METADATA)
+            .collection(THREADS_METADATA)
+
+        return RxFirestore.addDocument(ref, map)
+            .map { it.id }
+            .flatMap { sendMessage(it, initialMessage) }
+
+    }
+
+    private fun filter(chats: List<ChatEntity>, userIds: List<String>): Maybe<ChatEntity> {
+        chats.forEach {
+            if (equals(it.userIds, userIds)) {
+                return Maybe.just(it)
+            }
+        }
+        return Maybe.never()
+    }
+
+    private fun equals(list1: List<String>, list2: List<String>): Boolean {
+        val set1 = hashSetOf<String>()
+        set1.addAll(list1)
+
+        val set2 = hashSetOf<String>()
+        set2.addAll(list2)
+
+        for (s in set1) {
+            if (set2.contains(s).not())
+                return false
+        }
+
+        return set1.size == set2.size
     }
 
     private fun sort(chats: List<ChatEntity>): List<ChatEntity> {
@@ -106,12 +165,15 @@ class FirebaseChatProvider: ChatProvider {
             .map { toChatEntity(it) }
     }
 
-    private fun toMessageList(snapshot: QuerySnapshot): List<ChatMessageEntity> {
-        return snapshot.documents.map { toChatMessage(it) }
+    private fun toMessageList(threadId: String, snapshot: QuerySnapshot): List<ChatMessageEntity> {
+        return snapshot.documents.map { toChatMessage(threadId, it) }
     }
 
     private fun toMap(message: ChatMessageRequest): Map<String, Any> {
         val map = hashMapOf<String, Any>()
+        map[MESSAGE_TEXT] = message.text
+        map[MESSAGE_TIMESTAMP] = message.timestamp
+        map[MESSAGE_SENDER_ID] = message.senderId
         return map
     }
 
@@ -119,20 +181,34 @@ class FirebaseChatProvider: ChatProvider {
         return snapshot.documents.map { it.id }
     }
 
-    private fun toChatMessage(snapshot: DocumentSnapshot): ChatMessageEntity {
+    private fun toChatMessage(chatId: String, snapshot: DocumentSnapshot): ChatMessageEntity {
         return ChatMessageEntity(
-            id = snapshot.id
+            id = snapshot.id,
+            chatId = chatId,
+            text = snapshot.getString(MESSAGE_TEXT)!!,
+            timestamp = snapshot.getTimestamp(MESSAGE_TIMESTAMP)!!,
+            senderId = snapshot.getString(MESSAGE_SENDER_ID)!!
         )
+    }
+
+    private fun toChatEntities(docs: List<DocumentSnapshot>): List<ChatEntity> {
+        return docs.map { toChatEntity(it) }
     }
 
     private fun toChatEntity(snapshot: DocumentSnapshot): ChatEntity {
         return ChatEntity(
             id = snapshot.id,
             title = snapshot.getString(THREAD_TITLE),
-            lastMessageId = snapshot.getString(THREAD_LATEST_MESSAGE)!!,
+            lastMessageId = snapshot.getString(THREAD_LATEST_MESSAGE),
             usersHashCode = snapshot.getLong(THREAD_USERS_HASHCODE)!!.toInt(),
             timestamp = snapshot.getTimestamp(THREAD_TIMESTAMP) ?: Timestamp.now(),
             userIds = snapshot.get(THREAD_USERS) as List<String> )
+    }
+
+    private fun userHashcode(userIds: List<String>): Int {
+        var code = 0
+        for (id in userIds) code += id.hashCode()
+        return code
     }
 
     class ComparatorChatEntity: Comparator<ChatEntity> {
@@ -160,5 +236,10 @@ class FirebaseChatProvider: ChatProvider {
         private const val THREAD_USERS_HASHCODE = "users_hashcode"
         private const val THREAD_TIMESTAMP = "timestamp"
         private const val THREAD_LATEST_MESSAGE = "latest_message_id"
+
+        private const val MESSAGE_TEXT = "title"
+        private const val MESSAGE_TIMESTAMP = "timestamp"
+        private const val MESSAGE_SENDER_ID = "sender_id"
+
     }
 }

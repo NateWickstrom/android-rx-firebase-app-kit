@@ -10,7 +10,9 @@ import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialOverlayLayout
 import com.leinardi.android.speeddial.SpeedDialView
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.appkit__fragment_chat.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.*
+import kotlinx.android.synthetic.main.appkit__fragment_list.progress_bar
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.progress_bar
 import media.pixi.appkit.R
@@ -33,15 +35,21 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     override var error: String
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = ""
         set(value) {}
 
+    override var canSend: Boolean
+        get() = isSendEnabled
+        set(value) {
+            isSendEnabled = value
+        }
+
+    private var isSendEnabled = false
     private var adapter: MessageAdapter? = null
     private var speedDialView: SpeedDialView? = null
     private var textInputView: TextInputView? = null
 
     lateinit var presenter: ChatContract.Presenter
-        @Inject set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -133,6 +141,8 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun onSendPressed(text: String) {
+        //isSendEnabled
+
         ActivityUtils.hideKeyboard(activity!!)
 
         textInputView?.clearText()

@@ -8,11 +8,15 @@ interface ChatProvider {
 
     fun getChats() : Flowable<List<ChatEntity>>
 
+    fun getChat(chatId: String): Maybe<ChatEntity>
+
+    fun hasChat(userIds: List<String>): Maybe<ChatEntity>
+
     fun observerMessages(chatId: String): Flowable<List<ChatMessageEntity>>
 
     fun sendMessage(chatId: String, message: ChatMessageRequest): Single<ChatMessageEntity>
 
     fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity>
 
-    fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<Int>
+    fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<ChatMessageEntity>
 }

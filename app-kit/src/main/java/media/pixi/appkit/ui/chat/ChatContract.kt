@@ -8,6 +8,7 @@ interface ChatContract {
 
     interface View: BaseView<Presenter> {
         var loading: Boolean
+        var canSend: Boolean
 
         fun setResults(results: List<MessageListItem>)
 
