@@ -27,10 +27,9 @@ class FirebaseChatProvider: ChatProvider {
             .whereArrayContains(THREAD_USERS, currentUserId)
 //            .orderBy(THREAD_TIMESTAMP, Query.Direction.DESCENDING)
 
-        return RxFirestore.getCollection(ref)
+        return RxFirestore.observeQueryRef(ref)
             .map { toChatEntities(it.documents) }
             .map { sort(it) }
-            .toFlowable()
     }
 
     override fun getChat(chatId: String): Maybe<ChatEntity> {
