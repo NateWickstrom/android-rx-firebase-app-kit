@@ -47,9 +47,9 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
     }
 
     private fun onResult(chat: ChatItem) {
-        if (chat.profileImageUrls.isNotEmpty()) {
-            ImageUtils.setUserImage(image!!, chat.profileImageUrls[0])
+        for (users in chat.profileImageUrls) {
 
+            ImageUtils.setUserImage(image!!, chat.profileImageUrls[0])
         }
         title?.text = chat.title
         subtitle?.text = chat.subtitle

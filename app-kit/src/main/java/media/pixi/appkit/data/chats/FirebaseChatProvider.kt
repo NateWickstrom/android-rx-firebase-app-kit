@@ -15,7 +15,6 @@ import java.util.*
 
 
 class FirebaseChatProvider: ChatProvider {
-
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
@@ -31,6 +30,20 @@ class FirebaseChatProvider: ChatProvider {
         return RxFirestore.observeQueryRef(ref)
             .map { toChatEntities(it.documents) }
             .map { sort(it) }
+    }
+
+    override fun getMyChatStatus(chatId: String): Flowable<MyChatStatus> {
+        val currentUserId = auth.currentUser!!.uid
+        val ref = firestore
+            .collection(MESSAGING)
+            .document(THREADS_METADATA)
+            .collection(THREADS_METADATA)
+            .document(chatId)
+            .collection(THREAD_USERS)
+            .document(currentUserId)
+
+        return RxFirestore.observeDocumentRef(ref)
+            .map { toMyChatStatus(it) }
     }
 
     override fun getChat(chatId: String): Maybe<ChatEntity> {
@@ -234,6 +247,12 @@ class FirebaseChatProvider: ChatProvider {
             usersHashCode = snapshot.getLong(THREAD_USERS_HASHCODE)!!.toInt(),
             timestamp = snapshot.getTimestamp(THREAD_TIMESTAMP) ?: Timestamp.now(),
             userIds = snapshot.get(THREAD_USERS) as List<String> )
+    }
+
+    private fun toMyChatStatus(snapshot: DocumentSnapshot): MyChatStatus {
+        return MyChatStatus(
+            lastSeenMessageId = snapshot.getString(THREAD_LATEST_SEEN_MESSAGE)
+        )
     }
 
     private fun userHashcode(userIds: List<String>): Int {

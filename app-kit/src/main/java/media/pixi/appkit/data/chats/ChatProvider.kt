@@ -11,6 +11,8 @@ interface ChatProvider {
 
     fun getChat(chatId: String): Maybe<ChatEntity>
 
+    fun getMyChatStatus(chatId: String): Flowable<MyChatStatus>
+
     fun hasChat(userIds: List<String>): Maybe<ChatEntity>
 
     fun observerMessages(chatId: String): Flowable<List<ChatMessageEntity>>
