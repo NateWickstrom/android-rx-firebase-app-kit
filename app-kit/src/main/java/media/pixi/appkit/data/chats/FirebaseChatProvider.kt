@@ -88,8 +88,8 @@ class FirebaseChatProvider: ChatProvider {
     override fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_FOR_USERS)
-            .collection(THREADS_FOR_USERS)
+            .document(THREADS)
+            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
             .document(messageId)

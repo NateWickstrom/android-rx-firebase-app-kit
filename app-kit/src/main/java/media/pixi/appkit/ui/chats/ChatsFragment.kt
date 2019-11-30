@@ -10,7 +10,8 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
-import media.pixi.appkit.domain.chats.Chat
+import media.pixi.appkit.data.chats.ChatEntity
+import media.pixi.appkit.domain.chats.GetChats
 import javax.inject.Inject
 
 class ChatsFragment @Inject constructor(): DaggerFragment(), ChatsContract.View {
@@ -24,6 +25,7 @@ class ChatsFragment @Inject constructor(): DaggerFragment(), ChatsContract.View 
         set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     lateinit var presenter: ChatsContract.Presenter
+    lateinit var getChats: GetChats
         @Inject set
 
     private var adapter: ChatAdapter? = null
@@ -33,7 +35,7 @@ class ChatsFragment @Inject constructor(): DaggerFragment(), ChatsContract.View 
         val view = inflater.inflate(R.layout.appkit__fragment_list, container, false)
         view.list.layoutManager = LinearLayoutManager(context)
 
-        adapter = ChatAdapter()
+        adapter = ChatAdapter(getChats)
         adapter?.onClickListener = { presenter.onListItemClicked(activity as Activity, it) }
         view.list.adapter = adapter
 
@@ -48,10 +50,11 @@ class ChatsFragment @Inject constructor(): DaggerFragment(), ChatsContract.View 
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.dropView()
+        adapter?.unbind()
         adapter = null
     }
 
-    override fun setResults(results: List<Chat>) {
+    override fun setResults(results: List<ChatEntity>) {
         adapter?.set(results)
     }
 }

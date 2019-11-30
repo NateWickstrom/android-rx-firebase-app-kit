@@ -1,28 +1,29 @@
 package media.pixi.appkit.ui.chats
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.appkit__item_chat.view.*
-import media.pixi.appkit.R
-import media.pixi.appkit.domain.chats.Chat
-import media.pixi.appkit.utils.ImageUtils
+import media.pixi.appkit.data.chats.ChatEntity
+import media.pixi.appkit.domain.chats.GetChats
+import java.lang.ref.WeakReference
 
-class ChatAdapter: RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter(private val chats: GetChats): RecyclerView.Adapter<ChatViewHolder>() {
 
-    var onClickListener: ((Chat) -> Unit)? = null
+    var onClickListener: ((ChatEntity) -> Unit)? = null
     var onLongClickListener: ((Int) -> Boolean)? = null
 
-    private val items = mutableListOf<Chat>()
+    private val items = mutableListOf<ChatEntity>()
+    private val holders = mutableSetOf<WeakReference<ChatViewHolder>>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         val view  = LayoutInflater.from(parent.context)
-            .inflate(R.layout.appkit__item_chat, parent, false)
-        return ViewHolder(view)
+            .inflate(ChatViewHolder.LAYOUT_ID, parent, false)
+        val holder = ChatViewHolder(view, chats)
+        holders.add(WeakReference(holder))
+        return holder
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { onClickListener?.invoke(item) }
@@ -37,21 +38,15 @@ class ChatAdapter: RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
         return items[position].id.hashCode().toLong()
     }
 
-    fun set(results: List<Chat>) {
+    fun set(results: List<ChatEntity>) {
         items.clear()
         items.addAll(results)
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
-        fun bind(item: Chat) = with(itemView) {
-            //ImageUtils.setUserImage(item_image, item.item_image)
-            title.text = item.title
-            subtitle.text = item.subtitle
-
-            // get latest message
-            // get user profile pics
+    fun unbind() {
+        holders.forEach {
+            it.get()?.let { holder -> holder.unbind() }
         }
     }
 }

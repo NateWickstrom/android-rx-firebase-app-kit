@@ -29,13 +29,33 @@
             android:paddingRight="12dp"
             tools:text="MJ" />
 
-        <TextView
-            android:id="@+id/subtitle"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            tools:text="Micheal Jackson" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:paddingStart="6dp"
+                android:paddingEnd="12dp"
+                tools:text="11:11" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/time"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:paddingStart="12dp"
+                android:paddingEnd="6dp"
+                tools:text="Micheal Jackson" />
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

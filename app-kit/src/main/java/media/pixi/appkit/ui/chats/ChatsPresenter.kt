@@ -2,8 +2,7 @@ package media.pixi.appkit.ui.chats
 
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
-import media.pixi.appkit.data.chats.ChatProvider
-import media.pixi.appkit.domain.chats.Chat
+import media.pixi.appkit.data.chats.ChatEntity
 import media.pixi.appkit.domain.chats.GetChats
 import javax.inject.Inject
 
@@ -34,7 +33,7 @@ class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
         navigator.showChatCreator(activity)
     }
 
-    override fun onListItemClicked(activity: Activity, chat: Chat) {
+    override fun onListItemClicked(activity: Activity, chat: ChatEntity) {
         navigator.showChat(activity, chat.id)
     }
 
@@ -42,7 +41,7 @@ class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
         view?.loading = true
     }
 
-    private fun onResult(results: List<Chat>) {
+    private fun onResult(results: List<ChatEntity>) {
         view?.loading = false
         view?.setResults(results)
     }
