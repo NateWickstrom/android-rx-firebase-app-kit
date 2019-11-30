@@ -28,6 +28,8 @@ interface ChatContract {
         fun onLocationClicked(position: Int, item: MessageListItem)
 
         fun onOptionsClicked(activity: Activity)
+
+        fun onItemsViewed(firstPosition: Int, lastPosition: Int)
     }
 
     interface Navigator {

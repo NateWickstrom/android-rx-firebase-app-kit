@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import durdinapps.rxfirebase2.RxFirestore
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -66,6 +67,21 @@ class FirebaseChatProvider: ChatProvider {
             .orderBy(THREAD_TIMESTAMP)
 
         return RxFirestore.observeQueryRef(ref).map { toMessageList(chatId, it) }
+    }
+
+    override fun markAsLastSeen(chatId: String, messageId: String): Completable {
+        val currentUserId = auth.currentUser!!.uid
+        val ref = firestore
+            .collection(MESSAGING)
+            .document(THREADS_METADATA)
+            .collection(THREADS_METADATA)
+            .document(chatId)
+            .collection(THREAD_USERS)
+            .document(currentUserId)
+
+        val map = mutableMapOf<String, Any>()
+        map[THREAD_LATEST_SEEN_MESSAGE] = messageId
+        return RxFirestore.setDocument(ref, map)
     }
 
     override fun sendMessage(
@@ -235,7 +251,7 @@ class FirebaseChatProvider: ChatProvider {
     companion object {
         // COLLECTION// DOC_IDS             // COLLECTIONS          // DOC_IDS      // COLLECTIONS      // DOC_IDS
         // messaging // threads             // threads              // threadIds    // messages         // messageIds
-        // messaging // threads_meta        // threads_meta         // threadIds    // metadata (DOC)
+        // messaging // threads_meta        // threads_meta         // threadIds    // userIds ()
         // messaging // threads_for_users   // threads_for_users    // userId       // threads          // threadIds
         // messaging // threads_create_req  // threads_create_req   // requestId    // initialize (DOC)
 
@@ -251,6 +267,7 @@ class FirebaseChatProvider: ChatProvider {
         private const val THREAD_USERS_HASHCODE = "users_hashcode"
         private const val THREAD_TIMESTAMP = "timestamp"
         private const val THREAD_LATEST_MESSAGE = "latest_message_id"
+        private const val THREAD_LATEST_SEEN_MESSAGE = "last_seen_message_id"
 
         private const val MESSAGE_TEXT = "title"
         private const val MESSAGE_TIMESTAMP = "timestamp"

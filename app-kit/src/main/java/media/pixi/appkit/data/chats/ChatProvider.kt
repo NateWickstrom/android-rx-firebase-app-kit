@@ -1,5 +1,6 @@
 package media.pixi.appkit.data.chats
 
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -17,6 +18,8 @@ interface ChatProvider {
     fun sendMessage(chatId: String, message: ChatMessageRequest): Single<ChatMessageEntity>
 
     fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity>
+
+    fun markAsLastSeen(chatId: String, messageId: String): Completable
 
     fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity>
 

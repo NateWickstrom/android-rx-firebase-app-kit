@@ -132,6 +132,7 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         val type = if (isMe) MessageViewHolderType.MY_TEXT else MessageViewHolderType.THEIR_TEXT
 
         return MessageListItem(
+            id = message.id,
             message = textMessage,
             messageViewHolderType = type,
             sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",

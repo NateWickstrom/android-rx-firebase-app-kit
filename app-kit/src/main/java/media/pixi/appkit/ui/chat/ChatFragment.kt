@@ -54,10 +54,22 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_chat, container, false)
-        view.list.layoutManager = LinearLayoutManager(context)
+
+        val layoutManager = LinearLayoutManager(context)
+        view.list.layoutManager = layoutManager
 
         adapter = MessageAdapter(this)
         view.list.adapter = adapter
+        view.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val first = layoutManager.findFirstVisibleItemPosition()
+                val last = layoutManager.findLastVisibleItemPosition()
+                if (first != RecyclerView.NO_POSITION && last != RecyclerView.NO_POSITION) {
+                    presenter.onItemsViewed(first, last)
+                }
+            }
+        })
 
         textInputView = view.findViewById(R.id.view_message_text_input) as TextInputView
         textInputView?.setListener(this)
