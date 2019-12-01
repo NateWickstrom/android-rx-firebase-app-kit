@@ -14,6 +14,8 @@ import media.pixi.appkit.ui.chat.MessageListItem
 import media.pixi.appkit.ui.chat.MessageViewHolderType
 import org.joda.time.DateTime
 import java.lang.StringBuilder
+import java.time.Instant
+import java.util.*
 import javax.inject.Inject
 
 class GetChats @Inject constructor(private val chatProvider: ChatProvider,
@@ -61,12 +63,25 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
             chatProvider.observerMessages(chatId)
                 .map { toMessageListItems(it) },
             chatProvider.getMyChatStatus(chatId)
-                .filter { it.lastSeenMessageId != null }
-                .flatMap {
-                    chatProvider.getMessage(chatId, it.lastSeenMessageId!!)
-                },
+                .flatMap { maybeGetChatMessageEntity(chatId, it.lastSeenMessageId) },
             MyChatZipper()
         )
+    }
+
+    private fun maybeGetChatMessageEntity(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
+        val userId = authProvider.getUserId()!!
+        return if (messageId.isBlank()) {
+            // return a default message if missing
+            Flowable.just(ChatMessageEntity(
+                id = "",
+                chatId = chatId,
+                text = "",
+                timestamp = Timestamp(0,0),
+                senderId = userId
+            ))
+        } else {
+            chatProvider.getMessage(chatId, messageId)
+        }
     }
 
     fun hasChat(userIds: List<CharSequence>): Maybe<ChatEntity> {
@@ -97,7 +112,7 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
     }
 
     private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatItem {
-        val seen = myChatStatus.lastSeenMessageId?.equals(message.id) ?: false
+        val seen = myChatStatus.lastSeenMessageId.equals(message.id)
 
         val otherUsers = users.filter { it.id.equals(authProvider.getUserId()!!).not() }
 

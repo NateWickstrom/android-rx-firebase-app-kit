@@ -66,8 +66,6 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
             setBold(subtitle)
             setBold(time)
         }
-
-        itemView.requestLayout()
     }
 
     private fun onError(error: Throwable) {

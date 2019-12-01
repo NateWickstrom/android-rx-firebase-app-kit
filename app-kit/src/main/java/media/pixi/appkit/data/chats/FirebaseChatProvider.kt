@@ -42,8 +42,10 @@ class FirebaseChatProvider: ChatProvider {
             .collection(THREAD_USERS)
             .document(currentUserId)
 
-        return RxFirestore.observeDocumentRef(ref)
-            .map { toMyChatStatus(it) }
+        return Flowable.merge(
+                RxFirestore.observeDocumentRef(ref).map { toMyChatStatus(it) },
+                Flowable.just(MyChatStatus(lastSeenMessageId = ""))
+            )
     }
 
     override fun getChat(chatId: String): Maybe<ChatEntity> {
@@ -251,7 +253,7 @@ class FirebaseChatProvider: ChatProvider {
 
     private fun toMyChatStatus(snapshot: DocumentSnapshot): MyChatStatus {
         return MyChatStatus(
-            lastSeenMessageId = snapshot.getString(THREAD_LATEST_SEEN_MESSAGE)
+            lastSeenMessageId = snapshot.getString(THREAD_LATEST_SEEN_MESSAGE) ?: ""
         )
     }
 
