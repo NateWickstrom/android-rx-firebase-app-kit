@@ -48,6 +48,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     private var adapter: MessageAdapter? = null
     private var speedDialView: SpeedDialView? = null
     private var textInputView: TextInputView? = null
+    private var listView: RecyclerView? = null
 
     lateinit var presenter: ChatContract.Presenter
 
@@ -55,7 +56,10 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_chat, container, false)
 
+        listView = view.list
+
         val layoutManager = LinearLayoutManager(context)
+        layoutManager.stackFromEnd = true
         view.list.layoutManager = layoutManager
 
         adapter = MessageAdapter(this)
@@ -160,6 +164,11 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         textInputView?.clearText()
 
         presenter.send(text)
+
+//        val cnt = adapter?.itemCount ?: 0
+//        if (cnt > 0) {
+//            listView?.sm(cnt  - 1)
+//        }
     }
 
     override fun startTyping() {

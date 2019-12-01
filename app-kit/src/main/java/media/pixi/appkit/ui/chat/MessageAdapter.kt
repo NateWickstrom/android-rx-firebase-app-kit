@@ -15,7 +15,7 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
         fun onMessageListItemClicked(position: Int, item: MessageListItem)
     }
 
-    private val items = mutableListOf<MessageListItem>()
+    val items = mutableListOf<MessageListItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
 

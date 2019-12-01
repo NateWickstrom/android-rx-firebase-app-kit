@@ -87,12 +87,9 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
 
     override fun onItemsViewed(firstPosition: Int, lastPosition: Int) {
         val message = results[lastPosition]
-        val myUserId = authProvider.getUserId()!!
 
         if (message.timeInMillis <= latestMessage!!.timestamp.toDate().time)
             return
-
-        //if (message.hasSeen.contains(myUserId)) return
 
         disposables.add(
             chatProvider.markAsLastSeen(chatId!!, results[lastPosition].id).subscribe(
@@ -118,18 +115,6 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
                 { onError(it) }
             )
         )
-//        disposables.add(
-//            chatProvider.getMyChatStatus(chatId)
-//                .filter { it.lastSeenMessageId != null }
-//                .flatMap {
-//                    chatProvider.getMessage(chatId, it.lastSeenMessageId!!)
-//                }.subscribe(
-//                    {
-//                        latestMessage = it
-//                    },
-//                    { onError(it) }
-//                )
-//        )
     }
 
     private fun onMessageSent(message: MessageListItem) {
