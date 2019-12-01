@@ -13,18 +13,18 @@ import media.pixi.appkit.domain.chats.GetChats
 import media.pixi.appkit.utils.ImageUtils
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import timber.log.Timber
 
 
 class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.ViewHolder(itemView) {
 
+    private val defaultTypeface = itemView.findViewById<TextView>(R.id.title).typeface
     private var disposables = CompositeDisposable()
 
     private var image: ImageView? = null
     private var title: TextView? = null
     private var subtitle: TextView? = null
     private var time: TextView? = null
-
-    private var typeface: Typeface? = null
 
     fun bind(item: ChatEntity) = with(itemView) {
         unbind()
@@ -33,8 +33,6 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
         title = itemView.findViewById(R.id.title)
         subtitle = itemView.findViewById(R.id.subtitle)
         time = itemView.findViewById(R.id.time)
-
-        typeface = title?.typeface
 
         disposables.add(
             chats.getChatItem(item)
@@ -69,6 +67,7 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
     }
 
     private fun onError(error: Throwable) {
+        Timber.e(error)
         title?.text = "oops"
         subtitle?.text = ""
     }
@@ -86,7 +85,7 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
 
     private fun setPlane(textView: TextView?) {
         textView?.let {
-            it.setTypeface(typeface, Typeface.NORMAL)
+            it.setTypeface(defaultTypeface, Typeface.NORMAL)
         }
     }
 
