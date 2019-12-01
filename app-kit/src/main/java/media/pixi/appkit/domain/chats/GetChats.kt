@@ -30,14 +30,23 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         }
     }
 
+    private inner class MyChatZipper: io.reactivex.functions.BiFunction<List<MessageListItem>, ChatMessageEntity, Chat> {
+        override fun apply(
+            t1: List<MessageListItem>,
+            t2: ChatMessageEntity
+        ): Chat {
+            return toChat(t1, t2)
+        }
+    }
+
     fun getChatItem(chatEntity: ChatEntity): Flowable<ChatItem> {
         if (chatEntity.lastMessageId == null) return Flowable.never()
 
         val profiles = chatEntity.userIds.map { userProfileProvider.observerUserProfile(it) }
 
-        return Flowable.zip(
-            Flowable.zipIterable(profiles, { it.map { profile -> profile as UserProfile } },true, 1),
-            chatProvider.getMessage(chatEntity.id, chatEntity.lastMessageId).toFlowable(),
+        return Flowable.combineLatest(
+            Flowable.combineLatest(profiles, { it.map { profile -> profile as UserProfile } }, 1),
+            chatProvider.getMessage(chatEntity.id, chatEntity.lastMessageId),
             chatProvider.getMyChatStatus(chatEntity.id),
             MyChatItemZipper()
         )
@@ -47,9 +56,17 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         return chatProvider.getChats()
     }
 
-    fun getChat(chatId: String): Flowable<List<MessageListItem>> {
-        return chatProvider.observerMessages(chatId)
-            .map { toMessageListItems(it) }
+    fun getChat(chatId: String): Flowable<Chat> {
+        return Flowable.combineLatest(
+            chatProvider.observerMessages(chatId)
+                .map { toMessageListItems(it) },
+            chatProvider.getMyChatStatus(chatId)
+                .filter { it.lastSeenMessageId != null }
+                .flatMap {
+                    chatProvider.getMessage(chatId, it.lastSeenMessageId!!)
+                },
+            MyChatZipper()
+        )
     }
 
     fun hasChat(userIds: List<CharSequence>): Maybe<ChatEntity> {
@@ -79,18 +96,6 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         return messages.map { toMessageListItem(it) }
     }
 
-    private fun toChats(entities: List<ChatEntity>): List<Chat> {
-        return entities.map { toChat(it) }
-    }
-
-    private fun toChat(entity: ChatEntity): Chat {
-        return Chat(
-            id = entity.id,
-            title = entity.title ?: "no title",
-            subtitle = "no subtitle"
-        )
-    }
-
     private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatItem {
         val seen = myChatStatus.lastSeenMessageId?.equals(message.id) ?: false
 
@@ -105,6 +110,13 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
             )
     }
 
+    private fun toChat(messages: List<MessageListItem>, lastestMassage: ChatMessageEntity): Chat {
+        return Chat(
+            latestMessage = lastestMassage,
+            messages = messages
+        )
+    }
+
     private fun getNames(users: List<UserProfile>): String {
         val names = StringBuilder()
         for (user in users) {
@@ -112,12 +124,6 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         }
 
         return names.toString()
-    }
-
-    private fun getImageUrls(users: List<UserProfile>): List<String> {
-        return users
-            .filter { it.id.equals(authProvider.getUserId()!!).not() }
-            .map { it.imageUrl }
     }
 
     private fun toMessageListItem(message: ChatMessageEntity): MessageListItem {

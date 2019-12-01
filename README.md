@@ -2,6 +2,7 @@ Work in progress for building a bunch of reusable app components for working wit
 
 BUGs:
 when no device id for user
+check timestamp for most recent view
 
 Social
 - server side friend cnt

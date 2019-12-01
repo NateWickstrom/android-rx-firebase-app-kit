@@ -4,6 +4,7 @@ import android.app.Activity
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
+import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.chats.*
@@ -21,8 +22,7 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
 
     var chatId: String? = null
     var userIds: List<CharSequence>? = null
-
-    var id = 5
+    var latestMessage: ChatMessageEntity? = null
 
     override fun takeView(view: ChatContract.View) {
         this.view = view
@@ -30,12 +30,7 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
         view.canSend = false
 
         chatId?.let { id ->
-            disposables.add(
-                chatsGetter.getChat(id).subscribe(
-                    { onSubscribedToChat(it) },
-                    { onError(it) }
-                )
-            )
+            onFoundChatId(id)
         }
         userIds?.let { ids ->
             disposables.add(
@@ -93,7 +88,11 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
     override fun onItemsViewed(firstPosition: Int, lastPosition: Int) {
         val message = results[lastPosition]
         val myUserId = authProvider.getUserId()!!
-        if (message.hasSeen.contains(myUserId)) return
+
+        if (message.timeInMillis <= latestMessage!!.timestamp.toDate().time)
+            return
+
+        //if (message.hasSeen.contains(myUserId)) return
 
         disposables.add(
             chatProvider.markAsLastSeen(chatId!!, results[lastPosition].id).subscribe(
@@ -119,6 +118,18 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
                 { onError(it) }
             )
         )
+//        disposables.add(
+//            chatProvider.getMyChatStatus(chatId)
+//                .filter { it.lastSeenMessageId != null }
+//                .flatMap {
+//                    chatProvider.getMessage(chatId, it.lastSeenMessageId!!)
+//                }.subscribe(
+//                    {
+//                        latestMessage = it
+//                    },
+//                    { onError(it) }
+//                )
+//        )
     }
 
     private fun onMessageSent(message: MessageListItem) {
@@ -126,8 +137,9 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
 
     }
 
-    private fun onSubscribedToChat(results: List<MessageListItem>) {
-        this.results = results.toMutableList()
+    private fun onSubscribedToChat(chat: Chat) {
+        this.results = chat.messages.toMutableList()
+        latestMessage = chat.latestMessage
         view?.loading = false
         view?.canSend = true
         view?.setResults(results)

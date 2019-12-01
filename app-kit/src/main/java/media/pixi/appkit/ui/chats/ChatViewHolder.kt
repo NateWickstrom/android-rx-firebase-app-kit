@@ -24,6 +24,8 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
     private var subtitle: TextView? = null
     private var time: TextView? = null
 
+    private var typeface: Typeface? = null
+
     fun bind(item: ChatEntity) = with(itemView) {
         unbind()
 
@@ -32,6 +34,8 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
         subtitle = itemView.findViewById(R.id.subtitle)
         time = itemView.findViewById(R.id.time)
 
+        typeface = title?.typeface
+
         disposables.add(
             chats.getChatItem(item)
                 .subscribe(
@@ -39,7 +43,6 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
                     { onError(it) }
                 )
         )
-
     }
 
     fun unbind() {
@@ -48,7 +51,6 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
 
     private fun onResult(chat: ChatItem) {
         for (users in chat.profileImageUrls) {
-
             ImageUtils.setUserImage(image!!, chat.profileImageUrls[0])
         }
         title?.text = chat.title
@@ -64,6 +66,8 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
             setBold(subtitle)
             setBold(time)
         }
+
+        itemView.requestLayout()
     }
 
     private fun onError(error: Throwable) {
@@ -84,7 +88,7 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
 
     private fun setPlane(textView: TextView?) {
         textView?.let {
-            it.setTypeface(it.typeface, Typeface.NORMAL)
+            it.setTypeface(typeface, Typeface.NORMAL)
         }
     }
 

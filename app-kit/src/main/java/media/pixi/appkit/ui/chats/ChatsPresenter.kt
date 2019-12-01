@@ -19,8 +19,7 @@ class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
 
         disposables.add(getChats.getChats().subscribe(
             { onResult(it) },
-            { onError(it) },
-            { onComplete() }
+            { onError(it) }
         ))
     }
 
@@ -39,6 +38,11 @@ class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
 
     override fun onRefresh() {
         view?.loading = true
+        disposables.clear()
+        disposables.add(getChats.getChats().subscribe(
+            { onResult(it) },
+            { onError(it) }
+        ))
     }
 
     private fun onResult(results: List<ChatEntity>) {
@@ -50,7 +54,4 @@ class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
         view?.loading = false
     }
 
-    private fun onComplete() {
-
-    }
 }

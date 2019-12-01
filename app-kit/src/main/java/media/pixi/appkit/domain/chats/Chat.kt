@@ -1,5 +1,7 @@
 package media.pixi.appkit.domain.chats
 
-data class Chat(val id: String,
-                val title: String,
-                val subtitle: String)
+import media.pixi.appkit.data.chats.ChatMessageEntity
+import media.pixi.appkit.ui.chat.MessageListItem
+
+data class Chat(val latestMessage: ChatMessageEntity,
+                val messages: List<MessageListItem>)

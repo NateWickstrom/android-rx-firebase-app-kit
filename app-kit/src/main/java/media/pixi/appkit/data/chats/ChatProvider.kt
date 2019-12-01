@@ -19,7 +19,7 @@ interface ChatProvider {
 
     fun sendMessage(chatId: String, message: ChatMessageRequest): Single<ChatMessageEntity>
 
-    fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity>
+    fun getMessage(chatId: String, messageId: String): Flowable<ChatMessageEntity>
 
     fun markAsLastSeen(chatId: String, messageId: String): Completable
 

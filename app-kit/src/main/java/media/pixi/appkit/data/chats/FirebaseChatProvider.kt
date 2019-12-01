@@ -113,7 +113,7 @@ class FirebaseChatProvider: ChatProvider {
             .map { toChatMessage(chatId, it) }
     }
 
-    override fun getMessage(chatId: String, messageId: String): Maybe<ChatMessageEntity> {
+    override fun getMessage(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
             .document(THREADS)
@@ -122,7 +122,7 @@ class FirebaseChatProvider: ChatProvider {
             .collection(MESSAGES)
             .document(messageId)
 
-        return RxFirestore.getDocument(ref).map { toChatMessage(chatId, it) }
+        return RxFirestore.observeDocumentRef(ref).map { toChatMessage(chatId, it) }
     }
 
     override fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity> {
