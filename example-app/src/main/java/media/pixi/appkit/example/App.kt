@@ -11,7 +11,7 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.devices.DevicesProvider
 import media.pixi.appkit.example.di.AppComponent
 import media.pixi.appkit.example.di.DaggerAppComponent
-import media.pixi.appkit.service.AppKitNotificationService
+import media.pixi.appkit.service.messages.FirebaseCloudMessagingService
 import media.pixi.appkit.utils.AppForegroundListener
 import timber.log.Timber
 
@@ -62,7 +62,7 @@ class App : DaggerApplication(), AppKitInjector {
         }
     }
 
-    override fun inject(service: AppKitNotificationService) {
+    override fun inject(service: FirebaseCloudMessagingService) {
         getAppComponent().inject(service)
     }
 

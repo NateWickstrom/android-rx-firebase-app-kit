@@ -1,6 +1,5 @@
-package media.pixi.appkit.data
+package media.pixi.appkit.domain.chats
 
-import com.google.firebase.messaging.RemoteMessage
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -8,7 +7,7 @@ import javax.inject.Singleton
 class MessageBus @Inject constructor() {
 
     interface MessageListener {
-        fun onMessageReceived(message: RemoteMessage): Boolean
+        fun onMessageReceived(chatId: String, message: Message): Boolean
     }
 
     private val listeners = mutableSetOf<MessageListener>()
@@ -21,10 +20,10 @@ class MessageBus @Inject constructor() {
         listeners.remove(listener)
     }
 
-    fun sendMessage(message: RemoteMessage): Boolean {
+    fun sendMessage(chatId: String, message: Message): Boolean {
         var handled = false
         for (listener in listeners) {
-            handled = handled || listener.onMessageReceived(message)
+            handled = handled || listener.onMessageReceived(chatId, message)
         }
         return handled
     }

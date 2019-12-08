@@ -4,19 +4,19 @@ import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.notifications.NotificationProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.domain.notifications.AcceptFriendRequest
-import media.pixi.appkit.domain.notifications.AddNotifications
-import media.pixi.appkit.domain.notifications.GetNotifications
-import media.pixi.appkit.domain.notifications.MyNotification
+import media.pixi.appkit.domain.notifications.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class NotificationsPresenter @Inject constructor(private var getNotifications: GetNotifications,
-                                                 private val addNotifications: AddNotifications,
-                                                 private val notificationProvider: NotificationProvider,
-                                                 private val acceptFriendRequest: AcceptFriendRequest,
-                                                 private var userProfileProvider: UserProfileProvider,
-                                                 private var navigator: NotificationsNavigator): NotificationsContract.Presenter {
+class NotificationsPresenter @Inject constructor(
+    private var getNotifications: GetNotifications,
+    private val addNotifications: AddNotifications,
+    private val notificationProvider: NotificationProvider,
+    private val acceptFriendRequest: AcceptFriendRequest,
+    private var userProfileProvider: UserProfileProvider,
+    private val notificationBus: NotificationBus,
+    private var navigator: NotificationsNavigator
+) : NotificationsContract.Presenter, NotificationBus.NotificationListener {
 
     private val disposable = CompositeDisposable()
 
@@ -27,34 +27,45 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         this.view = view
         view.loading = true
 
-        disposable.add(getNotifications.getNotifications()
-            .subscribe(
-                this::onResult,
-                this::onError,
-                this::onComplete
-            ))
+        disposable.add(
+            getNotifications.getNotifications()
+                .subscribe(
+                    this::onResult,
+                    this::onError,
+                    this::onComplete
+                )
+        )
+
+        notificationBus.addListener(this)
     }
 
     override fun dropView() {
         view = null
         disposable.dispose()
+        notificationBus.removeListener(this)
     }
 
     override fun onItemClicked(activity: Activity, notification: MyNotification, position: Int) {
         navigator.showProfile(activity, notification.userProfile)
     }
 
-    override fun onItemLongClicked(activity: Activity, notification: MyNotification, position: Int) {
+    override fun onItemLongClicked(
+        activity: Activity,
+        notification: MyNotification,
+        position: Int
+    ) {
         navigator.showProfile(activity, notification.userProfile)
     }
 
     override fun onAcceptFriendRequestClicked(notification: MyNotification, position: Int) {
         view?.loading = true
-        disposable.add(userProfileProvider.addFriend(notification.userProfile.id)
-            .subscribe(
-                { onAcceptFriendRequestComplete(notification, position) },
-                this::onError
-            ))
+        disposable.add(
+            userProfileProvider.addFriend(notification.userProfile.id)
+                .subscribe(
+                    { onAcceptFriendRequestComplete(notification, position) },
+                    this::onError
+                )
+        )
     }
 
     override fun onDeleteNotification(position: Int) {
@@ -68,12 +79,18 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
             }
 
             // delete notification
-            disposable.add(notificationProvider.deleteNotification(notification.id)
-                .subscribe(
-                    { onDeleteComplete(notification, position) },
-                    this::onError
-                ))
+            disposable.add(
+                notificationProvider.deleteNotification(notification.id)
+                    .subscribe(
+                        { onDeleteComplete(notification, position) },
+                        this::onError
+                    )
+            )
         }
+    }
+
+    override fun onMessageReceived(message: MyNotification): Boolean {
+        return true
     }
 
     private fun onDeleteComplete(notification: MyNotification, position: Int) {
@@ -86,11 +103,13 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
         view?.setResults(notifications!!)
         view?.loading = true
         view?.hasResults = notifications.isNullOrEmpty().not()
-        disposable.add(addNotifications.addNotification(notification)
-            .subscribe(
-                { onRestoreComplete() },
-                this::onError
-            ))
+        disposable.add(
+            addNotifications.addNotification(notification)
+                .subscribe(
+                    { onRestoreComplete() },
+                    this::onError
+                )
+        )
     }
 
     private fun onAcceptFriendRequestComplete(notification: MyNotification, position: Int) {
@@ -114,7 +133,7 @@ class NotificationsPresenter @Inject constructor(private var getNotifications: G
 
     private fun onError(error: Throwable) {
         Timber.e(error)
-        view?.error = error.message?: "Oops, error"
+        view?.error = error.message ?: "Oops, error"
         view?.loading = false
         view?.hasResults = notifications.isNullOrEmpty().not()
     }

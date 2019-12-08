@@ -12,7 +12,7 @@ import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.example.App
-import media.pixi.appkit.service.AppKitNotificationService
+import media.pixi.appkit.service.messages.FirebaseCloudMessagingService
 
 import javax.inject.Singleton
 
@@ -30,7 +30,7 @@ interface AppComponent : AndroidInjector<App> {
     fun getCloudStorageRepo(): CloudStorageRepo
     fun getCurrentUserProfileProvider(): UserProfileProvider
 
-    fun inject(service: AppKitNotificationService)
+    fun inject(service: FirebaseCloudMessagingService)
 
     @Component.Builder
     interface Builder {

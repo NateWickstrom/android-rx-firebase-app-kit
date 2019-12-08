@@ -1,20 +1,24 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
-import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
-import media.pixi.appkit.data.profile.UserProfile
-import media.pixi.appkit.domain.chats.*
+import media.pixi.appkit.domain.chats.Chat
+import media.pixi.appkit.domain.chats.GetChats
+import media.pixi.appkit.domain.chats.Message
+import media.pixi.appkit.domain.chats.MessageBus
 import timber.log.Timber
 import javax.inject.Inject
 
-class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navigator,
-                                        private val authProvider: AuthProvider,
-                                        private var chatProvider: ChatProvider,
-                                        private val chatsGetter: GetChats) : ChatContract.Presenter {
+class ChatPresenter @Inject constructor(
+    private val navigator: ChatContract.Navigator,
+    private val authProvider: AuthProvider,
+    private var chatProvider: ChatProvider,
+    private val chatsGetter: GetChats,
+    private val messageBus: MessageBus
+) : ChatContract.Presenter, MessageBus.MessageListener {
 
     private var view: ChatContract.View? = null
     private var results = mutableListOf<MessageListItem>()
@@ -41,11 +45,12 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
                 )
             )
         }
-
+        messageBus.addListener(this)
     }
 
     override fun dropView() {
         view = null
+        messageBus.removeListener(this)
         disposables.clear()
     }
 
@@ -99,6 +104,10 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
         )
     }
 
+    override fun onMessageReceived(chatId: String, message: Message): Boolean {
+        return chatId.equals(this.chatId)
+    }
+
     private fun onCompletedSeen() {
 
     }
@@ -119,7 +128,6 @@ class ChatPresenter @Inject constructor(private val navigator: ChatContract.Navi
 
     private fun onMessageSent(message: MessageListItem) {
         view?.loading = false
-
     }
 
     private fun onSubscribedToChat(chat: Chat) {
