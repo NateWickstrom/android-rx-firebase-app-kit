@@ -46,6 +46,7 @@ class NotificationHelper @Inject constructor(private val context: Context,
 
     @WorkerThread
     fun clearNotification(): Completable {
+        // todo handle message notifications
         return notificationProvider.getNotifications()
             .concatMapCompletable { cancelAll(it) }
     }

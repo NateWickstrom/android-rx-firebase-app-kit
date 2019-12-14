@@ -82,12 +82,17 @@ class FirebaseCloudMessagingHelper @Inject constructor(
     }
 
     private fun onNotification(notification: MyNotification) {
+        //todo make app icon notification badge
+        //todo don't make notification if we've seen the notification
         if (!notificationBus.sendMessage(notification)) {
             notificationHelper.sendNotification(notification.id)
         }
     }
 
     private fun onMessage(chatId: String, message: ChatMessageEntity) {
+        //todo make app icon notification badge
+        //todo don't make notification if we've seen the message
+        //todo consolidate all messages the user hasn't seen and make a notification for chatId
 //        if (!messageBus.sendMessage(chatId, message)) {
 //            //notificationHelper.sendNotification(notificationId!!)
 //        }
