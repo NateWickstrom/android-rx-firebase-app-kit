@@ -10,9 +10,9 @@ import media.pixi.appkit.R
 import media.pixi.appkit.data.chats.ChatEntity
 import media.pixi.appkit.domain.chats.ChatItem
 import media.pixi.appkit.domain.chats.GetChats
+import media.pixi.appkit.utils.DateUtils
 import media.pixi.appkit.utils.ImageUtils
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import timber.log.Timber
 
 
@@ -73,8 +73,7 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
     }
 
     private fun getTime(time: DateTime): String {
-        val fmt = DateTimeFormat.forPattern("yyyyMMdd")
-        return time.toString(fmt)
+        return DateUtils.toPrettyString(time.toDate())
     }
 
     private fun setBold(textView: TextView?) {

@@ -21,14 +21,6 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            tools:text="MJ" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -44,7 +36,7 @@
                 tools:text="11:11" />
 
             <TextView
-                android:id="@+id/subtitle"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@id/time"
@@ -54,8 +46,17 @@
                 android:paddingEnd="6dp"
                 tools:text="Micheal Jackson" />
 
-
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:paddingStart="12dp"
+            android:paddingEnd="6dp"
+            tools:text="Hey man wazzup" />
 
     </LinearLayout>
 </LinearLayout>
