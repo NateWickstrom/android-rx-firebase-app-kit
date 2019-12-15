@@ -19,11 +19,15 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
 
     private lateinit var message: Message
 
-    open fun bind(messageItem: MessageListItem) {
+    open fun bind(messageItem: MessageListItem, showTimeStamp: Boolean) {
         this.message = messageItem.message
 
-        val time = getTimeFormat(message).format(message.date.toDate()).toString()
-        timeTextView.text = time
+        if (showTimeStamp) {
+            val time = getTimeFormat(message).format(message.date.toDate()).toString()
+            timeTextView.text = time
+        } else {
+            timeTextView.visibility = View.GONE
+        }
 
         avatarImageView.setImageURI(messageItem.sendIconUrl)
 

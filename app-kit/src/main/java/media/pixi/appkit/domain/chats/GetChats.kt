@@ -28,12 +28,13 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         }
     }
 
-    private inner class MyChatZipper: io.reactivex.functions.BiFunction<List<MessageListItem>, ChatMessageEntity, Chat> {
+    private inner class MyChatZipper: io.reactivex.functions.Function3<List<MessageListItem>, ChatMessageEntity, ChatItem, Chat> {
         override fun apply(
             t1: List<MessageListItem>,
-            t2: ChatMessageEntity
+            t2: ChatMessageEntity,
+            t3: ChatItem
         ): Chat {
-            return toChat(t1, t2)
+            return toChat(t1, t2, t3)
         }
     }
 
@@ -60,6 +61,9 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
                 .map { toMessageListItems(it) },
             chatProvider.getMyChatStatus(chatId)
                 .flatMap { maybeGetChatMessageEntity(chatId, it.lastSeenMessageId) },
+            chatProvider.getChat(chatId)
+                .toFlowable()
+                .flatMap { getChatItem(it) },
             MyChatZipper()
         )
     }
@@ -121,9 +125,10 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
             )
     }
 
-    private fun toChat(messages: List<MessageListItem>, lastestMassage: ChatMessageEntity): Chat {
+    private fun toChat(messages: List<MessageListItem>, latestMassage: ChatMessageEntity, chatItem: ChatItem): Chat {
         return Chat(
-            latestMessage = lastestMassage,
+            latestMessage = latestMassage,
+            chatItem = chatItem,
             messages = messages
         )
     }

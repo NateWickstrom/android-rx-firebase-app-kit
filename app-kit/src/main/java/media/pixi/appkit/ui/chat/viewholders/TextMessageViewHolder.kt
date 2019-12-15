@@ -9,8 +9,8 @@ class TextMessageViewHolder(itemView: View): MessageViewHolder (itemView) {
 
     private var messageTextView: TextView = itemView.findViewById(R.id.text_content)
 
-    override fun bind(messageItem: MessageListItem) {
-        super.bind(messageItem)
+    override fun bind(messageItem: MessageListItem, showTimeStamp: Boolean) {
+        super.bind(messageItem, showTimeStamp)
         messageTextView.text = messageItem.message.message
     }
 

@@ -9,8 +9,8 @@ class ImageMessageViewHolder(itemView: View): MessageViewHolder (itemView) {
 
     private var messageImageView: SimpleDraweeView = itemView.findViewById(R.id.image_message_image)
 
-    override fun bind(messageItem: MessageListItem) {
-        super.bind(messageItem)
+    override fun bind(messageItem: MessageListItem, showTimeStamp: Boolean) {
+        super.bind(messageItem, showTimeStamp)
 
         val url = messageItem.message.message
         messageImageView.setImageURI(url)

@@ -7,6 +7,7 @@ import media.pixi.appkit.R
 import media.pixi.appkit.ui.chat.viewholders.ImageMessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.MessageViewHolder
 import media.pixi.appkit.ui.chat.viewholders.TextMessageViewHolder
+import java.util.concurrent.TimeUnit
 
 
 class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClicked?): RecyclerView.Adapter<MessageViewHolder>() {
@@ -50,7 +51,7 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item)
+        holder.bind(item, showTimestamp(position))
         holder.setOnClickListener { onMessageListItemClicked?.onMessageListItemClicked(position, item) }
     }
 
@@ -72,7 +73,19 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
         notifyDataSetChanged()
     }
 
+    private fun showTimestamp(position: Int): Boolean {
+        if (position == 0) return true
+        val previous = items[position - 1]
+        val current = items[position]
+
+        val timeDiff = TimeUnit.MILLISECONDS.toMinutes(current.timeInMillis) -
+                TimeUnit.MILLISECONDS.toMinutes(previous.timeInMillis)
+
+        return timeDiff >= TIME_DIFF
+    }
+
     companion object {
+        const val TIME_DIFF = 5
         const val TAG = "MessageAdapter"
     }
 

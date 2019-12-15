@@ -13,7 +13,6 @@ Messaging
 - pagination
 - start of chat header
 - has-seen header for new messages
-- leave out time if close to previous
 - user images
 - accurate send status
 - receivers have seen
