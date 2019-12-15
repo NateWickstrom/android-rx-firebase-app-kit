@@ -48,9 +48,10 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
 
     private fun onResult(chat: ChatItem) {
         image?.setClusteredViews(toClusteredView(chat.users))
-        title?.text = chat.title
         subtitle?.text = chat.subtitle
         time?.text = getTime(chat.time)
+
+        createTitle(chat.users)
 
         if (chat.hasSeen) {
             setPlane(title)
@@ -83,6 +84,27 @@ class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.
         textView?.let {
             it.setTypeface(defaultTypeface, Typeface.NORMAL)
         }
+    }
+
+    private fun createTitle(users: List<UserProfile>) {
+        val names = StringBuilder()
+        users.forEach { names.append(it.firstName + ",") }
+        title?.text = names.toString()
+            .removeSuffix(",")
+    }
+
+    private fun isTruncated(textView: TextView): Boolean {
+        val layout = textView.layout
+        if (layout != null) {
+            val lines = layout.lineCount
+            if (lines > 0) {
+                val ellipsisCount = layout.getEllipsisCount(lines - 1)
+                if (ellipsisCount > 0) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     private fun toClusteredView(users: List<UserProfile>): MutableList<ClusterLayout.ClusteredView> {
