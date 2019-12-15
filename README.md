@@ -15,17 +15,17 @@ Messaging
 - has-seen header for new messages
 - leave out time if close to previous
 - user images
-- different colors bubbles
 - accurate send status
 - receivers have seen
 - >1 user images
 - remove image from local user
 - edit chat name
 - new messages list item
-- emojis
 - on send click scroll to bottom
 - edit text/image/audio
 - remove text/image/audio
+- show list of people in chat
+- add people to chat
 
 Notifications
 - images in notifications
