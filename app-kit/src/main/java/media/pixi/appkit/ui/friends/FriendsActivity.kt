@@ -34,7 +34,6 @@ class FriendsActivity: DaggerAppCompatActivity() {
         presenter.userId = userId
     }
 
-
     companion object {
         private const val BUNDLE_USER = "user_id"
 

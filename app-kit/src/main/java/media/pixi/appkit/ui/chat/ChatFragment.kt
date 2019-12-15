@@ -1,9 +1,7 @@
 package media.pixi.appkit.ui.chat
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -53,6 +51,11 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     lateinit var presenter: ChatContract.Presenter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_chat, container, false)
@@ -99,6 +102,22 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         super.onDestroyView()
         presenter.dropView()
         adapter = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.appkit__chat_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_people -> {
+                presenter.onShowChatMembersClicked(activity!!)
+                return true
+            }
+        }
+
+        return false
     }
 
     override fun scrollToEnd() {

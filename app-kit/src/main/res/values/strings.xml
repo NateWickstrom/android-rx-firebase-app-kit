@@ -120,4 +120,7 @@
     <string name="location_services_not_enabled">Location services not enabled</string>
     <string name="location_services_problem_message">There was a problem with the location services. Make sure you enabled them in your phone settings.</string>
     <string name="location_is_null">Location is null</string>
+
+    <string name="chat_members">View Members List</string>
+
 </resources>

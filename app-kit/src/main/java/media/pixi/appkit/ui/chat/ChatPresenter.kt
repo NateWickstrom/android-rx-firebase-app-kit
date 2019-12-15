@@ -90,6 +90,10 @@ class ChatPresenter @Inject constructor(
         navigator.showOptions(activity)
     }
 
+    override fun onShowChatMembersClicked(activity: Activity) {
+
+    }
+
     override fun onItemsViewed(firstPosition: Int, lastPosition: Int) {
         val message = results[lastPosition]
 

@@ -30,6 +30,8 @@ interface ChatContract {
 
         fun onOptionsClicked(activity: Activity)
 
+        fun onShowChatMembersClicked(activity: Activity)
+
         fun onItemsViewed(firstPosition: Int, lastPosition: Int)
     }
 
