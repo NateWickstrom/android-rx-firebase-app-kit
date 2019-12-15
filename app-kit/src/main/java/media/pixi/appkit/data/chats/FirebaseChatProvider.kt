@@ -273,15 +273,15 @@ class FirebaseChatProvider: ChatProvider {
         // COLLECTION// DOC_IDS             // COLLECTIONS          // DOC_IDS      // COLLECTIONS      // DOC_IDS
         // messaging // threads             // threads              // threadIds    // messages         // messageIds
         // messaging // threads_meta        // threads_meta         // threadIds    // userIds ()
-        // messaging // threads_for_users   // threads_for_users    // userId       // threads          // threadIds
-        // messaging // threads_create_req  // threads_create_req   // requestId    // initialize (DOC)
+
+        // COLLECTION // DOC_IDS        // COLLECTIONS      // DOC_IDS
+        // messaging  // threadIds      // messages         // messageIds
+                                        // users
 
         private const val MESSAGING = "messaging"
         private const val MESSAGES = "messages"
         private const val THREADS = "threads"
         private const val THREADS_METADATA = "threads_meta"
-        private const val THREADS_FOR_USERS = "threads_for_users"
-        private const val THREADS_CREATION_REQUEST = "threads_creation_request"
 
         private const val THREAD_TITLE = "title"
         private const val THREAD_USERS = "users"

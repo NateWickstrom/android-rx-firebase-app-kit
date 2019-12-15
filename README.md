@@ -12,7 +12,6 @@ Notifications
 - has seen for notifications
 
 Chats
-- nice chats list items
 - simplify messaging in firestore
 
 Social
