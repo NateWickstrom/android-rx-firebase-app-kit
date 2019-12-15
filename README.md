@@ -10,13 +10,13 @@ Messaging
 - send audio
 - send file
 - send location
-- edit text/image/audio
-- remove text/image/audio
 - pagination
+- start of chat header
+- has-seen header for new messages
 - leave out time if close to previous
 - user images
-- different colors
-- accurate status
+- different colors bubbles
+- accurate send status
 - receivers have seen
 - >1 user images
 - remove image from local user
@@ -24,6 +24,8 @@ Messaging
 - new messages list item
 - emojis
 - on send click scroll to bottom
+- edit text/image/audio
+- remove text/image/audio
 
 Notifications
 - images in notifications
