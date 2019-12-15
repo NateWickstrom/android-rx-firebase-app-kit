@@ -22,8 +22,6 @@ class FirebaseChatProvider: ChatProvider {
         val currentUserId = auth.currentUser!!.uid
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
             .whereArrayContains(THREAD_USERS, currentUserId)
 //            .orderBy(THREAD_TIMESTAMP, Query.Direction.DESCENDING)
 
@@ -36,8 +34,6 @@ class FirebaseChatProvider: ChatProvider {
         val currentUserId = auth.currentUser!!.uid
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
             .document(chatId)
             .collection(THREAD_USERS)
             .document(currentUserId)
@@ -51,8 +47,6 @@ class FirebaseChatProvider: ChatProvider {
     override fun getChat(chatId: String): Maybe<ChatEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
             .document(chatId)
 
         return RxFirestore.getDocument(ref)
@@ -63,8 +57,6 @@ class FirebaseChatProvider: ChatProvider {
         val hashcode = userHashcode(userIds)
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
             .whereEqualTo(THREAD_USERS_HASHCODE, hashcode)
 
         return RxFirestore.getCollection(ref)
@@ -75,8 +67,6 @@ class FirebaseChatProvider: ChatProvider {
     override fun observerMessages(chatId: String): Flowable<List<ChatMessageEntity>> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS)
-            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
             .orderBy(THREAD_TIMESTAMP)
@@ -88,8 +78,6 @@ class FirebaseChatProvider: ChatProvider {
         val currentUserId = auth.currentUser!!.uid
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
             .document(chatId)
             .collection(THREAD_USERS)
             .document(currentUserId)
@@ -105,8 +93,6 @@ class FirebaseChatProvider: ChatProvider {
     ): Single<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS)
-            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
 
@@ -118,8 +104,6 @@ class FirebaseChatProvider: ChatProvider {
     override fun getMessage(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS)
-            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
             .document(messageId)
@@ -130,8 +114,6 @@ class FirebaseChatProvider: ChatProvider {
     override fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS)
-            .collection(MESSAGES)
             .document(chatId)
             .collection(MESSAGES)
             .orderBy(THREAD_TIMESTAMP, Query.Direction.DESCENDING)
@@ -152,8 +134,6 @@ class FirebaseChatProvider: ChatProvider {
         // send message to chat
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
 
         return RxFirestore.addDocument(ref, map)
             .map { it.id }
@@ -202,8 +182,6 @@ class FirebaseChatProvider: ChatProvider {
     private fun getThreadMetadata(threadId: String): Flowable<ChatEntity> {
         val ref = firestore
             .collection(MESSAGING)
-            .document(THREADS_METADATA)
-            .collection(THREADS_METADATA)
             .document(threadId)
 
         return RxFirestore.getDocument(ref)
@@ -270,19 +248,15 @@ class FirebaseChatProvider: ChatProvider {
     }
 
     companion object {
-        // COLLECTION// DOC_IDS             // COLLECTIONS          // DOC_IDS      // COLLECTIONS      // DOC_IDS
-        // messaging // threads             // threads              // threadIds    // messages         // messageIds
-        // messaging // threads_meta        // threads_meta         // threadIds    // userIds ()
+        // COLLECTION   // DOC_IDS      // COLLECTIONS  // DOC_IDS
+        // messaging    // threadIds    // messages     // messageIds
+                                        // users        // userIds
 
-        // COLLECTION // DOC_IDS        // COLLECTIONS      // DOC_IDS
-        // messaging  // threadIds      // messages         // messageIds
-                                        // users
-
+        // Collections
         private const val MESSAGING = "messaging"
         private const val MESSAGES = "messages"
-        private const val THREADS = "threads"
-        private const val THREADS_METADATA = "threads_meta"
 
+        // Thread Metadata
         private const val THREAD_TITLE = "title"
         private const val THREAD_USERS = "users"
         private const val THREAD_USERS_HASHCODE = "users_hashcode"
@@ -290,6 +264,7 @@ class FirebaseChatProvider: ChatProvider {
         private const val THREAD_LATEST_MESSAGE = "latest_message_id"
         private const val THREAD_LATEST_SEEN_MESSAGE = "last_seen_message_id"
 
+        // Message Metadata
         private const val MESSAGE_TEXT = "title"
         private const val MESSAGE_TIMESTAMP = "timestamp"
         private const val MESSAGE_SENDER_ID = "sender_id"
