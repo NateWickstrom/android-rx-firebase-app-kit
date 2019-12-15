@@ -3,20 +3,7 @@ Work in progress for building a bunch of reusable app components for working wit
 BUGs:
 when no device id for user
 check timestamp for most recent view
-
-Notifications
-- images in notifications
-- >1 user images
-- better notification action handling
-- remove all notifications on logout
-- has seen for notifications
-
-Chats
-- simplify messaging in firestore
-
-Social
-- server side friend cnt
-- 'Add friend' checks if request sent
+timestamp with timezones
 
 Messaging
 - send image
@@ -37,6 +24,17 @@ Messaging
 - new messages list item
 - emojis
 - on send click scroll to bottom
+
+Notifications
+- images in notifications
+- >1 user images
+- better notification action handling
+- remove all notifications on logout
+- has seen for notifications
+
+Social
+- server side friend cnt
+- 'Add friend' checks if request sent
 
 Testing
 - espresso testing
