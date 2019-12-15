@@ -127,6 +127,7 @@ class ChatPresenter @Inject constructor(
     }
 
     private fun onMessageSent(message: MessageListItem) {
+        view?.scrollToEnd()
         view?.loading = false
     }
 

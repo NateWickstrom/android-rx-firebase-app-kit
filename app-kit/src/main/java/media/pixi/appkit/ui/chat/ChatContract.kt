@@ -11,6 +11,7 @@ interface ChatContract {
         var canSend: Boolean
 
         fun setResults(results: List<MessageListItem>)
+        fun scrollToEnd()
 
         fun showTextSpeedDial(messageListItem: MessageListItem)
         fun showImageSpeedDial(messageListItem: MessageListItem)

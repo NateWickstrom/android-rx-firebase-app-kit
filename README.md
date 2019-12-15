@@ -20,7 +20,6 @@ Messaging
 - remove image from local user
 - edit chat name
 - new messages list item
-- on send click scroll to bottom
 - edit text/image/audio
 - remove text/image/audio
 - show list of people in chat

@@ -96,6 +96,12 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         adapter = null
     }
 
+    override fun scrollToEnd() {
+        adapter?.items?.size?.let {
+            listView?.smoothScrollToPosition(it)
+        }
+    }
+
     override fun setResults(results: List<MessageListItem>) {
         adapter?.set(results)
     }
@@ -158,7 +164,6 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     override fun onSendPressed(text: String) {
         //isSendEnabled
-
         ActivityUtils.hideKeyboard(activity!!)
 
         textInputView?.clearText()
