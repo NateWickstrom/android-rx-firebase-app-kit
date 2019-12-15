@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialOverlayLayout
 import com.leinardi.android.speeddial.SpeedDialView
@@ -55,6 +56,10 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.appkit__fragment_chat, container, false)
+
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.layout_swipe_to_refresh)
+        swipeRefreshLayout.setRefreshing(false)
+        swipeRefreshLayout.setEnabled(false)
 
         listView = view.list
 

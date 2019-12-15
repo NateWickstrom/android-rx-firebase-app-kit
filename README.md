@@ -11,19 +11,16 @@ Messaging
 - send file
 - send location
 - pagination
-- start of chat header
-- has-seen header for new messages
 - user images
 - accurate send status
 - receivers have seen
-- >1 user images
 - remove image from local user
-- edit chat name
-- new messages list item
+- chat title
+- edit chat title
+- new messages indicator
 - edit text/image/audio
 - remove text/image/audio
 - show list of people in chat
-- add people to chat
 
 Notifications
 - images in notifications

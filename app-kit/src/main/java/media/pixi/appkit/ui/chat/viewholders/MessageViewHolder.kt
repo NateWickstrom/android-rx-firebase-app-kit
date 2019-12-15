@@ -25,6 +25,7 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
         if (showTimeStamp) {
             val time = getTimeFormat(message).format(message.date.toDate()).toString()
             timeTextView.text = time
+            timeTextView.visibility = View.VISIBLE
         } else {
             timeTextView.visibility = View.GONE
         }
