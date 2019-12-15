@@ -6,16 +6,12 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.*
-import media.pixi.appkit.data.notifications.NotificationEntity
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.domain.notifications.MyNotification
 import media.pixi.appkit.ui.chat.MessageListItem
 import media.pixi.appkit.ui.chat.MessageViewHolderType
 import org.joda.time.DateTime
 import java.lang.StringBuilder
-import java.time.Instant
-import java.util.*
 import javax.inject.Inject
 
 class GetChats @Inject constructor(private val chatProvider: ChatProvider,
@@ -121,7 +117,7 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
             subtitle = message.text,
             time = DateTime(message.timestamp.toDate()),
             hasSeen = seen,
-            profileImageUrls = otherUsers.map { it.imageUrl }
+            users = otherUsers
             )
     }
 

@@ -1,5 +1,6 @@
 package media.pixi.appkit.domain.chats
 
+import media.pixi.appkit.data.profile.UserProfile
 import org.joda.time.DateTime
 
 data class ChatItem(
@@ -7,5 +8,5 @@ data class ChatItem(
     val subtitle: String,
     val time: DateTime,
     val hasSeen: Boolean,
-    val profileImageUrls: List<String>
+    val users: List<UserProfile>
 )
