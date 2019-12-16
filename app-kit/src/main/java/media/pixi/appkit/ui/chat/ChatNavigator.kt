@@ -1,7 +1,9 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
+import media.pixi.appkit.ui.chatmembers.ChatMembersActivity
 import media.pixi.appkit.ui.chatoptions.ChatOptionFragment
+import media.pixi.appkit.ui.friends.FriendsActivity
 import javax.inject.Inject
 
 class ChatNavigator @Inject constructor(): ChatContract.Navigator {
@@ -18,6 +20,10 @@ class ChatNavigator @Inject constructor(): ChatContract.Navigator {
             chatActivity.supportFragmentManager,
             OPTION_ID
         )
+    }
+
+    override fun showChatMembers(activity: Activity, chatId: String) {
+        ChatMembersActivity.launch(activity, chatId)
     }
 
     companion object {

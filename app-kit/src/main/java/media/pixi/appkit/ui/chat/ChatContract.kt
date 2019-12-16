@@ -41,5 +41,6 @@ interface ChatContract {
 
         fun showImage(activity: Activity)
 
+        fun showChatMembers(activity: Activity, chatId: String)
     }
 }

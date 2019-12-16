@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/menu_people"
-        android:title="@string/chat_members"
+        android:title="@string/view_chat_members"
         android:icon="@drawable/ic_people_24px"
         app:showAsAction="never" />
 

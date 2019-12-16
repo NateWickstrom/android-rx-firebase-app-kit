@@ -14,13 +14,13 @@ Messaging
 - user images
 - accurate send status
 - receivers have seen
-- remove image from local user
 - chat title
 - edit chat title
-- new messages indicator
 - edit text/image/audio
 - remove text/image/audio
-- show list of people in chat
+- new messages indicator
+- remove image from local user
+- error sending/updating
 
 Notifications
 - images in notifications

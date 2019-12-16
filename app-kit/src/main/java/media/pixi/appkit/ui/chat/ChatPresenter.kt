@@ -91,7 +91,7 @@ class ChatPresenter @Inject constructor(
     }
 
     override fun onShowChatMembersClicked(activity: Activity) {
-
+        navigator.showChatMembers(activity, chatId!!)
     }
 
     override fun onItemsViewed(firstPosition: Int, lastPosition: Int) {

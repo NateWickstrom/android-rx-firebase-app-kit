@@ -85,6 +85,7 @@
     <string name="my_friends">My Friends</string>
     <string name="chat">Chat</string>
     <string name="chats">Chats</string>
+    <string name="chat_members">Chat Members</string>
     <string name="image_viewer">Image Viewer</string>
     <string name="new_conversation">New Conversation</string>
     <string name="new_conversation_hint">type a name&#8230;</string>
@@ -121,6 +122,6 @@
     <string name="location_services_problem_message">There was a problem with the location services. Make sure you enabled them in your phone settings.</string>
     <string name="location_is_null">Location is null</string>
 
-    <string name="chat_members">View Members List</string>
+    <string name="view_chat_members">View Members List</string>
 
 </resources>

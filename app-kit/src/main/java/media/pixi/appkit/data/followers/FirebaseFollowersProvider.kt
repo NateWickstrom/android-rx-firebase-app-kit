@@ -56,7 +56,7 @@ class FirebaseFollowersProvider: FollowersProvider {
     }
 
     companion object {
-        // people // userId // followers // userID // <blank>
+        // people // chatId // followers // userID // <blank>
         private const val PEOPLE = "people"
         private const val FOLLOWERS = "followers"
 

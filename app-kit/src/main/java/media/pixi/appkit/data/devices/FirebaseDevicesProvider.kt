@@ -100,7 +100,7 @@ class FirebaseDevicesProvider(context: Context): DevicesProvider {
     }
 
     companion object {
-        // devices // userId // devices // instanceId // Device
+        // devices // chatId // devices // instanceId // Device
         private const val ANDROID = "android"
         private const val DEVICES = "devices"
         private const val DEVICE_TYPE = "type"
