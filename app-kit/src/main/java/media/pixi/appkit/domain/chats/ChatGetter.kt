@@ -18,21 +18,21 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
                                      private val userProfileProvider: UserProfileProvider,
                                      private val authProvider: AuthProvider) {
 
-    private inner class MyChatItemZipper: io.reactivex.functions.Function3<List<UserProfile>, ChatMessageEntity, MyChatStatus, ChatItem> {
+    private inner class MyChatItemZipper: io.reactivex.functions.Function3<List<UserProfile>, ChatMessageEntity, MyChatStatus, ChatListItem> {
         override fun apply(
             t1: List<UserProfile>,
             t2: ChatMessageEntity,
             t3: MyChatStatus
-        ): ChatItem {
+        ): ChatListItem {
             return toChatItem(t1, t2, t3)
         }
     }
 
-    private inner class MyChatZipper: io.reactivex.functions.Function3<List<MessageListItem>, ChatMessageEntity, ChatItem, Chat> {
+    private inner class MyChatZipper: io.reactivex.functions.Function3<List<MessageListItem>, ChatMessageEntity, ChatListItem, Chat> {
         override fun apply(
             t1: List<MessageListItem>,
             t2: ChatMessageEntity,
-            t3: ChatItem
+            t3: ChatListItem
         ): Chat {
             return toChat(t1, t2, t3)
         }
@@ -51,13 +51,36 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         )
     }
 
-    private fun getChatItem(chatEntity: ChatEntity): Flowable<ChatItem> {
+    fun getChatId(userIds: List<CharSequence>): Maybe<String> {
+        return chatProvider.hasChat(userIds.map { it.toString() }).map { it.id }
+    }
+
+    fun sendMessage(message: String, chatId: String): Single<MessageListItem> {
+        return chatProvider.sendMessage(chatId,
+            ChatMessageRequest(
+                text = message,
+                senderId = authProvider.getUserId()!!,
+                timestamp = Timestamp.now())
+        ).map { toMessageListItem(it) }
+    }
+
+    fun createChat(message: String, userIds: List<CharSequence>): Single<ChatMessageEntity> {
+        return chatProvider.createChat(
+            ChatMessageRequest(
+                text = message,
+                senderId = authProvider.getUserId()!!,
+                timestamp = Timestamp.now()),
+            userIds.map { it.toString() }
+        )
+    }
+
+    private fun getChatItem(chatEntity: ChatEntity): Flowable<ChatListItem> {
         if (chatEntity.lastMessageId == null) return Flowable.never()
 
         val profiles = chatEntity.userIds.map { userProfileProvider.observerUserProfile(it) }
 
         return Flowable.combineLatest(
-            Flowable.combineLatest(profiles, { it.map { profile -> profile as UserProfile } }, 1),
+            Flowable.combineLatest(profiles) { it.map { profile -> profile as UserProfile } },
             chatProvider.getMessage(chatEntity.id, chatEntity.lastMessageId),
             chatProvider.getMyChatStatus(chatEntity.id),
             MyChatItemZipper()
@@ -80,39 +103,16 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         }
     }
 
-    fun hasChat(userIds: List<CharSequence>): Maybe<ChatEntity> {
-        return chatProvider.hasChat(userIds.map { it.toString() })
-    }
-
-    fun sendMessage(message: String, chatId: String): Single<MessageListItem> {
-        return chatProvider.sendMessage(chatId,
-            ChatMessageRequest(
-                text = message,
-                senderId = authProvider.getUserId()!!,
-                timestamp = Timestamp.now())
-        ).map { toMessageListItem(it) }
-    }
-
-    fun createChat(message: String, userIds: List<CharSequence>): Single<ChatMessageEntity> {
-        return chatProvider.createChat(
-            ChatMessageRequest(
-                text = message,
-                senderId = authProvider.getUserId()!!,
-                timestamp = Timestamp.now()),
-            userIds.map { it.toString() }
-        )
-    }
-
     private fun toMessageListItems(messages: List<ChatMessageEntity>): List<MessageListItem> {
         return messages.map { toMessageListItem(it) }
     }
 
-    private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatItem {
+    private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatListItem {
         val seen = myChatStatus.lastSeenMessageId.equals(message.id)
 
         val otherUsers = users.filter { it.id.equals(authProvider.getUserId()!!).not() }
 
-        return ChatItem(
+        return ChatListItem(
             title = getNames(otherUsers),
             subtitle = message.text,
             time = DateTime(message.timestamp.toDate()),
@@ -121,7 +121,7 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             )
     }
 
-    private fun toChat(messages: List<MessageListItem>, latestMassage: ChatMessageEntity, chatItem: ChatItem): Chat {
+    private fun toChat(messages: List<MessageListItem>, latestMassage: ChatMessageEntity, chatItem: ChatListItem): Chat {
         return Chat(
             latestMessage = latestMassage,
             chatItem = chatItem,

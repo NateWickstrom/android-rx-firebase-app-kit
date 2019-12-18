@@ -38,8 +38,8 @@ class ChatPresenter @Inject constructor(
         }
         userIds?.let { ids ->
             disposables.add(
-                chatsGetter.hasChat(ids).subscribe(
-                    { onFoundChatId(it.id) },
+                chatsGetter.getChatId(ids).subscribe(
+                    { onFoundChatId(it) },
                     { onError(it) },
                     { onNoChatIdFound() }
                 )

@@ -17,17 +17,17 @@ class ChatListItemsGetter @Inject constructor(private val chatProvider: ChatProv
                                               private val authProvider: AuthProvider
 ) {
 
-    private inner class MyChatItemZipper: io.reactivex.functions.Function3<List<UserProfile>, ChatMessageEntity, MyChatStatus, ChatItem> {
+    private inner class MyChatItemZipper: io.reactivex.functions.Function3<List<UserProfile>, ChatMessageEntity, MyChatStatus, ChatListItem> {
         override fun apply(
             t1: List<UserProfile>,
             t2: ChatMessageEntity,
             t3: MyChatStatus
-        ): ChatItem {
+        ): ChatListItem {
             return toChatItem(t1, t2, t3)
         }
     }
 
-    fun getChatItem(chatEntity: ChatEntity): Flowable<ChatItem> {
+    fun getChatItem(chatEntity: ChatEntity): Flowable<ChatListItem> {
         if (chatEntity.lastMessageId == null) return Flowable.never()
 
         val profiles = chatEntity.userIds.map { userProfileProvider.observerUserProfile(it) }
@@ -44,12 +44,12 @@ class ChatListItemsGetter @Inject constructor(private val chatProvider: ChatProv
         return chatProvider.getChats()
     }
 
-    private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatItem {
+    private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatListItem {
         val seen = myChatStatus.lastSeenMessageId.equals(message.id)
 
         val otherUsers = users.filter { it.id.equals(authProvider.getUserId()!!).not() }
 
-        return ChatItem(
+        return ChatListItem(
             title = getNames(otherUsers),
             subtitle = message.text,
             time = DateTime(message.timestamp.toDate()),
