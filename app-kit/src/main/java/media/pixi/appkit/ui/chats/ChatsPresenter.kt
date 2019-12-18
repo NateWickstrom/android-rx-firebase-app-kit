@@ -3,11 +3,11 @@ package media.pixi.appkit.ui.chats
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.chats.ChatEntity
-import media.pixi.appkit.domain.chats.ChatListItemGetter
+import media.pixi.appkit.domain.chats.ChatListItemsGetter
 import javax.inject.Inject
 
 class ChatsPresenter @Inject constructor(private val navigator: ChatsNavigator,
-                                         private val getChats: ChatListItemGetter) : ChatsContract.Presenter {
+                                         private val getChats: ChatListItemsGetter) : ChatsContract.Presenter {
 
     private var view: ChatsContract.View? = null
 

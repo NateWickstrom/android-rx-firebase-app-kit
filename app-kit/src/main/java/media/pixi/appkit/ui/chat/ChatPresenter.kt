@@ -6,7 +6,7 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.domain.chats.Chat
-import media.pixi.appkit.domain.chats.GetChats
+import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.Message
 import media.pixi.appkit.domain.chats.MessageBus
 import timber.log.Timber
@@ -16,7 +16,7 @@ class ChatPresenter @Inject constructor(
     private val navigator: ChatContract.Navigator,
     private val authProvider: AuthProvider,
     private var chatProvider: ChatProvider,
-    private val chatsGetter: GetChats,
+    private val chatsGetter: ChatGetter,
     private val messageBus: MessageBus
 ) : ChatContract.Presenter, MessageBus.MessageListener {
 

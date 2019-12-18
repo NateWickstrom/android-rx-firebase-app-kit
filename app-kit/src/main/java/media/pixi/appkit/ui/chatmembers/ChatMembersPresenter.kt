@@ -4,11 +4,11 @@ import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.profile.UserProfile
-import media.pixi.appkit.domain.chats.GetChats
+import media.pixi.appkit.domain.chats.ChatMembersGetter
 import timber.log.Timber
 import javax.inject.Inject
 
-class ChatMembersPresenter @Inject constructor(private var getChats: GetChats,
+class ChatMembersPresenter @Inject constructor(private var getChats: ChatMembersGetter,
                                                private var authProvider: AuthProvider,
                                                private var navigator: ChatMembersNavigator): ChatMembersContract.Presenter {
 

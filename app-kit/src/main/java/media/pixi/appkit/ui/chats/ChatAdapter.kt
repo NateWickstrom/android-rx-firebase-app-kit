@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import media.pixi.appkit.data.chats.ChatEntity
-import media.pixi.appkit.domain.chats.ChatListItemGetter
+import media.pixi.appkit.domain.chats.ChatListItemsGetter
 import java.lang.ref.WeakReference
 
-class ChatAdapter(private val chats: ChatListItemGetter): RecyclerView.Adapter<ChatViewHolder>() {
+class ChatAdapter(private val chats: ChatListItemsGetter): RecyclerView.Adapter<ChatViewHolder>() {
 
     var onClickListener: ((ChatEntity) -> Unit)? = null
     var onLongClickListener: ((Int) -> Boolean)? = null

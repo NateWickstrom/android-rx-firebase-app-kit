@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.chats.ChatEntity
-import media.pixi.appkit.domain.chats.ChatListItemGetter
+import media.pixi.appkit.domain.chats.ChatListItemsGetter
 import javax.inject.Inject
 
 class ChatsFragment @Inject constructor(): DaggerFragment(), ChatsContract.View {
@@ -25,7 +25,7 @@ class ChatsFragment @Inject constructor(): DaggerFragment(), ChatsContract.View 
         set(value) { progress_bar.visibility = if (value) View.VISIBLE else View.INVISIBLE }
 
     lateinit var presenter: ChatsContract.Presenter
-    lateinit var getChats: ChatListItemGetter
+    lateinit var getChats: ChatListItemsGetter
         @Inject set
 
     private var adapter: ChatAdapter? = null

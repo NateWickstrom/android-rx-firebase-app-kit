@@ -12,9 +12,9 @@ import org.joda.time.DateTime
 import java.lang.StringBuilder
 import javax.inject.Inject
 
-class ChatListItemGetter @Inject constructor(private val chatProvider: ChatProvider,
-                                             private val userProfileProvider: UserProfileProvider,
-                                             private val authProvider: AuthProvider
+class ChatListItemsGetter @Inject constructor(private val chatProvider: ChatProvider,
+                                              private val userProfileProvider: UserProfileProvider,
+                                              private val authProvider: AuthProvider
 ) {
 
     private inner class MyChatItemZipper: io.reactivex.functions.Function3<List<UserProfile>, ChatMessageEntity, MyChatStatus, ChatItem> {
