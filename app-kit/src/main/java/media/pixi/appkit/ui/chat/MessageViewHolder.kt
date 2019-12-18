@@ -12,9 +12,9 @@ import java.util.*
 
 class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
 
-    protected var avatarImageView: SimpleDraweeView = itemView.findViewById(R.id.image_avatar)
-    protected var timeTextView: TextView = itemView.findViewById(R.id.text_time)
-    protected var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
+    private var avatarImageView: SimpleDraweeView = itemView.findViewById(R.id.image_avatar)
+    private var timeTextView: TextView = itemView.findViewById(R.id.text_time)
+    private var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
     private var messageTextView: TextView = itemView.findViewById(R.id.text_content)
 
     private lateinit var message: Message
@@ -40,7 +40,7 @@ class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
         messageTextView.setOnClickListener(onClickListener)
     }
 
-    protected fun updateReadStatus() {
+    private fun updateReadStatus() {
 //        var resource = R.drawable.ic_done_24px
 //        var status = message.messageReadStatus
 //
@@ -84,7 +84,7 @@ class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
         progressBar.visibility = View.GONE
     }
 
-    protected fun getTimeFormat(message: Message): SimpleDateFormat {
+    private fun getTimeFormat(message: Message): SimpleDateFormat {
 
         val curTime = Date()
         val interval = (curTime.time - message.date.toDate().time) / 1000L
