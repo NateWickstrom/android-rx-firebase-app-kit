@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chat.viewholders
+package media.pixi.appkit.ui.chat
 
 import android.view.View
 import android.widget.ProgressBar
@@ -7,20 +7,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import media.pixi.appkit.R
 import media.pixi.appkit.domain.chats.Message
-import media.pixi.appkit.ui.chat.MessageListItem
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
+class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
 
     protected var avatarImageView: SimpleDraweeView = itemView.findViewById(R.id.image_avatar)
     protected var timeTextView: TextView = itemView.findViewById(R.id.text_time)
     protected var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
+    private var messageTextView: TextView = itemView.findViewById(R.id.text_content)
 
     private lateinit var message: Message
 
     open fun bind(messageItem: MessageListItem, showTimeStamp: Boolean) {
         this.message = messageItem.message
+        messageTextView.text = messageItem.message.message
 
         if (showTimeStamp) {
             val time = getTimeFormat(message).format(message.date.toDate()).toString()
@@ -35,8 +36,8 @@ abstract class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemV
         updateReadStatus()
     }
 
-    open fun setOnClickListener(onClickListener: (View) -> Unit) {
-
+    fun setOnClickListener(onClickListener: (View) -> Unit) {
+        messageTextView.setOnClickListener(onClickListener)
     }
 
     protected fun updateReadStatus() {

@@ -4,9 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import media.pixi.appkit.R
-import media.pixi.appkit.ui.chat.viewholders.ImageMessageViewHolder
-import media.pixi.appkit.ui.chat.viewholders.MessageViewHolder
-import media.pixi.appkit.ui.chat.viewholders.TextMessageViewHolder
 import java.util.concurrent.TimeUnit
 
 
@@ -24,26 +21,26 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
         val view  = when (viewType) {
             MessageViewHolderType.MY_TEXT.id ->
                 inflater.inflate(R.layout.view_message_text_me, parent, false)
-            MessageViewHolderType.MY_IMAGE.id,
-            MessageViewHolderType.MY_LOCATION.id ->
-                inflater.inflate(R.layout.view_message_image_me, parent, false)
+//            MessageViewHolderType.MY_IMAGE.id,
+//            MessageViewHolderType.MY_LOCATION.id ->
+//                inflater.inflate(R.layout.view_message_image_me, parent, false)
 
             MessageViewHolderType.THEIR_TEXT.id ->
                 inflater.inflate(R.layout.view_message_text_reply, parent, false)
-            MessageViewHolderType.THEIR_IMAGE.id,
-            MessageViewHolderType.THEIR_LOCATION.id ->
-                inflater.inflate(R.layout.view_message_image_reply, parent, false)
+//            MessageViewHolderType.THEIR_IMAGE.id,
+//            MessageViewHolderType.THEIR_LOCATION.id ->
+//                inflater.inflate(R.layout.view_message_image_reply, parent, false)
 
             else -> throw IllegalArgumentException("Unknown view type")
         }
 
         return when (viewType) {
             MessageViewHolderType.MY_TEXT.id,
-            MessageViewHolderType.THEIR_TEXT.id -> TextMessageViewHolder(view)
-            MessageViewHolderType.MY_IMAGE.id,
-            MessageViewHolderType.THEIR_IMAGE.id,
-            MessageViewHolderType.MY_LOCATION.id,
-            MessageViewHolderType.THEIR_LOCATION.id -> ImageMessageViewHolder(view)
+            MessageViewHolderType.THEIR_TEXT.id -> MessageViewHolder(view)
+//            MessageViewHolderType.MY_IMAGE.id,
+//            MessageViewHolderType.THEIR_IMAGE.id,
+//            MessageViewHolderType.MY_LOCATION.id,
+//            MessageViewHolderType.THEIR_LOCATION.id -> ImageMessageViewHolder(view)
 
             else -> throw IllegalArgumentException("Unknown view type")
         }
