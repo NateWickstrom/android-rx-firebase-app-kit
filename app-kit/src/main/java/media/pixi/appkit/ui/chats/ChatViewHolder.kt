@@ -9,13 +9,13 @@ import media.pixi.appkit.R
 import media.pixi.appkit.data.chats.ChatEntity
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.chats.ChatItem
-import media.pixi.appkit.domain.chats.GetChats
+import media.pixi.appkit.domain.chats.ChatListItemGetter
 import media.pixi.appkit.utils.DateUtils
 import org.joda.time.DateTime
 import timber.log.Timber
 
 
-class ChatViewHolder(itemView: View, private val chats: GetChats): RecyclerView.ViewHolder(itemView) {
+class ChatViewHolder(itemView: View, private val chats: ChatListItemGetter): RecyclerView.ViewHolder(itemView) {
 
     private val defaultTypeface = itemView.findViewById<TextView>(R.id.title).typeface
     private var disposables = CompositeDisposable()

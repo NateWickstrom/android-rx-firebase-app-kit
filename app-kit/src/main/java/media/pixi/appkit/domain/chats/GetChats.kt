@@ -52,10 +52,6 @@ class GetChats @Inject constructor(private val chatProvider: ChatProvider,
         )
     }
 
-    fun getChats(): Flowable<List<ChatEntity>> {
-        return chatProvider.getChats()
-    }
-
     fun getChat(chatId: String): Flowable<Chat> {
         return Flowable.combineLatest(
             chatProvider.observerMessages(chatId)
