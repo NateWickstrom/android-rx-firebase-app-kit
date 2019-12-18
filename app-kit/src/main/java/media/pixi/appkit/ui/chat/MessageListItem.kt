@@ -7,6 +7,7 @@ data class MessageListItem(
     val message: Message,
     val isMe: Boolean = false,
     val sendIconUrl: String = "",
+    val senderId: String = "",
     val messageViewHolderType: MessageViewHolderType,
     val progress: Float = 0.toFloat(),
     val timeInMillis: Long = message.date.toDate().time,

@@ -18,37 +18,32 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
                                      private val userProfileProvider: UserProfileProvider,
                                      private val authProvider: AuthProvider) {
 
-    private inner class MyChatItemZipper: io.reactivex.functions.Function3<List<UserProfile>, ChatMessageEntity, MyChatStatus, ChatListItem> {
-        override fun apply(
-            t1: List<UserProfile>,
-            t2: ChatMessageEntity,
-            t3: MyChatStatus
-        ): ChatListItem {
-            return toChatItem(t1, t2, t3)
-        }
-    }
-
-    private inner class MyChatZipper: io.reactivex.functions.Function3<List<MessageListItem>, ChatMessageEntity, ChatListItem, Chat> {
+    private inner class MyChatZipper: io.reactivex.functions.Function3<List<MessageListItem>, ChatMessageEntity, List<UserProfile>, Chat> {
         override fun apply(
             t1: List<MessageListItem>,
             t2: ChatMessageEntity,
-            t3: ChatListItem
+            t3: List<UserProfile>
         ): Chat {
             return toChat(t1, t2, t3)
         }
     }
 
     fun getChat(chatId: String): Flowable<Chat> {
-        return Flowable.combineLatest(
-            chatProvider.observerMessages(chatId)
-                .map { toMessageListItems(it) },
-            chatProvider.getMyChatStatus(chatId)
-                .flatMap { maybeGetChatMessageEntity(chatId, it.lastSeenMessageId) },
-            chatProvider.getChat(chatId)
-                .toFlowable()
-                .flatMap { getChatItem(it) },
-            MyChatZipper()
-        )
+        return chatProvider.getChat(chatId)
+            .toFlowable()
+            .concatMap {
+                Flowable.combineLatest(
+                    chatProvider.observerMessages(chatId)
+                        .map { toMessageListItems(it) },
+                    chatProvider.getMyChatStatus(chatId)
+                        .flatMap { maybeGetChatMessageEntity(chatId, it.lastSeenMessageId) },
+                    Flowable.combineLatest(
+                        it.userIds.map { userProfileProvider.observerUserProfile(it) }
+                    ) { it.map { profile -> profile as UserProfile } },
+                    MyChatZipper()
+                )
+            }
+
     }
 
     fun getChatId(userIds: List<CharSequence>): Maybe<String> {
@@ -74,19 +69,6 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         )
     }
 
-    private fun getChatItem(chatEntity: ChatEntity): Flowable<ChatListItem> {
-        if (chatEntity.lastMessageId == null) return Flowable.never()
-
-        val profiles = chatEntity.userIds.map { userProfileProvider.observerUserProfile(it) }
-
-        return Flowable.combineLatest(
-            Flowable.combineLatest(profiles) { it.map { profile -> profile as UserProfile } },
-            chatProvider.getMessage(chatEntity.id, chatEntity.lastMessageId),
-            chatProvider.getMyChatStatus(chatEntity.id),
-            MyChatItemZipper()
-        )
-    }
-
     private fun maybeGetChatMessageEntity(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
         val userId = authProvider.getUserId()!!
         return if (messageId.isBlank()) {
@@ -107,35 +89,43 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         return messages.map { toMessageListItem(it) }
     }
 
-    private fun toChatItem(users: List<UserProfile>, message: ChatMessageEntity, myChatStatus: MyChatStatus): ChatListItem {
-        val seen = myChatStatus.lastSeenMessageId.equals(message.id)
-
-        val otherUsers = users.filter { it.id.equals(authProvider.getUserId()!!).not() }
-
-        return ChatListItem(
-            title = getNames(otherUsers),
-            subtitle = message.text,
-            time = DateTime(message.timestamp.toDate()),
-            hasSeen = seen,
-            users = otherUsers
-            )
-    }
-
-    private fun toChat(messages: List<MessageListItem>, latestMassage: ChatMessageEntity, chatItem: ChatListItem): Chat {
+    private fun toChat(messages: List<MessageListItem>, latestMassage: ChatMessageEntity, profiles: List<UserProfile>): Chat {
         return Chat(
             latestMessage = latestMassage,
-            chatItem = chatItem,
-            messages = messages
+            title = toChatTitle(profiles),
+            users = profiles,
+            messages = toProperMessages(messages, profiles)
         )
     }
 
-    private fun getNames(users: List<UserProfile>): String {
-        val names = StringBuilder()
-        for (user in users) {
-            names.append(user.firstName)
-        }
+    private fun toChatTitle(profiles: List<UserProfile>): String {
+        val sb = StringBuilder()
 
-        return names.toString()
+        profiles
+            .filter { it.id.equals(authProvider.getUserId()!!).not() }
+            .forEach { sb.append(it.firstName + ", ") }
+
+        sb.removeSuffix(", ")
+        return sb.toString()
+    }
+
+    private fun toProperMessages(messages: List<MessageListItem>, profiles: List<UserProfile>): List<MessageListItem> {
+        val set = mutableMapOf<String, UserProfile>()
+        profiles.forEach {
+            set[it.id] = it
+        }
+        return messages.map { toProperMessage(it, set) }
+    }
+
+    private fun toProperMessage(message: MessageListItem, profiles: Map<String, UserProfile>): MessageListItem {
+        return MessageListItem(
+            id = message.id,
+            message = message.message,
+            messageViewHolderType = message.messageViewHolderType,
+            sendIconUrl = profiles[message.senderId]?.imageUrl!!,
+            senderId = message.senderId,
+            isMe = message.isMe
+        )
     }
 
     private fun toMessageListItem(message: ChatMessageEntity): MessageListItem {
@@ -158,6 +148,7 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             message = textMessage,
             messageViewHolderType = type,
             sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
+            senderId = message.senderId,
             isMe = isMe
         )
     }
