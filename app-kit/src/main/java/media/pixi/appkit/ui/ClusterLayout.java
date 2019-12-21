@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chats;
+package media.pixi.appkit.ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,13 +19,14 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 import media.pixi.appkit.R;
+import media.pixi.appkit.ui.TextDrawable;
 
 public class ClusterLayout extends ViewGroup {
 
     private static final double CONSTANT_FOR_TWO_VIEWS = 2 + ( 2 / Math.sqrt(2) );
     private static final double CONSTANT_FOR_THREE_VIEWS = 1 - Math.sin(Math.toRadians(60));
 
-    interface ClusteredView {
+    public interface ClusteredView {
         String getImageUrl();
         String getName();
         int getBackgroundColor();

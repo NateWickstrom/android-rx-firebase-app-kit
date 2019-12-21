@@ -10,6 +10,7 @@ import media.pixi.appkit.data.chats.ChatEntity
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.chats.ChatListItem
 import media.pixi.appkit.domain.chats.ChatListItemsGetter
+import media.pixi.appkit.ui.ClusterLayout
 import media.pixi.appkit.utils.DateUtils
 import org.joda.time.DateTime
 import timber.log.Timber

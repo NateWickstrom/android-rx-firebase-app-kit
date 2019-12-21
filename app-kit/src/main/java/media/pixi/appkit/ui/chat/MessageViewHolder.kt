@@ -6,13 +6,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import media.pixi.appkit.R
+import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.chats.Message
+import media.pixi.appkit.ui.ClusterLayout
+import media.pixi.appkit.ui.chats.ChatViewHolder
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
 
-    private var avatarImageView: SimpleDraweeView = itemView.findViewById(R.id.image_avatar)
+    private var avatarImageView: ClusterLayout = itemView.findViewById(R.id.image_avatar)
     private var timeTextView: TextView = itemView.findViewById(R.id.text_time)
     private var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
     private var messageTextView: TextView = itemView.findViewById(R.id.text_content)
@@ -31,7 +34,7 @@ class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
             timeTextView.visibility = View.GONE
         }
 
-        avatarImageView.setImageURI(messageItem.sendIconUrl)
+        avatarImageView.setClusteredViews(toClusteredView(messageItem.senderProfile!!))
 
         updateReadStatus()
     }
@@ -103,6 +106,24 @@ class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
         }
         return simpleDateFormat
     }
+
+    private fun toClusteredView(userProfile: UserProfile): MutableList<ClusterLayout.ClusteredView> {
+        val blue = itemView.resources.getColor(R.color.blue)
+        val green = itemView.resources.getColor(R.color.green)
+        val pink = itemView.resources.getColor(R.color.pink)
+        val orange = itemView.resources.getColor(R.color.orange)
+        val colors = mutableListOf(blue, green, pink, orange)
+        colors.shuffle()
+
+        return mutableListOf(
+            ChatViewHolder.MyClusteredView(
+                image = userProfile.imageUrl,
+                name = userProfile.firstName[0].toString(),
+                backgroundColor = colors[0]
+            )
+        )
+    }
+
     companion object {
         const val MoreThanYearFormat = "MM/yy"
         const val WeekToYearFormat = "dd/MM"

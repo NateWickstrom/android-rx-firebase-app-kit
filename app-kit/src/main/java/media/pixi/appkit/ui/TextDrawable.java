@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chats;
+package media.pixi.appkit.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

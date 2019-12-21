@@ -11,7 +11,6 @@ Messaging
 - send file
 - send location
 - pagination
-- user images
 - accurate send status
 - receivers have seen
 - chat title
@@ -21,6 +20,7 @@ Messaging
 - new messages indicator
 - remove image from local user
 - error sending/updating
+- add/remove members
 
 Notifications
 - images in notifications

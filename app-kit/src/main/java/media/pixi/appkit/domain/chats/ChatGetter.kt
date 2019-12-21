@@ -124,6 +124,7 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             messageViewHolderType = message.messageViewHolderType,
             sendIconUrl = profiles[message.senderId]?.imageUrl!!,
             senderId = message.senderId,
+            senderProfile = profiles[message.senderId],
             isMe = message.isMe
         )
     }
@@ -149,6 +150,7 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             messageViewHolderType = type,
             sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
             senderId = message.senderId,
+            senderProfile = null,
             isMe = isMe
         )
     }
