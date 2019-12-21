@@ -5,7 +5,7 @@ import android.app.Activity;
 import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
 import media.pixi.appkit.R;
-import media.pixi.appkit.domain.chats.Message;
+import media.pixi.appkit.domain.chats.models.Message;
 
 public class ForwardMessageAction extends MessageAction {
 

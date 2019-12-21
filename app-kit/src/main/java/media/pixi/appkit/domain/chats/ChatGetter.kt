@@ -8,8 +8,7 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.*
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.ui.chat.MessageListItem
-import media.pixi.appkit.ui.chat.MessageViewHolderType
+import media.pixi.appkit.domain.chats.models.*
 import media.pixi.appkit.utils.StringUtils
 import org.joda.time.DateTime
 import javax.inject.Inject
@@ -125,8 +124,6 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         return MessageListItem(
             id = message.id,
             message = message.message,
-            messageViewHolderType = message.messageViewHolderType,
-            sendIconUrl = profiles[message.senderId]?.imageUrl!!,
             senderId = message.senderId,
             senderProfile = profiles[message.senderId],
             isMe = message.isMe
@@ -146,13 +143,11 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         val sender = message.senderId
         val me = authProvider.getUserId()
         val isMe = me.equals(sender)
-        val type = if (isMe) MessageViewHolderType.MY_TEXT else MessageViewHolderType.THEIR_TEXT
 
         return MessageListItem(
             id = message.id,
             message = textMessage,
-            messageViewHolderType = type,
-            sendIconUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/Madonna-press-by-Ricardo-Gomes-2019-billboard-1548.jpg",
+            sendIconUrl = "",
             senderId = message.senderId,
             senderProfile = null,
             isMe = isMe

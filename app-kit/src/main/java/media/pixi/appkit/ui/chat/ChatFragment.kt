@@ -12,8 +12,9 @@ import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.audio.Recording
-import media.pixi.appkit.domain.chats.Message
-import media.pixi.appkit.domain.chats.MessageType
+import media.pixi.appkit.domain.chats.models.Message
+import media.pixi.appkit.domain.chats.models.MessageListItem
+import media.pixi.appkit.domain.chats.models.MessageType
 import media.pixi.appkit.ui.chat.actions.*
 import media.pixi.appkit.ui.chat.textinput.TextInputListener
 import media.pixi.appkit.ui.chat.textinput.TextInputView

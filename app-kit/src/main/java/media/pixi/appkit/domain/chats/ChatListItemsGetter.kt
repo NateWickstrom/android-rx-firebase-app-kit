@@ -8,9 +8,9 @@ import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.chats.MyChatStatus
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.domain.chats.models.ChatListItem
 import media.pixi.appkit.utils.StringUtils
 import org.joda.time.DateTime
-import java.lang.StringBuilder
 import javax.inject.Inject
 
 class ChatListItemsGetter @Inject constructor(private val chatProvider: ChatProvider,

@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import io.reactivex.Completable;
 import media.pixi.appkit.R;
-import media.pixi.appkit.domain.chats.Message;
+import media.pixi.appkit.domain.chats.models.Message;
 
 public class DeleteMessageAction extends MessageAction {
 

@@ -1,5 +1,6 @@
 package media.pixi.appkit.domain.chats
 
+import media.pixi.appkit.domain.chats.models.Message
 import javax.inject.Inject
 import javax.inject.Singleton
 

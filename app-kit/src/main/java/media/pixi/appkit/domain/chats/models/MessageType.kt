@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain.chats
+package media.pixi.appkit.domain.chats.models
 
 enum class MessageType constructor(val value: Int) {
     NONE(-1),

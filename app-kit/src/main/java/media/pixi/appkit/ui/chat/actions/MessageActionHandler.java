@@ -10,7 +10,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
-import media.pixi.appkit.domain.chats.Message;
+import media.pixi.appkit.domain.chats.models.Message;
 
 public class MessageActionHandler {
 

@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain.chats
+package media.pixi.appkit.domain.chats.models
 
 import media.pixi.appkit.data.profile.UserProfile
 import org.joda.time.DateTime

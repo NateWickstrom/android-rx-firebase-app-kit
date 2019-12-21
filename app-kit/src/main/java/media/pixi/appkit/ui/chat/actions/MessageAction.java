@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Completable;
-import media.pixi.appkit.domain.chats.Message;
+import media.pixi.appkit.domain.chats.models.Message;
 
 public abstract class MessageAction {
 

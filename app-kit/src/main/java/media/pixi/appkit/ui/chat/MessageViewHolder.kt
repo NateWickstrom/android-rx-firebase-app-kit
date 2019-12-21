@@ -6,7 +6,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
-import media.pixi.appkit.domain.chats.Message
+import media.pixi.appkit.domain.chats.models.Message
+import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.ui.ClusterLayout
 import media.pixi.appkit.ui.chats.ChatViewHolder
 import java.text.SimpleDateFormat

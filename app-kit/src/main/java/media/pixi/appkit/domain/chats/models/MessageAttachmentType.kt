@@ -1,6 +1,6 @@
-package media.pixi.appkit.ui.chat
+package media.pixi.appkit.domain.chats.models
 
-enum class MessageViewHolderType constructor(internal val id: Int) {
+enum class MessageAttachmentType constructor(internal val id: Int) {
     MY_TEXT(100),
     MY_IMAGE(101),
     MY_LOCATION(102),

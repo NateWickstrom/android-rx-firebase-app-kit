@@ -7,9 +7,7 @@ timestamp with timezones
 
 Messaging
 - send image
-- send audio
-- send file
-- send location
+- send video
 - pagination
 - accurate send status
 - receivers have seen
@@ -20,6 +18,10 @@ Messaging
 - remove image from local user
 - error sending/updating
 - add/remove members
+- threads/replies
+- send audio (later)
+- send file (later)
+- send location (later)
 
 Notifications
 - fix bugs
