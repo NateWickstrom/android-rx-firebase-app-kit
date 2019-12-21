@@ -9,6 +9,7 @@ interface ChatContract {
     interface View: BaseView<Presenter> {
         var loading: Boolean
         var canSend: Boolean
+        var title: String
 
         fun setResults(results: List<MessageListItem>)
         fun scrollToEnd()

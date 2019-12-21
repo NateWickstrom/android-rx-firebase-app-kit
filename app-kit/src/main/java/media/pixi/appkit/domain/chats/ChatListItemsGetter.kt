@@ -8,6 +8,7 @@ import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.chats.MyChatStatus
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.utils.StringUtils
 import org.joda.time.DateTime
 import java.lang.StringBuilder
 import javax.inject.Inject
@@ -59,11 +60,10 @@ class ChatListItemsGetter @Inject constructor(private val chatProvider: ChatProv
     }
 
     private fun getNames(users: List<UserProfile>): String {
-        val names = StringBuilder()
-        for (user in users) {
-            names.append(user.firstName)
-        }
-
-        return names.toString()
+        return StringUtils.toChatTitle(
+            users
+                .filter { it.id.equals(authProvider.getUserId()!!).not() }
+                .map { Pair(it.firstName, it.lastName) }
+        )
     }
 }

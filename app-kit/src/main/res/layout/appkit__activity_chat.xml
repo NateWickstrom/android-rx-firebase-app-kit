@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/appbar"
-        layout="@layout/appkit__appbar_chat"/>
+        layout="@layout/appkit__appbar"/>
 
     <FrameLayout
             android:id="@+id/contentFrame"

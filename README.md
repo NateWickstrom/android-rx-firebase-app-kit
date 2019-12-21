@@ -13,7 +13,6 @@ Messaging
 - pagination
 - accurate send status
 - receivers have seen
-- chat title
 - edit chat title
 - edit text/image/audio
 - remove text/image/audio

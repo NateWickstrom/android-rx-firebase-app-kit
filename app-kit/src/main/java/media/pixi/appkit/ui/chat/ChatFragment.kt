@@ -43,6 +43,12 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
             isSendEnabled = value
         }
 
+    override var title: String
+        get() = activity?.title.toString()
+        set(value) {
+            activity?.title = value
+        }
+
     private var isSendEnabled = false
     private var adapter: MessageAdapter? = null
     private var speedDialView: SpeedDialView? = null

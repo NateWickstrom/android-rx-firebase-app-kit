@@ -10,8 +10,8 @@ import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
 import media.pixi.appkit.ui.chat.MessageListItem
 import media.pixi.appkit.ui.chat.MessageViewHolderType
+import media.pixi.appkit.utils.StringUtils
 import org.joda.time.DateTime
-import java.lang.StringBuilder
 import javax.inject.Inject
 
 class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
@@ -69,6 +69,13 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         )
     }
 
+    fun getChatTitle(userIds: List<String>): Flowable<String> {
+        return Flowable
+            .combineLatest(userIds.map { userProfileProvider.observerUserProfile(it) })
+                    { it.map { profile -> profile as UserProfile } }
+            .map { toChatTitle(it) }
+    }
+
     private fun maybeGetChatMessageEntity(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
         val userId = authProvider.getUserId()!!
         return if (messageId.isBlank()) {
@@ -99,14 +106,11 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
     }
 
     private fun toChatTitle(profiles: List<UserProfile>): String {
-        val sb = StringBuilder()
-
-        profiles
-            .filter { it.id.equals(authProvider.getUserId()!!).not() }
-            .forEach { sb.append(it.firstName + ", ") }
-
-        sb.removeSuffix(", ")
-        return sb.toString()
+        return StringUtils.toChatTitle(
+            profiles
+                .filter { it.id.equals(authProvider.getUserId()!!).not() }
+                .map { Pair(it.firstName, it.lastName) }
+        )
     }
 
     private fun toProperMessages(messages: List<MessageListItem>, profiles: List<UserProfile>): List<MessageListItem> {

@@ -52,7 +52,7 @@ class ChatViewHolder(itemView: View, private val chats: ChatListItemsGetter): Re
         subtitle?.text = chat.subtitle
         time?.text = getTime(chat.time)
 
-        createTitle(chat.users)
+        title?.text = chat.title
 
         if (chat.hasSeen) {
             setPlane(title)
@@ -87,13 +87,6 @@ class ChatViewHolder(itemView: View, private val chats: ChatListItemsGetter): Re
         }
     }
 
-    private fun createTitle(users: List<UserProfile>) {
-        val names = StringBuilder()
-        users.forEach { names.append(it.firstName + ",") }
-        title?.text = names.toString()
-            .removeSuffix(",")
-    }
-
     private fun isTruncated(textView: TextView): Boolean {
         val layout = textView.layout
         if (layout != null) {
@@ -120,7 +113,7 @@ class ChatViewHolder(itemView: View, private val chats: ChatListItemsGetter): Re
             MyClusteredView(
                 image = userProfile.imageUrl,
                 name = userProfile.firstName[0].toString(),
-                backgroundColor = colors[index]
+                backgroundColor = colors[index % 4]
             )
         }.toMutableList()
     }

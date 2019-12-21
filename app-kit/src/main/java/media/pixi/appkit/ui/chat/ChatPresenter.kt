@@ -32,6 +32,7 @@ class ChatPresenter @Inject constructor(
         this.view = view
         view.loading = true
         view.canSend = false
+        view.title = ""
 
         chatId?.let { id ->
             onFoundChatId(id)
@@ -140,14 +141,24 @@ class ChatPresenter @Inject constructor(
         latestMessage = chat.latestMessage
         view?.loading = false
         view?.canSend = true
+        view?.title = chat.title
         view?.setResults(results)
     }
 
-    private fun onNoChatIdFound() {
+    private fun onChatTitleCreated(title: String) {
         results = mutableListOf()
+        view?.title = title
         view?.loading = false
         view?.canSend = true
+    }
 
+    private fun onNoChatIdFound() {
+        disposables.add(
+            chatsGetter.getChatTitle(userIds!!.map { it.toString() }).subscribe(
+                { onChatTitleCreated(it) },
+                { onError(it) }
+            )
+        )
     }
 
     private fun onError(error: Throwable) {
