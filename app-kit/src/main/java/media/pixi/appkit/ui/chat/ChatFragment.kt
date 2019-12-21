@@ -6,14 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialOverlayLayout
 import com.leinardi.android.speeddial.SpeedDialView
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.appkit__fragment_chat.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.*
-import kotlinx.android.synthetic.main.appkit__fragment_list.progress_bar
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
-import kotlinx.android.synthetic.main.appkit__fragment_list.view.progress_bar
 import media.pixi.appkit.R
 import media.pixi.appkit.data.audio.Recording
 import media.pixi.appkit.domain.chats.Message
@@ -23,7 +19,7 @@ import media.pixi.appkit.ui.chat.textinput.TextInputListener
 import media.pixi.appkit.ui.chat.textinput.TextInputView
 import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import media.pixi.appkit.utils.ActivityUtils
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
 
 class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, TextInputListener,

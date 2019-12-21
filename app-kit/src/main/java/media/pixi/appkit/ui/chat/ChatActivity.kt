@@ -8,8 +8,8 @@ import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
 import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
 import media.pixi.appkit.utils.ActivityUtils
-import javax.inject.Inject
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 class ChatActivity : DaggerAppCompatActivity() {
 

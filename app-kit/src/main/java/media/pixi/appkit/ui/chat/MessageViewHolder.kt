@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.domain.chats.Message
