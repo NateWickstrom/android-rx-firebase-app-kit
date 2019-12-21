@@ -22,6 +22,8 @@ Messaging
 - add/remove members
 
 Notifications
+- fix bugs
+- ordering
 - images in notifications
 - >1 user images
 - better notification action handling
