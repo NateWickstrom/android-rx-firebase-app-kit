@@ -37,9 +37,9 @@ interface ChatContract {
 
         fun onItemsViewed(firstPosition: Int, lastPosition: Int)
 
-        fun onImageSelected(uri: Uri)
+        fun onImageSelected(path: String)
 
-        fun onVideoSelected(uri: Uri)
+        fun onVideoSelected(path: String)
     }
 
     interface Navigator {

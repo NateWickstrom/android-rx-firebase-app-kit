@@ -13,7 +13,9 @@ import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 import media.pixi.appkit.ui.chatoptions.ChatOptionsNavigator
 import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageContract
+import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageNavigator
 import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoContract
+import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoNavigator
 
 class ChatActivity : DaggerAppCompatActivity() {
 
@@ -62,15 +64,22 @@ class ChatActivity : DaggerAppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-//            if (requestCode == ChatOptionsNavigator.GALLERY_IMAGE_REQUEST) {
-//                data?.data?.let {
-//                    presenter.onImageSelected(it)
-//                }
-//            }
-//            if (requestCode == ChatOptionsVideoNavigator.CAMERA_IMAGE_REQUEST) {
-//                val uri = data?.extras?.get(MediaStore.EXTRA_OUTPUT)
-//                presenter.onImageSelected(uri!!)
-//            }
+            if (requestCode == ChatOptionsImageNavigator.GALLERY_IMAGE_REQUEST) {
+                val path = data?.data?.path!!
+                presenter.onImageSelected(path)
+            }
+            if (requestCode == ChatOptionsImageNavigator.CAMERA_IMAGE_REQUEST) {
+                val path = ChatOptionsImageNavigator.tempFilePath(this)
+                presenter.onImageSelected(path)
+            }
+            if (requestCode == ChatOptionsVideoNavigator.GALLERY_VIDEO_REQUEST) {
+                val path = data?.data?.path!!
+                presenter.onVideoSelected(path)
+            }
+            if (requestCode == ChatOptionsVideoNavigator.CAMERA_VIDEO_REQUEST) {
+                val path = ChatOptionsVideoNavigator.tempFilePath(this)
+                presenter.onVideoSelected(path)
+            }
         }
     }
 

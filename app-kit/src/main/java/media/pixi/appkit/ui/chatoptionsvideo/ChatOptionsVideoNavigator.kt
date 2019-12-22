@@ -1,6 +1,7 @@
 package media.pixi.appkit.ui.chatoptionsvideo
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -42,5 +43,10 @@ class ChatOptionsVideoNavigator @Inject constructor(): ChatOptionsVideoContract.
         const val GALLERY_VIDEO_REQUEST = 901
         const val CAMERA_VIDEO_REQUEST = 902
         const val TEMP_CAMERA_VIDEO_FILE = "temp_camera_video"
+
+        fun tempFilePath(context: Context): String {
+            val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+            return File(storageDir, "$TEMP_CAMERA_VIDEO_FILE.tmp").absolutePath
+        }
     }
 }

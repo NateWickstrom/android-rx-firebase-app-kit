@@ -1,6 +1,7 @@
 package media.pixi.appkit.ui.chatoptionsimage
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -40,5 +41,10 @@ class ChatOptionsImageNavigator @Inject constructor(): ChatOptionsImageContract.
         const val GALLERY_IMAGE_REQUEST = 801
         const val CAMERA_IMAGE_REQUEST = 802
         const val TEMP_CAMERA_IMAGE_FILE = "temp_camera_image"
+
+        fun tempFilePath(context: Context): String {
+            val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+            return File(storageDir, "$TEMP_CAMERA_IMAGE_FILE.tmp").absolutePath
+        }
     }
 }

@@ -114,12 +114,12 @@ class ChatPresenter @Inject constructor(
         return chatId.equals(this.chatId)
     }
 
-    override fun onImageSelected(uri: Uri) {
-        Timber.d("Image: $uri")
+    override fun onImageSelected(path: String) {
+        Timber.d("Image: $path")
     }
 
-    override fun onVideoSelected(uri: Uri) {
-        Timber.d("Video: $uri")
+    override fun onVideoSelected(path: String) {
+        Timber.d("Video: $path")
     }
 
     private fun onCompletedSeen() {
