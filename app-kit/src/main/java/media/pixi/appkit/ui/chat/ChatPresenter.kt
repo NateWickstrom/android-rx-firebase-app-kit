@@ -1,6 +1,7 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
+import android.net.Uri
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
@@ -111,6 +112,14 @@ class ChatPresenter @Inject constructor(
 
     override fun onMessageReceived(chatId: String, message: Message): Boolean {
         return chatId.equals(this.chatId)
+    }
+
+    override fun onImageSelected(uri: Uri) {
+        Timber.d("Image: $uri")
+    }
+
+    override fun onVideoSelected(uri: Uri) {
+        Timber.d("Video: $uri")
     }
 
     private fun onCompletedSeen() {

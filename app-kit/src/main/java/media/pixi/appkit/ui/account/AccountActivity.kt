@@ -37,6 +37,7 @@ class AccountActivity : DaggerAppCompatActivity() {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         val uri = navigator.onShowImageFetcherResult(this, requestCode, resultCode, data)
         if (uri != null) {
             val bitmap = BitmapUtils.getScaledBitmapFromUri(this, uri, 120, 120)

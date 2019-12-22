@@ -17,11 +17,12 @@ class ChatOptionsPresenter @Inject constructor(val navigator: ChatOptionsContrac
 
     }
 
-    override fun onPhotoClicked(activity: Activity) {
-        navigator.showCamera(activity)
+    override fun onVideoClicked(activity: Activity) {
+        navigator.showVideoChosser(activity)
     }
 
+
     override fun onImageClicked(activity: Activity) {
-        navigator.showGallery(activity)
+        navigator.showImageChooser(activity)
     }
 }

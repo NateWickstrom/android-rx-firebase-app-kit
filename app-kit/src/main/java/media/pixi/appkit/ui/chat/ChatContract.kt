@@ -1,6 +1,7 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
+import android.net.Uri
 import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.ui.BasePresenter
 import media.pixi.appkit.ui.BaseView
@@ -35,6 +36,10 @@ interface ChatContract {
         fun onShowChatMembersClicked(activity: Activity)
 
         fun onItemsViewed(firstPosition: Int, lastPosition: Int)
+
+        fun onImageSelected(uri: Uri)
+
+        fun onVideoSelected(uri: Uri)
     }
 
     interface Navigator {

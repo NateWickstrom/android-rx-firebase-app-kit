@@ -34,9 +34,9 @@ class ChatOptionFragment : BottomSheetDialogFragment(), ChatOptionsContract.View
             dismiss()
             presenter.onImageClicked(activity!!)
         }
-        view.findViewById<View>(R.id.photo).setOnClickListener {
+        view.findViewById<View>(R.id.video).setOnClickListener {
             dismiss()
-            presenter.onPhotoClicked(activity!!)
+            presenter.onVideoClicked(activity!!)
         }
 
         return view

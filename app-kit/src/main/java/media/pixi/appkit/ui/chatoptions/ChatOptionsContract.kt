@@ -12,12 +12,12 @@ interface ChatOptionsContract {
 
     interface Presenter : BasePresenter<View> {
         fun onLocationClicked(activity: Activity)
-        fun onPhotoClicked(activity: Activity)
+        fun onVideoClicked(activity: Activity)
         fun onImageClicked(activity: Activity)
     }
 
     interface Navigator {
-        fun showGallery(activity: Activity)
-        fun showCamera(activity: Activity)
+        fun showImageChooser(activity: Activity)
+        fun showVideoChosser(activity: Activity)
     }
 }

@@ -1,29 +1,32 @@
 package media.pixi.appkit.ui.chatoptions
 
 import android.app.Activity
+import media.pixi.appkit.ui.chat.ChatActivity
+import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageFragment
+import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoFragment
 import javax.inject.Inject
-import android.provider.MediaStore
-import android.content.Intent
 
 
 class ChatOptionsNavigator @Inject constructor(): ChatOptionsContract.Navigator {
 
-    override fun showGallery(activity: Activity) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+    override fun showImageChooser(activity: Activity) {
+        if (activity is ChatActivity) {
+            val fragment = ChatOptionsImageFragment.newInstance()
+            fragment.presenter = activity.optionsImagePresenter
+            fragment.show(activity.supportFragmentManager, IMAGE_ID)
+        }
     }
 
-    override fun showCamera(activity: Activity) {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        imageUri = getImageUri()
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        activity.startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    override fun showVideoChosser(activity: Activity) {
+        if (activity is ChatActivity) {
+            val fragment = ChatOptionsVideoFragment.newInstance()
+            fragment.presenter = activity.optionsVideoPresenter
+            fragment.show(activity.supportFragmentManager, VIDEO_ID)
+        }
     }
 
     companion object {
-        const val REQUEST_IMAGE_CAPTURE = 99
-        const val PICK_IMAGE = 98
+        const val IMAGE_ID = "image_chooser"
+        const val VIDEO_ID = "video_chooser"
     }
 }

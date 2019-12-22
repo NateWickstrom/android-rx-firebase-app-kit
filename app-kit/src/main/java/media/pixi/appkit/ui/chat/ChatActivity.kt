@@ -3,6 +3,7 @@ package media.pixi.appkit.ui.chat
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
@@ -10,6 +11,9 @@ import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
 import media.pixi.appkit.utils.ActivityUtils
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
+import media.pixi.appkit.ui.chatoptions.ChatOptionsNavigator
+import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageContract
+import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoContract
 
 class ChatActivity : DaggerAppCompatActivity() {
 
@@ -18,6 +22,10 @@ class ChatActivity : DaggerAppCompatActivity() {
     lateinit var presenter: ChatPresenter
         @Inject set
     lateinit var optionsPresenter: ChatOptionsContract.Presenter
+        @Inject set
+    lateinit var optionsImagePresenter: ChatOptionsImageContract.Presenter
+        @Inject set
+    lateinit var optionsVideoPresenter: ChatOptionsVideoContract.Presenter
         @Inject set
     lateinit var navigator: ChatContract.Navigator
         @Inject set
@@ -49,6 +57,21 @@ class ChatActivity : DaggerAppCompatActivity() {
 
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == ChatOptionsNavigator.GALLERY_IMAGE_REQUEST) {
+//                data?.data?.let {
+//                    presenter.onImageSelected(it)
+//                }
+//            }
+//            if (requestCode == ChatOptionsVideoNavigator.CAMERA_IMAGE_REQUEST) {
+//                val uri = data?.extras?.get(MediaStore.EXTRA_OUTPUT)
+//                presenter.onImageSelected(uri!!)
+//            }
+        }
     }
 
     companion object {

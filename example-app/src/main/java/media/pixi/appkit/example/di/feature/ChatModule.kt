@@ -12,6 +12,12 @@ import media.pixi.appkit.ui.chat.ChatPresenter
 import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
 import media.pixi.appkit.ui.chatoptions.ChatOptionsNavigator
 import media.pixi.appkit.ui.chatoptions.ChatOptionsPresenter
+import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageContract
+import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageNavigator
+import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImagePresenter
+import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoContract
+import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoNavigator
+import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoPresenter
 
 @Module
 abstract class ChatModule {
@@ -35,4 +41,20 @@ abstract class ChatModule {
     @ActivityScoped
     @Binds
     internal abstract fun chatOptionsNavigator(navigator: ChatOptionsNavigator): ChatOptionsContract.Navigator
+
+    @ActivityScoped
+    @Binds
+    internal abstract fun chatOptionsImagePresenter(presenter: ChatOptionsImagePresenter): ChatOptionsImageContract.Presenter
+
+    @ActivityScoped
+    @Binds
+    internal abstract fun chatOptionsImageNavigator(navigator: ChatOptionsImageNavigator): ChatOptionsImageContract.Navigator
+
+    @ActivityScoped
+    @Binds
+    internal abstract fun chatOptionsVideoPresenter(presenter: ChatOptionsVideoPresenter): ChatOptionsVideoContract.Presenter
+
+    @ActivityScoped
+    @Binds
+    internal abstract fun chatOptionsVideoNavigator(navigator: ChatOptionsVideoNavigator): ChatOptionsVideoContract.Navigator
 }
