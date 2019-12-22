@@ -15,6 +15,9 @@ interface ChatContract {
         fun setResults(results: List<MessageListItem>)
         fun scrollToEnd()
 
+        fun showImageAttachment(path: String)
+        fun showVideoAttachment(path: String)
+
         fun showTextSpeedDial(messageListItem: MessageListItem)
         fun showImageSpeedDial(messageListItem: MessageListItem)
         fun showLocationSpeedDial(messageListItem: MessageListItem)

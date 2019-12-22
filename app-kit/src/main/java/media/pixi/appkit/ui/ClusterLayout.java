@@ -19,7 +19,6 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 import media.pixi.appkit.R;
-import media.pixi.appkit.ui.TextDrawable;
 
 public class ClusterLayout extends ViewGroup {
 

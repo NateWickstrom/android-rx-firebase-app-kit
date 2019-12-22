@@ -2,7 +2,6 @@ package media.pixi.appkit.ui.myprofile
 
 import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.AuthUserModel
 import media.pixi.appkit.data.friends.FriendsProvider

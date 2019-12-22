@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -14,9 +17,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.ref.WeakReference;
@@ -38,6 +43,7 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
     protected ImageButton btnSend;
     protected ImageButton btnOptions;
     protected TextInputEditText etMessage;
+    protected ImageView attachment;
     protected boolean audioModeEnabled = false;
     protected boolean recordOnPress = false;
     protected Recording recording = null;
@@ -80,6 +86,7 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         btnSend = findViewById(R.id.button_send);
         btnOptions = findViewById(R.id.button_options);
         etMessage = findViewById(R.id.text_input_message);
+        attachment = findViewById(R.id.attachment);
         updateSendButton();
     }
 
@@ -308,6 +315,20 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
 //        }
 //        return false;
 //    }
+
+    public void setVideoAttachment(String path) {
+        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(
+                path,
+                MediaStore.Video.Thumbnails.MICRO_KIND
+        );
+        Glide.with(this).load(bMap).into(attachment);
+        attachment.setVisibility(View.VISIBLE);
+    }
+
+    public void setImageAttachment(String path) {
+        Glide.with(this).load(path).into(attachment);
+        attachment.setVisibility(View.VISIBLE);
+    }
 
     public String getMessageText(){
         return etMessage.getText().toString();

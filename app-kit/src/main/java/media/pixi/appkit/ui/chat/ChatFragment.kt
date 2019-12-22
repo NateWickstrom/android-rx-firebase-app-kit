@@ -2,6 +2,7 @@ package media.pixi.appkit.ui.chat
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -51,6 +52,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     private var speedDialView: SpeedDialView? = null
     private var textInputView: TextInputView? = null
     private var listView: RecyclerView? = null
+    private var attachment: ImageView? = null
 
     lateinit var presenter: ChatContract.Presenter
 
@@ -93,6 +95,8 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         speedDialView?.setOnActionSelectedListener(this)
         speedDialView?.setOnChangeListener(this)
 
+        attachment = view.findViewById(R.id.attachment)
+
         return view
     }
 
@@ -121,6 +125,14 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         }
 
         return false
+    }
+
+    override fun showImageAttachment(path: String) {
+        textInputView?.setImageAttachment(path)
+    }
+
+    override fun showVideoAttachment(path: String) {
+        textInputView?.setVideoAttachment(path)
     }
 
     override fun scrollToEnd() {

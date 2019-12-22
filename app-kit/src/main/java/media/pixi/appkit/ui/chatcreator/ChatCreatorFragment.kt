@@ -3,22 +3,21 @@ package media.pixi.appkit.ui.chatcreator
 import android.app.Activity
 import android.os.Bundle
 import android.view.*
+import android.view.LayoutInflater
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.appkit__fragment_create_chat.*
 import kotlinx.android.synthetic.main.appkit__fragment_create_chat.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
-import javax.inject.Inject
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import android.view.LayoutInflater
-import android.widget.EditText
-import kotlinx.android.synthetic.main.appkit__fragment_create_chat.empty_message
-import kotlinx.android.synthetic.main.appkit__fragment_create_chat.progress_bar
 import media.pixi.appkit.utils.ImageUtils
 import media.pixi.appkit.utils.TextChangeListner
+import javax.inject.Inject
 
 
 class ChatCreatorFragment @Inject constructor(): DaggerFragment(), ChatCreatorContract.View,

@@ -115,10 +115,12 @@ class ChatPresenter @Inject constructor(
     }
 
     override fun onImageSelected(path: String) {
+        view?.showImageAttachment(path)
         Timber.d("Image: $path")
     }
 
     override fun onVideoSelected(path: String) {
+        view?.showVideoAttachment(path)
         Timber.d("Video: $path")
     }
 

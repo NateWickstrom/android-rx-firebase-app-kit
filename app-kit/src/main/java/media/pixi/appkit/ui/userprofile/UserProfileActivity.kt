@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__activity_friend.*
-import kotlinx.android.synthetic.main.appkit__activity_friend.progress_bar
 import media.pixi.appkit.R
 import media.pixi.appkit.utils.ActivityUtils
 import media.pixi.appkit.utils.ImageUtils
