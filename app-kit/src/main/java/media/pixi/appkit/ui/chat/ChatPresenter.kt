@@ -1,12 +1,12 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
-import android.net.Uri
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
-import media.pixi.appkit.domain.chats.*
+import media.pixi.appkit.domain.chats.ChatGetter
+import media.pixi.appkit.domain.chats.MessageBus
 import media.pixi.appkit.domain.chats.models.Chat
 import media.pixi.appkit.domain.chats.models.Message
 import media.pixi.appkit.domain.chats.models.MessageListItem

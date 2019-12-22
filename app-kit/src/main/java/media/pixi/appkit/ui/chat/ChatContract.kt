@@ -1,7 +1,6 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
-import android.net.Uri
 import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.ui.BasePresenter
 import media.pixi.appkit.ui.BaseView

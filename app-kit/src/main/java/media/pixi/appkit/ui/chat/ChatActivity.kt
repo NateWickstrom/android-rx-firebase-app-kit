@@ -3,19 +3,17 @@ package media.pixi.appkit.ui.chat
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
 import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
-import media.pixi.appkit.utils.ActivityUtils
-import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
-import media.pixi.appkit.ui.chatoptions.ChatOptionsNavigator
 import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageContract
 import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageNavigator
 import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoContract
 import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoNavigator
+import media.pixi.appkit.utils.ActivityUtils
+import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 class ChatActivity : DaggerAppCompatActivity() {
 
