@@ -1,5 +1,6 @@
-package media.pixi.appkit.ui.chatoptions
+package media.pixi.appkit.ui.chat.options
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,14 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import media.pixi.appkit.R
 
-class ChatOptionFragment : BottomSheetDialogFragment(), ChatOptionsContract.View {
+class ChatOptionsBottomSheetFragment : BottomSheetDialogFragment() {
 
-    override var error: String
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
+    interface PrimaryOptionOnClickListener {
+        fun showImageChooser(activity: Activity)
+        fun showVideoChooser(activity: Activity)
+    }
 
-    lateinit var presenter: ChatOptionsContract.Presenter
+    var listener: PrimaryOptionOnClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,15 +30,14 @@ class ChatOptionFragment : BottomSheetDialogFragment(), ChatOptionsContract.View
 
         view.findViewById<View>(R.id.location).setOnClickListener {
             dismiss()
-            presenter.onLocationClicked(activity!!)
         }
         view.findViewById<View>(R.id.image).setOnClickListener {
             dismiss()
-            presenter.onImageClicked(activity!!)
+            listener?.showImageChooser(activity!!)
         }
         view.findViewById<View>(R.id.video).setOnClickListener {
             dismiss()
-            presenter.onVideoClicked(activity!!)
+            listener?.showVideoChooser(activity!!)
         }
 
         return view
@@ -44,8 +45,8 @@ class ChatOptionFragment : BottomSheetDialogFragment(), ChatOptionsContract.View
     }
 
     companion object {
-        fun newInstance(): ChatOptionFragment {
-            return ChatOptionFragment()
+        fun newInstance(): ChatOptionsBottomSheetFragment {
+            return ChatOptionsBottomSheetFragment()
         }
     }
 }

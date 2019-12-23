@@ -6,19 +6,20 @@ check timestamp for most recent view
 timestamp with timezones
 
 Messaging
+- store draft with multiple attachments for chat
 - send image
 - send video
-- pagination
 - accurate send status
 - receivers have seen
-- edit chat title
 - edit text/image/audio
 - remove text/image/audio
 - new messages indicator
-- remove image from local user
 - error sending/updating
-- add/remove members
-- threads/replies
+- edit chat title
+- add/remove members (later)
+- chat admin(s) (later)
+- pagination (later)
+- threads/replies (later)
 - send audio (later)
 - send file (later)
 - send location (later)

@@ -3,9 +3,9 @@ package media.pixi.appkit.ui
 interface BasePresenter<T> {
 
     /**
-     * Binds presenter with a view when resumed. The Presenter will perform initialization here.
+     * Binds listener with a view when resumed. The Presenter will perform initialization here.
      *
-     * @param view the view associated with this presenter
+     * @param view the view associated with this listener
      */
     fun takeView(view: T)
 

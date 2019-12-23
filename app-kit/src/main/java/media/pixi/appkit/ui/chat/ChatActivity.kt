@@ -8,11 +8,6 @@ import android.os.PersistableBundle
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.appkit__appbar.*
 import media.pixi.appkit.R
-import media.pixi.appkit.ui.chatoptions.ChatOptionsContract
-import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageContract
-import media.pixi.appkit.ui.chatoptionsimage.ChatOptionsImageNavigator
-import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoContract
-import media.pixi.appkit.ui.chatoptionsvideo.ChatOptionsVideoNavigator
 import media.pixi.appkit.utils.ActivityUtils
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
@@ -24,12 +19,6 @@ class ChatActivity : DaggerAppCompatActivity() {
     lateinit var fragment: ChatFragment
         @Inject set
     lateinit var presenter: ChatPresenter
-        @Inject set
-    lateinit var optionsPresenter: ChatOptionsContract.Presenter
-        @Inject set
-    lateinit var optionsImagePresenter: ChatOptionsImageContract.Presenter
-        @Inject set
-    lateinit var optionsVideoPresenter: ChatOptionsVideoContract.Presenter
         @Inject set
     lateinit var navigator: ChatContract.Navigator
         @Inject set
@@ -73,21 +62,21 @@ class ChatActivity : DaggerAppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == ChatOptionsVideoNavigator.CAMERA_VIDEO_REQUEST) {
+        if (resultCode == Activity.RESULT_OK && requestCode == ChatNavigator.CAMERA_VIDEO_REQUEST) {
             val uri = data?.data!!
             val file = toFile(uri)
             contentResolver.delete(uri, null, null)
             presenter.onVideoSelected(file.absolutePath)
         }
-        if (resultCode == Activity.RESULT_OK && requestCode == ChatOptionsImageNavigator.CAMERA_IMAGE_REQUEST) {
+        if (resultCode == Activity.RESULT_OK && requestCode == ChatNavigator.CAMERA_IMAGE_REQUEST) {
             presenter.onImageSelected(imageFilePath!!)
         }
-        if (resultCode == Activity.RESULT_OK && requestCode == ChatOptionsImageNavigator.GALLERY_IMAGE_REQUEST) {
+        if (resultCode == Activity.RESULT_OK && requestCode == ChatNavigator.GALLERY_IMAGE_REQUEST) {
             val uri = data?.data!!
             val file = toFile(uri)
             presenter.onImageSelected(file.absolutePath)
         }
-        if (resultCode == Activity.RESULT_OK && requestCode == ChatOptionsVideoNavigator.GALLERY_VIDEO_REQUEST) {
+        if (resultCode == Activity.RESULT_OK && requestCode == ChatNavigator.GALLERY_VIDEO_REQUEST) {
             val uri = data?.data!!
             val file = toFile(uri)
             presenter.onVideoSelected(file.absolutePath)

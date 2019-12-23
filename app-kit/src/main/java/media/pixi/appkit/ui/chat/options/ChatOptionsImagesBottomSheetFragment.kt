@@ -1,5 +1,6 @@
-package media.pixi.appkit.ui.chatoptionsvideo
+package media.pixi.appkit.ui.chat.options
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,14 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import media.pixi.appkit.R
 
-class ChatOptionsVideoFragment : BottomSheetDialogFragment(), ChatOptionsVideoContract.View {
+class ChatOptionsImagesBottomSheetFragment : BottomSheetDialogFragment() {
 
-    override var error: String
-        get() = ""
-        set(value) {}
+    interface ChatOptionsForImagesOnClickListener {
+        fun onGalleryImageClicked(activity: Activity)
+        fun onCameraImageClicked(activity: Activity)
+    }
 
-    lateinit var presenter: ChatOptionsVideoContract.Presenter
+    var listener: ChatOptionsForImagesOnClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,25 +24,25 @@ class ChatOptionsVideoFragment : BottomSheetDialogFragment(), ChatOptionsVideoCo
     ): View? {
 
         val view = inflater.inflate(
-            R.layout.appkit__fragment_chat_options_videos, container,
+            R.layout.appkit__fragment_chat_options_images, container,
             false
         )
 
         view.findViewById<View>(R.id.gallery).setOnClickListener {
             dismiss()
-            presenter.onGalleryClicked(activity!!)
+            listener?.onGalleryImageClicked(activity!!)
         }
         view.findViewById<View>(R.id.camera).setOnClickListener {
             dismiss()
-            presenter.onCameraClicked(activity!!)
+            listener?.onCameraImageClicked(activity!!)
         }
 
         return view
     }
 
     companion object {
-        fun newInstance(): ChatOptionsVideoFragment {
-            return ChatOptionsVideoFragment()
+        fun newInstance(): ChatOptionsImagesBottomSheetFragment {
+            return ChatOptionsImagesBottomSheetFragment()
         }
     }
 }
