@@ -37,6 +37,12 @@ android {
         buildConfigField "String", "ALGOLIA_APP_ID", "\""+getAlgoliaAppId()+"\""
         buildConfigField "String", "ALGOLIA_API_KEY", "\""+getAlgoliaApiKey()+"\""
         buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\""+getGoogleMapsApiKey()+"\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -76,6 +82,12 @@ dependencies {
 
     // Algolia
     implementation 'com.algolia:instantsearch-androidx:1.15.0'
+
+    // Room
+    kapt deps.room.compiler
+    implementation deps.room.runtime
+    implementation deps.room.rxjava2
+    //implementation deps.room.kotlin
 
     // Dagger dependencies
     kapt deps.dagger.android_support_compiler
