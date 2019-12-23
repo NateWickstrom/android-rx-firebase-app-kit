@@ -54,7 +54,7 @@ class ChatPresenter @Inject constructor(
         disposables.clear()
     }
 
-    override fun send(text: String) {
+    override fun send(text: String, attachments: List<MessageAttachment>) {
         view?.loading = true
 
         if (chatId.isNullOrBlank()) {
@@ -130,11 +130,9 @@ class ChatPresenter @Inject constructor(
             type = MessageAttachmentType.MY_IMAGE,
             imageUrl = path
         ))
-//        Timber.d("Image: $path")
     }
 
     override fun onVideoSelected(path: String) {
-        //view?.showVideoAttachment(path)
         Timber.d("Video: $path")
     }
 
