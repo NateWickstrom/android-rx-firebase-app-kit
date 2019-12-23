@@ -1,15 +1,15 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
+import android.media.ThumbnailUtils
+import android.provider.MediaStore
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.MessageBus
-import media.pixi.appkit.domain.chats.models.Chat
-import media.pixi.appkit.domain.chats.models.Message
-import media.pixi.appkit.domain.chats.models.MessageListItem
+import media.pixi.appkit.domain.chats.models.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -114,13 +114,29 @@ class ChatPresenter @Inject constructor(
         return chatId.equals(this.chatId)
     }
 
+    override fun onAttachmentClicked(position: Int, attachment: MessageAttachment) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onAttachmentDeleteClicked(position: Int, attachment: MessageAttachment) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun onImageSelected(path: String) {
-        view?.showImageAttachment(path)
-        Timber.d("Image: $path")
+//        ThumbnailUtils.createVideoThumbnail(
+//            path,
+//            MediaStore.Video.Thumbnails.MINI_KIND
+//        )
+        view?.addAttachment(MessageAttachment(
+            id = "1234",
+            type = MessageAttachmentType.MY_IMAGE,
+            imageUrl = path
+        ))
+//        Timber.d("Image: $path")
     }
 
     override fun onVideoSelected(path: String) {
-        view?.showVideoAttachment(path)
+        //view?.showVideoAttachment(path)
         Timber.d("Video: $path")
     }
 

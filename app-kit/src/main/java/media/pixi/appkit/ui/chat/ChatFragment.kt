@@ -2,7 +2,6 @@ package media.pixi.appkit.ui.chat
 
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,9 +13,11 @@ import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
 import media.pixi.appkit.data.audio.Recording
 import media.pixi.appkit.domain.chats.models.Message
+import media.pixi.appkit.domain.chats.models.MessageAttachment
 import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.domain.chats.models.MessageType
 import media.pixi.appkit.ui.chat.actions.*
+import media.pixi.appkit.ui.chat.textinput.AttachmentAdapter
 import media.pixi.appkit.ui.chat.textinput.TextInputListener
 import media.pixi.appkit.ui.chat.textinput.TextInputView
 import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
@@ -48,11 +49,11 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         }
 
     private var isSendEnabled = false
-    private var adapter: MessageAdapter? = null
+    private var messageAdapter: MessageAdapter? = null
+    private var attachmentAdapter: AttachmentAdapter? = null
     private var speedDialView: SpeedDialView? = null
     private var textInputView: TextInputView? = null
     private var listView: RecyclerView? = null
-    private var attachment: ImageView? = null
 
     lateinit var presenter: ChatContract.Presenter
 
@@ -75,8 +76,8 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         layoutManager.stackFromEnd = true
         view.list.layoutManager = layoutManager
 
-        adapter = MessageAdapter(this)
-        view.list.adapter = adapter
+        messageAdapter = MessageAdapter(this)
+        view.list.adapter = messageAdapter
         view.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -95,7 +96,11 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         speedDialView?.setOnActionSelectedListener(this)
         speedDialView?.setOnChangeListener(this)
 
-        attachment = view.findViewById(R.id.attachment)
+        attachmentAdapter = AttachmentAdapter(
+            { position, attachment -> presenter.onAttachmentClicked(position, attachment) },
+            { position, attachment -> presenter.onAttachmentDeleteClicked(position, attachment) }
+        )
+        textInputView?.setAttachmentAdapter(attachmentAdapter)
 
         return view
     }
@@ -108,7 +113,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.dropView()
-        adapter = null
+        messageAdapter = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -127,22 +132,22 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         return false
     }
 
-    override fun showImageAttachment(path: String) {
-        textInputView?.setImageAttachment(path)
+    override fun addAttachment(attachment: MessageAttachment) {
+        textInputView?.addAttachemnt(attachment)
     }
 
-    override fun showVideoAttachment(path: String) {
-        textInputView?.setVideoAttachment(path)
+    override fun addAttachment(attachments: List<MessageAttachment>) {
+        textInputView?.setAttachments(attachments)
     }
 
     override fun scrollToEnd() {
-        adapter?.items?.size?.let {
+        messageAdapter?.items?.size?.let {
             listView?.smoothScrollToPosition(it)
         }
     }
 
     override fun setResults(results: List<MessageListItem>) {
-        adapter?.set(results)
+        messageAdapter?.set(results)
     }
 
     override fun showTextSpeedDial(messageListItem: MessageListItem) {
@@ -209,7 +214,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
         presenter.send(text)
 
-//        val cnt = adapter?.itemCount ?: 0
+//        val cnt = messageAdapter?.itemCount ?: 0
 //        if (cnt > 0) {
 //            listView?.sm(cnt  - 1)
 //        }

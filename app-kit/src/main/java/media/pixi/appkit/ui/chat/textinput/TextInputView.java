@@ -21,11 +21,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -33,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import media.pixi.appkit.R;
 import media.pixi.appkit.data.audio.Recording;
+import media.pixi.appkit.domain.chats.models.MessageAttachment;
 import media.pixi.appkit.utils.InfiniteToast;
 import media.pixi.appkit.utils.ToastHelper;
 
@@ -43,7 +48,6 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
     protected ImageButton btnSend;
     protected ImageButton btnOptions;
     protected TextInputEditText etMessage;
-    protected ImageView attachment;
     protected boolean audioModeEnabled = false;
     protected boolean recordOnPress = false;
     protected Recording recording = null;
@@ -53,6 +57,9 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
     protected Date recordingStart;
     protected Disposable toastUpdateDisposable;
     protected boolean audioMaxLengthReached = false;
+    protected RecyclerView recyclerView;
+    protected AttachmentAdapter attachmentAdapter;
+    protected View attachments;
 
     public TextInputView(Context context) {
         super(context);
@@ -82,11 +89,13 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
         inflate(getContext(), R.layout.view_chat_text_input, this);
     }
 
-    protected void initViews(){
+    protected void initViews() {
         btnSend = findViewById(R.id.button_send);
         btnOptions = findViewById(R.id.button_options);
         etMessage = findViewById(R.id.text_input_message);
-        attachment = findViewById(R.id.attachment);
+        attachments = findViewById(R.id.attachments);
+        recyclerView = findViewById(R.id.attachments);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         updateSendButton();
     }
 
@@ -316,18 +325,25 @@ public class TextInputView extends LinearLayout implements TextView.OnEditorActi
 //        return false;
 //    }
 
-    public void setVideoAttachment(String path) {
-        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(
-                path,
-                MediaStore.Video.Thumbnails.MICRO_KIND
-        );
-        Glide.with(this).load(bMap).into(attachment);
-        attachment.setVisibility(View.VISIBLE);
+    public void setAttachmentAdapter(AttachmentAdapter attachmentAdapter) {
+        this.attachmentAdapter = attachmentAdapter;
+        recyclerView.setAdapter(attachmentAdapter);
     }
 
-    public void setImageAttachment(String path) {
-        Glide.with(this).load(path).into(attachment);
-        attachment.setVisibility(View.VISIBLE);
+    public void addAttachemnt(MessageAttachment attachment) {
+        if (attachmentAdapter == null) return;
+        attachmentAdapter.add(attachment);
+        attachments.setVisibility(View.VISIBLE);
+    }
+
+    public void setAttachments(List<MessageAttachment> messageAttachments) {
+        if (attachmentAdapter == null) return;
+        attachmentAdapter.add(messageAttachments);
+        if (messageAttachments.isEmpty()) {
+            attachments.setVisibility(View.GONE);
+        } else {
+            attachments.setVisibility(View.VISIBLE);
+        }
     }
 
     public String getMessageText(){
