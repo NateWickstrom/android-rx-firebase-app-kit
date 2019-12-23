@@ -3,6 +3,7 @@ package media.pixi.appkit.data.drafts.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import media.pixi.appkit.data.drafts.DraftAttachmentType
 import java.util.*
 
 @Entity(tableName = "Attachments")
@@ -15,8 +16,11 @@ class AttachmentEntity(
     val draftId: String,
 
     @ColumnInfo(name = "type")
-    val type: Int,
+    val type: DraftAttachmentType,
 
-    @ColumnInfo(name = "imageUrl")
-    val imageUrl: String
+    @ColumnInfo(name = "thumbnailUrl")
+    val thumbnailUrl: String,
+
+    @ColumnInfo(name = "fileUrl")
+    val fileUrl: String
 )

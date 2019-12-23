@@ -11,9 +11,9 @@ interface DraftsProvider {
 
     fun addToDraft(chatId: String, attachment: DraftAttachment): Completable
 
-    fun setDraftText(chatId: String, text: String): Completable
+    fun setDraft(chatId: String, draft: Draft): Completable
 
-    fun removeFromDraft(chatId: String, attachment: DraftAttachment): Completable
+    fun deleteAttachment(attachment: DraftAttachment): Completable
 
     fun clear(): Completable
 }
