@@ -1,8 +1,6 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
-import android.media.ThumbnailUtils
-import android.provider.MediaStore
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
@@ -115,11 +113,11 @@ class ChatPresenter @Inject constructor(
     }
 
     override fun onAttachmentClicked(position: Int, attachment: MessageAttachment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onAttachmentDeleteClicked(position: Int, attachment: MessageAttachment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onImageSelected(path: String) {

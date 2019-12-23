@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chat.textinput
+package media.pixi.appkit.ui.chat.attachments
 
 import android.view.View
 import android.widget.ImageView

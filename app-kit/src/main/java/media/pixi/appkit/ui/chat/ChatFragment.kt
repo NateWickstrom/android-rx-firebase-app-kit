@@ -1,32 +1,37 @@
 package media.pixi.appkit.ui.chat
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
+import com.google.android.material.textfield.TextInputEditText
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
-import media.pixi.appkit.data.audio.Recording
 import media.pixi.appkit.domain.chats.models.Message
 import media.pixi.appkit.domain.chats.models.MessageAttachment
 import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.domain.chats.models.MessageType
-import media.pixi.appkit.ui.chat.actions.*
-import media.pixi.appkit.ui.chat.textinput.AttachmentAdapter
-import media.pixi.appkit.ui.chat.textinput.TextInputListener
-import media.pixi.appkit.ui.chat.textinput.TextInputView
+import media.pixi.appkit.ui.chat.actions.CopyMessageAction
+import media.pixi.appkit.ui.chat.actions.DeleteMessageAction
+import media.pixi.appkit.ui.chat.actions.ForwardMessageAction
+import media.pixi.appkit.ui.chat.actions.MessageAction
+import media.pixi.appkit.ui.chat.attachments.AttachmentAdapter
 import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import media.pixi.appkit.utils.ActivityUtils
 import java.util.*
 import javax.inject.Inject
 
-class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, TextInputListener,
-    SpeedDialView.OnActionSelectedListener, SpeedDialView.OnChangeListener, MessageAdapter.OnMessageListItemClicked {
+class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, TextView.OnEditorActionListener,
+    MessageAdapter.OnMessageListItemClicked {
 
     override var loading: Boolean
         get() = progress_bar.visibility == View.INVISIBLE
@@ -49,11 +54,16 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         }
 
     private var isSendEnabled = false
+
     private var messageAdapter: MessageAdapter? = null
-    private var attachmentAdapter: AttachmentAdapter? = null
-    private var speedDialView: SpeedDialView? = null
-    private var textInputView: TextInputView? = null
-    private var listView: RecyclerView? = null
+    private var messagesRecyclerView: RecyclerView? = null
+
+    private var attachmentsAdapter: AttachmentAdapter? = null
+    private var attachmentsRecyclerView: RecyclerView? = null
+
+    private var btnSend: ImageButton? = null
+    private var btnOptions: ImageButton? = null
+    private var etMessage: TextInputEditText? = null
 
     lateinit var presenter: ChatContract.Presenter
 
@@ -70,7 +80,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         swipeRefreshLayout.setRefreshing(false)
         swipeRefreshLayout.setEnabled(false)
 
-        listView = view.list
+        messagesRecyclerView = view.list
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
@@ -89,18 +99,42 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
             }
         })
 
-        textInputView = view.findViewById(R.id.view_message_text_input) as TextInputView
-        textInputView?.setListener(this)
+        btnSend = view.findViewById<ImageButton>(R.id.button_send)
+        btnSend?.setOnClickListener {
+                _ -> onSendPressed(etMessage?.text!!.toString())
+        }
 
-        speedDialView = view.findViewById(R.id.speed_dial_message_actions)
-        speedDialView?.setOnActionSelectedListener(this)
-        speedDialView?.setOnChangeListener(this)
+        btnOptions = view.findViewById<ImageButton>(R.id.button_options)
+        btnOptions?.setOnClickListener { _ -> showOptions() }
 
-        attachmentAdapter = AttachmentAdapter(
+        etMessage = view.findViewById<TextInputEditText>(R.id.text_input_message)
+        etMessage?.setOnEditorActionListener(this)
+        etMessage?.setOnKeyListener { v, keyCode, event -> false }
+        etMessage?.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
+        //etMessage?.setOnFocusChangeListener { view, focus -> }
+
+        etMessage?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun afterTextChanged(editable: Editable) {}
+        })
+
+        attachmentsRecyclerView = view.findViewById<RecyclerView>(R.id.attachments)
+        attachmentsRecyclerView?.setLayoutManager(
+            LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        )
+
+        attachmentsAdapter = AttachmentAdapter(
             { position, attachment -> presenter.onAttachmentClicked(position, attachment) },
             { position, attachment -> presenter.onAttachmentDeleteClicked(position, attachment) }
         )
-        textInputView?.setAttachmentAdapter(attachmentAdapter)
+        attachmentsRecyclerView?.adapter = attachmentsAdapter
 
         return view
     }
@@ -133,16 +167,16 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun addAttachment(attachment: MessageAttachment) {
-        textInputView?.addAttachemnt(attachment)
+        attachmentsAdapter?.add(attachment)
     }
 
     override fun addAttachment(attachments: List<MessageAttachment>) {
-        textInputView?.setAttachments(attachments)
+        attachmentsAdapter?.add(attachments)
     }
 
     override fun scrollToEnd() {
         messageAdapter?.items?.size?.let {
-            listView?.smoothScrollToPosition(it)
+            messagesRecyclerView?.smoothScrollToPosition(it)
         }
     }
 
@@ -152,10 +186,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     override fun showTextSpeedDial(messageListItem: MessageListItem) {
         ActivityUtils.hideKeyboard(activity!!)
-        speedDialView?.close(false)
-        ActionUtils.setActions(speedDialView!!, getTextActions(messageListItem.isMe, messageListItem.message))
-        speedDialView?.visibility = View.VISIBLE
-        speedDialView?.open()
+
     }
 
     override fun showImageSpeedDial(messageListItem: MessageListItem) {
@@ -170,16 +201,6 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
-//        when (actionItem!!.id) {
-//            MessageAction.Type.Copy.ordinal ->
-//            MessageAction.Type.Delete.ordinal ->
-//            MessageAction.Type.Forward.ordinal ->
-//        }
-
-        return true
-    }
-
     override fun onMessageListItemClicked(position: Int, item: MessageListItem) {
         when (item.message.type) {
             MessageType.IMAGE -> {
@@ -188,56 +209,25 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         }
     }
 
-    override fun onMainActionSelected(): Boolean {
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_SEND) {
+            onSendPressed(etMessage?.text!!.toString())
+        }
+
         return false
     }
 
-    override fun onToggleChanged(isOpen: Boolean) {
-        if (isOpen.not()) {
-            speedDialView?.visibility = View.INVISIBLE
-        }
-    }
-
-    override fun showOptions() {
+    private fun showOptions() {
         presenter.onOptionsClicked(activity!!)
     }
 
-    override fun hideOptions() {
-
-    }
-
-    override fun onSendPressed(text: String) {
-        //isSendEnabled
+    private fun onSendPressed(text: String) {
+        //isSendEnabled?
         ActivityUtils.hideKeyboard(activity!!)
 
-        textInputView?.clearText()
+        etMessage?.setText("")
 
-        presenter.send(text)
-
-//        val cnt = messageAdapter?.itemCount ?: 0
-//        if (cnt > 0) {
-//            listView?.sm(cnt  - 1)
-//        }
-    }
-
-    override fun startTyping() {
-
-    }
-
-    override fun sendAudio(recording: Recording) {
-
-    }
-
-    override fun stopTyping() {
-
-    }
-
-    override fun onKeyboardShow() {
-
-    }
-
-    override fun onKeyboardHide() {
-
+        presenter.send(text, attachmentsAdapter?.get()!!)
     }
 
     private fun getTextActions(isMe: Boolean, message: Message): List<MessageAction> {

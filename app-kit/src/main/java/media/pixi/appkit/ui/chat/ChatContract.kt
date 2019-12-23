@@ -26,7 +26,7 @@ interface ChatContract {
     }
 
     interface Presenter: BasePresenter<View> {
-        fun send(text: String)
+        fun send(text: String, attachments: List<MessageAttachment>)
 
         fun onTextClicked(position: Int, item: MessageListItem)
 

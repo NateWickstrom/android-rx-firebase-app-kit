@@ -1,4 +1,4 @@
-package media.pixi.appkit.ui.chat.textinput
+package media.pixi.appkit.ui.chat.attachments
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ class AttachmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.view_chat_text_input_attachment, parent, false)
+        val view = inflater.inflate(R.layout.view_attachment_item, parent, false)
         return AttachmentViewHolder(view)
     }
 
@@ -46,6 +46,10 @@ class AttachmentAdapter(
     fun add(messageAttachments: List<MessageAttachment>) {
         list.addAll(messageAttachments)
         notifyDataSetChanged()
+    }
+
+    fun get(): List<MessageAttachment> {
+        return list
     }
 
     override fun getItemCount(): Int {

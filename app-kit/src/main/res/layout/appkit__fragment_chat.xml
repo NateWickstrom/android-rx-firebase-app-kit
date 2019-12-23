@@ -6,32 +6,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <media.pixi.appkit.ui.chat.textinput.TextInputView
+    <LinearLayout
         android:id="@+id/view_message_text_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        />
+        android:background="@drawable/send_message_border"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/attachments"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <ImageButton
+                android:id="@+id/button_options"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/acces_message_option_button"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_add_24px"
+                android:tint="@color/colorPrimary" />
+
+            <ImageButton
+                android:id="@+id/button_send"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_send_24px"
+                android:tint="@color/colorPrimary" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/button_send"
+                android:layout_toEndOf="@+id/button_options"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/message"
+                android:inputType="textShortMessage|textMultiLine"
+                android:isScrollContainer="true"
+                android:maxLines="@integer/chat_sdk_max_message_lines"
+                android:minHeight="48dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_above="@+id/view_message_text_input"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.leinardi.android.speeddial.SpeedDialOverlayLayout
-            android:id="@+id/messageOptionsOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <com.leinardi.android.speeddial.SpeedDialView
-            android:id="@+id/speed_dial_message_actions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:layout_gravity="bottom|end"
-            app:sdMainFabClosedSrc="@drawable/ic_add_24px"
-            app:sdOverlayLayout="@id/messageOptionsOverlay"
-            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
@@ -57,7 +96,6 @@
             android:indeterminate="true"/>
 
     </FrameLayout>
-
 
 </RelativeLayout>
 
