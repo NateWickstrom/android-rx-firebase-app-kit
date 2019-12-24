@@ -25,5 +25,7 @@ interface ChatProvider {
 
     fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity>
 
+    fun getFailedToSendMessages(chatId: String): Flowable<List<ChatMessageEntity>>
+
     fun createChat(initialMessage: ChatMessageRequest, userIds: List<String>): Single<ChatMessageEntity>
 }

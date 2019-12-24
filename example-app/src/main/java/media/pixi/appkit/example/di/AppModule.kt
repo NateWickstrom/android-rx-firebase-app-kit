@@ -9,6 +9,7 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.chats.FirebaseChatProvider
+import media.pixi.appkit.data.chats.room.MessageDatabase
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.devices.DevicesProvider
@@ -108,8 +109,10 @@ abstract class AppModule {
         @Singleton
         @Provides
         @JvmStatic
-        fun provideChatProvider(): ChatProvider {
-            return FirebaseChatProvider()
+        fun provideChatProvider(context: Context): ChatProvider {
+            val database = MessageDatabase.getInstance(context)
+            val dao = database.messageDao()
+            return FirebaseChatProvider(dao)
         }
 
         @Singleton
@@ -127,5 +130,7 @@ abstract class AppModule {
             val dao = database.draftsDao()
             return LocalDraftProvider(dao)
         }
+
+
     }
 }
