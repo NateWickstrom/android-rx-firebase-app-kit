@@ -1,13 +1,13 @@
-package media.pixi.appkit.data.drafts
+package media.pixi.appkit.data.drafts.local
 
 import io.reactivex.Completable
 import io.reactivex.Maybe
-import media.pixi.appkit.data.drafts.room.AttachmentEntity
-import media.pixi.appkit.data.drafts.room.DraftAndAllAttachments
-import media.pixi.appkit.data.drafts.room.DraftEntity
-import media.pixi.appkit.data.drafts.room.DraftsDao
+import media.pixi.appkit.data.drafts.Draft
+import media.pixi.appkit.data.drafts.DraftAttachment
+import media.pixi.appkit.data.drafts.DraftsProvider
 
-class LocalDraftProvider(private val draftDataSource: DraftsDao) : DraftsProvider {
+class LocalDraftProvider(private val draftDataSource: DraftsDao) :
+    DraftsProvider {
 
     override fun getDraft(chatId: String): Maybe<Draft> {
         return draftDataSource.getDraftAndAllAttachmentsById(chatId).map { toDraft(it) }

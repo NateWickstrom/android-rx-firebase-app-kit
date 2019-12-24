@@ -1,4 +1,4 @@
-package media.pixi.appkit.data.drafts.room
+package media.pixi.appkit.data.drafts.local
 
 import androidx.room.*
 import io.reactivex.Completable

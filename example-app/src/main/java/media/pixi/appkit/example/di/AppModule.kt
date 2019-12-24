@@ -15,8 +15,8 @@ import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.devices.DevicesProvider
 import media.pixi.appkit.data.devices.FirebaseDevicesProvider
 import media.pixi.appkit.data.drafts.DraftsProvider
-import media.pixi.appkit.data.drafts.LocalDraftProvider
-import media.pixi.appkit.data.drafts.room.DraftsDatabase
+import media.pixi.appkit.data.drafts.local.LocalDraftProvider
+import media.pixi.appkit.data.drafts.local.DraftsDatabase
 import media.pixi.appkit.data.files.FileProvider
 import media.pixi.appkit.data.files.LocalFileProvider
 import media.pixi.appkit.data.followers.FirebaseFollowersProvider

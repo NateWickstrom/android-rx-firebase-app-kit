@@ -1,4 +1,4 @@
-package media.pixi.appkit.data.drafts.room
+package media.pixi.appkit.data.drafts.local
 
 import android.content.Context
 import androidx.room.Database
