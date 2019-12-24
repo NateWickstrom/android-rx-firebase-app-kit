@@ -7,11 +7,13 @@ interface DraftsProvider {
 
     fun getDraft(draftId: String): Maybe<Draft>
 
+    // get drafts for chat
+
     fun deleteDraft(draftId: String): Completable
 
-    fun addToDraft(draftId: String, attachment: DraftAttachment): Completable
-
     fun setDraft(draft: Draft): Completable
+
+    fun addToDraft(draftId: String, attachment: DraftAttachment): Completable
 
     fun deleteAttachment(attachment: DraftAttachment): Completable
 

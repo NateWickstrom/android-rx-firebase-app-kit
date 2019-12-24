@@ -109,10 +109,8 @@ abstract class AppModule {
         @Singleton
         @Provides
         @JvmStatic
-        fun provideChatProvider(context: Context): ChatProvider {
-            val database = MessageDatabase.getInstance(context)
-            val dao = database.messageDao()
-            return FirebaseChatProvider(dao)
+        fun provideChatProvider(): ChatProvider {
+            return FirebaseChatProvider()
         }
 
         @Singleton

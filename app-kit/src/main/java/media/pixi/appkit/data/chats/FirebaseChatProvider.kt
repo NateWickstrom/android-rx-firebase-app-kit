@@ -15,7 +15,7 @@ import media.pixi.appkit.data.chats.room.MessageDao
 import java.util.*
 
 
-class FirebaseChatProvider(private val messageDao: MessageDao): ChatProvider {
+class FirebaseChatProvider(): ChatProvider {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -101,15 +101,6 @@ class FirebaseChatProvider(private val messageDao: MessageDao): ChatProvider {
         return RxFirestore.addDocument(ref, toMap(message))
             .flatMap { RxFirestore.getDocument(it).toSingle() }
             .map { toChatMessage(chatId, it) }
-
-            // on success remove from failed message cache
-            // on error save to failed message cache
-    }
-
-    override fun getFailedToSendMessages(chatId: String): Flowable<List<ChatMessageEntity>> {
-        TODO("not implemented")
-
-        // load fail message cache
     }
 
     override fun getMessage(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
