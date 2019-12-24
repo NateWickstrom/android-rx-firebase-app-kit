@@ -5,9 +5,11 @@ import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
+import media.pixi.appkit.data.files.FileProvider
 import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.MessageBus
 import media.pixi.appkit.domain.chats.models.*
+import media.pixi.appkit.domain.drafs.DraftHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,6 +18,8 @@ class ChatPresenter @Inject constructor(
     private val authProvider: AuthProvider,
     private var chatProvider: ChatProvider,
     private val chatsGetter: ChatGetter,
+    private val draftHelper: DraftHelper,
+    private val fileProvider: FileProvider,
     private val messageBus: MessageBus
 ) : ChatContract.Presenter, MessageBus.MessageListener {
 

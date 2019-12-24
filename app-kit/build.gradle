@@ -87,7 +87,6 @@ dependencies {
     kapt deps.room.compiler
     implementation deps.room.runtime
     implementation deps.room.rxjava2
-    //implementation deps.room.kotlin
 
     // Dagger dependencies
     kapt deps.dagger.android_support_compiler

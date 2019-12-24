@@ -13,6 +13,11 @@ import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.devices.DevicesProvider
 import media.pixi.appkit.data.devices.FirebaseDevicesProvider
+import media.pixi.appkit.data.drafts.DraftsProvider
+import media.pixi.appkit.data.drafts.LocalDraftProvider
+import media.pixi.appkit.data.drafts.room.DraftsDatabase
+import media.pixi.appkit.data.files.FileProvider
+import media.pixi.appkit.data.files.LocalFileProvider
 import media.pixi.appkit.data.followers.FirebaseFollowersProvider
 import media.pixi.appkit.data.followers.FollowersProvider
 import media.pixi.appkit.data.friends.FirebaseFriendsProvider
@@ -105,6 +110,22 @@ abstract class AppModule {
         @JvmStatic
         fun provideChatProvider(): ChatProvider {
             return FirebaseChatProvider()
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideFileProvider(context: Context): FileProvider {
+            return LocalFileProvider(context)
+        }
+
+        @Singleton
+        @Provides
+        @JvmStatic
+        fun provideDraftsProvider(context: Context): DraftsProvider {
+            val database = DraftsDatabase.getInstance(context)
+            val dao = database.draftsDao()
+            return LocalDraftProvider(dao)
         }
     }
 }

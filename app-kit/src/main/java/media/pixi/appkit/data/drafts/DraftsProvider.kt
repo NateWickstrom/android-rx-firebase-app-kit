@@ -5,13 +5,13 @@ import io.reactivex.Maybe
 
 interface DraftsProvider {
 
-    fun getDraft(chatId: String): Maybe<Draft>
+    fun getDraft(draftId: String): Maybe<Draft>
 
-    fun deleteDraft(chatId: String): Completable
+    fun deleteDraft(draftId: String): Completable
 
-    fun addToDraft(chatId: String, attachment: DraftAttachment): Completable
+    fun addToDraft(draftId: String, attachment: DraftAttachment): Completable
 
-    fun setDraft(chatId: String, draft: Draft): Completable
+    fun setDraft(draft: Draft): Completable
 
     fun deleteAttachment(attachment: DraftAttachment): Completable
 

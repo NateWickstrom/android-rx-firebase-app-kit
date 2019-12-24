@@ -30,16 +30,16 @@ class LocalDraftProvider(private val draftDataSource: DraftsDao) : DraftsProvide
         )
     }
 
-    override fun setDraft(chatId: String, draft: Draft): Completable {
+    override fun setDraft(draft: Draft): Completable {
         return if (draft.attachments.isEmpty()) {
-            setDraft(draft)
+            setDraftInternal(draft)
         } else {
             setAttachments(draft, draft.attachments)
-                .andThen(setDraft(draft))
+                .andThen(setDraftInternal(draft))
         }
     }
 
-    private fun setDraft(draft: Draft): Completable {
+    private fun setDraftInternal(draft: Draft): Completable {
         return draftDataSource.insertDraft(
             DraftEntity(
                 id = draft.id,
