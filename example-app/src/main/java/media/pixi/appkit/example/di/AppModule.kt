@@ -9,7 +9,6 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.FirebaseAuthProvider
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.chats.FirebaseChatProvider
-import media.pixi.appkit.data.chats.room.MessageDatabase
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.config.FirebaseConfigDataSource
 import media.pixi.appkit.data.devices.DevicesProvider
@@ -27,8 +26,6 @@ import media.pixi.appkit.data.notifications.FirebaseNotificationProvider
 import media.pixi.appkit.data.notifications.NotificationProvider
 import media.pixi.appkit.data.profile.FirebaseUserProfileProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.data.search.AlgoliaSearchDataSource
-import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.data.storage.GoogleCloudStorageDataSource
 import javax.inject.Singleton
@@ -42,13 +39,6 @@ abstract class AppModule {
 
     @Module
     companion object {
-
-        @Singleton
-        @Provides
-        @JvmStatic
-        fun searchSearchProvider(): SearchProvider {
-            return AlgoliaSearchDataSource()
-        }
 
         @Singleton
         @Provides

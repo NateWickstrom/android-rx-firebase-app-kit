@@ -9,7 +9,6 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.config.ConfigProvider
 import media.pixi.appkit.data.devices.DevicesProvider
 import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.data.search.SearchProvider
 import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.example.App
 import media.pixi.appkit.service.messages.FirebaseCloudMessagingService
@@ -26,7 +25,6 @@ interface AppComponent : AndroidInjector<App> {
     fun getAuthProvider(): AuthProvider
     fun getDevicesProvider(): DevicesProvider
     fun getConfigProvider(): ConfigProvider
-    fun getSearchProvider(): SearchProvider
     fun getCloudStorageRepo(): CloudStorageRepo
     fun getCurrentUserProfileProvider(): UserProfileProvider
 

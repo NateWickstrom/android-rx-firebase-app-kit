@@ -43,6 +43,7 @@ class LocalDraftProvider(private val draftDataSource: DraftsDao) :
         return draftDataSource.insertDraft(
             DraftEntity(
                 id = draft.id,
+                chatId = draft.id,
                 text = draft.text
             )
         )

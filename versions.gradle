@@ -4,13 +4,14 @@
  **/
 ext.deps = [:]
 def versions = [:]
-versions.arch_core = "1.1.1"
+versions.arch_core = "2.0.1"
 versions.room = "2.2.3"
-versions.support = "27.1.1"
+versions.support = "1.0.0"
+versions.fragment = "1.2.0-rc04"
 versions.dagger = "2.24"
 versions.junit = "4.12"
-versions.espresso = "3.0.1"
-versions.mockito = "2.7.19"
+versions.espresso = "3.2.0"
+versions.mockito = "2.25.0"
 versions.mockito_all = "1.10.19"
 versions.dexmaker = "2.2.0"
 versions.timber = "4.5.1"
@@ -18,10 +19,11 @@ versions.android_gradle_plugin = '3.4.0'
 versions.rxjava2 = "2.2.16"
 versions.rx_android = "2.1.1"
 versions.hamcrest = "1.3"
-versions.kotlin = "1.3.50"
+versions.kotlin = "1.3.61"
 versions.butterknife = "8.8.1"
 versions.chuck = "1.1.0"
-versions.constraint_layout = "1.0.2"
+versions.constraint_layout = "2.0.0-alpha2"
+versions.core_ktx = "1.0.0"
 versions.leakcanary = "1.6.1"
 versions.google_auth = "16.0.0"
 versions.google_services = "4.0.1"
@@ -53,6 +55,7 @@ deps.hamcrest = "org.hamcrest:hamcrest-all:$versions.hamcrest"
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
 deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
 deps.dexmaker = "com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker"
+deps.kotlin_serialization = "org.jetbrains.kotlin:kotlin-serialization:$versions.kotlin"
 
 
 def build_versions = [:]
@@ -77,12 +80,17 @@ butterknife.compiler = "com.jakewharton:butterknife-compiler:$versions.butterkni
 deps.butterknife = butterknife
 
 def support = [:]
-support.annotations = "com.android.support:support-annotations:$versions.support"
-support.app_compat = "com.android.support:appcompat-v7:$versions.support"
-support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
-support.design = "com.android.support:design:$versions.support"
-support.v4 = "com.android.support:support-v4:$versions.support"
-support.core_utils = "com.android.support:support-core-utils:$versions.support"
+support.annotations = "androidx.annotation:annotation:$versions.support"
+support.app_compat = "androidx.appcompat:appcompat:$versions.appcompat"
+support.recyclerview = "androidx.recyclerview:recyclerview:$versions.support"
+support.cardview = "androidx.cardview:cardview:$versions.support"
+support.coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:$versions.support"
+support.design = "com.google.android.material:material:$versions.support"
+support.core_utils = "androidx.legacy:legacy-support-core-utils:$versions.support"
+support.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
+support.fragment_runtime = "androidx.fragment:fragment:${versions.fragment}"
+support.fragment_runtime_ktx = "androidx.fragment:fragment-ktx:${versions.fragment}"
+support.fragment_testing = "androidx.fragment:fragment-testing:${versions.fragment}"
 deps.support = support
 
 def room = [:]
@@ -94,7 +102,8 @@ room.testing = "androidx.room:room-testing:$versions.room"
 deps.room = room
 
 def arch_core = [:]
-arch_core.testing = "android.arch.core:core-testing:$versions.arch_core"
+arch_core.runtime = "androidx.arch.core:core-runtime:$versions.arch_core"
+arch_core.testing = "androidx.arch.core:core-testing:$versions.arch_core"
 deps.arch_core = arch_core
 
 def dagger = [:]
@@ -106,10 +115,11 @@ dagger.android_support_compiler = "com.google.dagger:dagger-android-processor:$v
 deps.dagger = dagger
 
 def espresso = [:]
-espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
-espresso.contrib = "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
-espresso.intents = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
-espresso.idling =  "com.android.support.test.espresso:espresso-idling-resource:$versions.espresso"
+espresso.core = "androidx.test.espresso:espresso-core:$versions.espresso"
+espresso.contrib = "androidx.test.espresso:espresso-contrib:$versions.espresso"
+espresso.intents = "androidx.test.espresso:espresso-intents:$versions.espresso"
+espresso.idling =  "androidx.test.espresso:espresso-idling-resource:$versions.espresso"
+
 deps.espresso = espresso
 
 def mockito = [:]
@@ -125,8 +135,10 @@ kotlin.allopen = "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
 deps.kotlin = kotlin
 
 def atsl = [:]
-atsl.runner = "com.android.support.test:runner:$versions.atsl_runner"
-atsl.rules = "com.android.support.test:rules:$versions.atsl_runner"
+atsl.core = "androidx.test:core:$versions.atsl_core"
+atsl.ext_junit = "androidx.test.ext:junit:$versions.atsl_junit"
+atsl.runner = "androidx.test:runner:$versions.atsl_runner"
+atsl.rules = "androidx.test:rules:$versions.atsl_rules"
 deps.atsl = atsl
 
 def firebase = [:]
@@ -154,5 +166,6 @@ def addRepos(RepositoryHandler handler) {
     handler.maven { url "https://jitpack.io" }
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url 'https://maven.fabric.io/public' }
+    handler.maven { url "https://dl.bintray.com/algolia/maven" }
 }
 ext.addRepos = this.&addRepos

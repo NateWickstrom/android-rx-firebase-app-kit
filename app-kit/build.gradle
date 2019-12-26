@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 
 def getAlgoliaAppId() {
@@ -32,7 +33,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "ALGOLIA_APP_ID", "\""+getAlgoliaAppId()+"\""
         buildConfigField "String", "ALGOLIA_API_KEY", "\""+getAlgoliaApiKey()+"\""
@@ -70,18 +71,20 @@ dependencies {
     implementation deps.kotlin.stdlib
 
     // AndroidX
-    implementation "com.android.support:support-compat:28.0.0"
-    implementation 'com.google.android.material:material:1.1.0-alpha03'
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation deps.support.app_compat
+    implementation deps.support.fragment_runtime_ktx
+    implementation deps.support.design
+    implementation deps.support.recyclerview
 
     implementation 'com.google.code.gson:gson:2.8.5'
 
     // permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
 
-    // Algolia
-    implementation 'com.algolia:instantsearch-androidx:1.15.0'
+    // Algolia Search
+    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.1.0"
+    implementation 'com.algolia:instantsearch-android:2.2.1'
 
     // Room
     kapt deps.room.compiler
@@ -138,14 +141,30 @@ dependencies {
 
     // Dependencies for local unit tests
     testImplementation deps.junit
+    testImplementation deps.mockito.all
     testImplementation deps.hamcrest
-    testImplementation(deps.arch_core.testing, {
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-core-utils'
-    })
-    testImplementation deps.mockito.core
+    testImplementation deps.arch_core.testing
+    testImplementation deps.kotlin.stdlib
+    testImplementation deps.kotlin.test
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.atsl.rules
+    androidTestImplementation deps.room.testing
+    androidTestImplementation deps.arch_core.testing
+
+    // Dependencies for Android unit tests
+    androidTestImplementation deps.junit
+    androidTestImplementation deps.mockito.core, { exclude group: 'net.bytebuddy' }
+    androidTestImplementation deps.dexmaker
+
+    // Espresso UI Testing
+    androidTestImplementation deps.espresso.core
+    androidTestImplementation deps.espresso.contrib
+    androidTestImplementation deps.espresso.intents
+
+    // Resolve conflicts between main and test APK:
+    androidTestImplementation deps.support.annotations
+    androidTestImplementation deps.support.app_compat
+    androidTestImplementation deps.support.design
 }

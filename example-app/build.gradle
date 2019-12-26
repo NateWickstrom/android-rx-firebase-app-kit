@@ -24,6 +24,10 @@ android {
         manifestPlaceholders = [googleMapsApiKey:"\""+getGoogleMapsApiKey()+"\""]
     }
 
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,19 +39,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    // For Kotlin projects
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
 
     implementation project(":app-kit")
-//    implementation project(":rx-firebase-profile-kit")
-//    implementation project(":rx-algolia-search-kit")
-//    implementation project(":rx-firebase-config")
-//    implementation project(":rx-google-cloud-storage")
 
     implementation deps.firebase.firebase_config
 

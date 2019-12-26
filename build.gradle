@@ -5,6 +5,7 @@ buildscript {
     addRepos(repositories)
     dependencies {
         classpath deps.android_gradle_plugin
+        //classpath deps.kotlin_serialization
         classpath deps.google_services
         classpath deps.kotlin.plugin
         classpath deps.kotlin.allopen

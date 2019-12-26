@@ -12,8 +12,7 @@ data class DraftEntity(
     @PrimaryKey
     @ColumnInfo(name = "id") val id: String = UUID.randomUUID().toString(),
 
-    @PrimaryKey
-    @ColumnInfo(name = "chatId") val chatId: Int,
+    @ColumnInfo(name = "chatId") val chatId: String,
 
     @ColumnInfo(name = "text")
     val text: String?,
