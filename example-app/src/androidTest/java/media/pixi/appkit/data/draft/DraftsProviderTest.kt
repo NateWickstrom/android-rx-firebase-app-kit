@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.runner.AndroidJUnit4
+import junit.framework.Assert.assertTrue
 import media.pixi.appkit.data.drafts.DraftsProvider
 import media.pixi.appkit.data.drafts.local.DraftsDao
 import media.pixi.appkit.data.drafts.local.DraftsDatabase
@@ -11,6 +12,7 @@ import media.pixi.appkit.data.drafts.local.LocalDraftProvider
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -41,5 +43,10 @@ class DraftsProviderTest {
     @After
     fun closeDb() {
         database.close()
+    }
+
+    @Test
+    fun firstTest() {
+        assertTrue(true)
     }
 }

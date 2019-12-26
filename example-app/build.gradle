@@ -105,16 +105,34 @@ dependencies {
 
     // Dependencies for local unit tests
     testImplementation deps.junit
+    testImplementation deps.mockito.all
     testImplementation deps.hamcrest
-    testImplementation(deps.arch_core.testing, {
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-core-utils'
-    })
-    testImplementation deps.mockito.core
+    testImplementation deps.arch_core.testing
+    testImplementation deps.kotlin.stdlib
+    testImplementation deps.kotlin.test
 
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.atsl.rules
+    androidTestImplementation deps.room.testing
+    androidTestImplementation deps.arch_core.testing
+
+    // Dependencies for Android unit tests
+    androidTestImplementation deps.junit
+    androidTestImplementation deps.mockito.core, { exclude group: 'net.bytebuddy' }
+    androidTestImplementation deps.dexmaker
+
+    // Espresso UI Testing
+    androidTestImplementation deps.espresso.core
+    androidTestImplementation deps.espresso.contrib
+    androidTestImplementation deps.espresso.intents
+
+    // Resolve conflicts between main and test APK:
+    androidTestImplementation deps.support.annotations
     androidTestImplementation deps.support.app_compat
+    androidTestImplementation deps.support.fragment_runtime_ktx
     androidTestImplementation deps.support.design
+    androidTestImplementation deps.support.recyclerview
 }
 
 apply plugin: 'com.google.gms.google-services'
