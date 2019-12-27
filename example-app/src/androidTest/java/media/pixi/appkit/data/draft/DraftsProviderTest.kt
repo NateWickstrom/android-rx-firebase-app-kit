@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.runner.AndroidJUnit4
-import junit.framework.Assert.assertTrue
+import media.pixi.appkit.data.drafts.Draft
 import media.pixi.appkit.data.drafts.DraftsProvider
 import media.pixi.appkit.data.drafts.local.DraftsDao
 import media.pixi.appkit.data.drafts.local.DraftsDatabase
@@ -46,7 +46,16 @@ class DraftsProviderTest {
     }
 
     @Test
-    fun firstTest() {
-        assertTrue(true)
+    fun setAndGetDraft() {
+        val draft = Draft(
+            id = "123",
+            text = "hello world",
+            attachments = emptyList()
+        )
+
+        provider.setDraft(draft).test().assertComplete()
+
+        provider.getDraft("123").test()
+            .assertResult(draft)
     }
 }

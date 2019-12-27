@@ -147,5 +147,5 @@ dependencies {
     testImplementation deps.arch_core.testing
     testImplementation deps.kotlin.stdlib
     testImplementation deps.kotlin.test
-    
+
 }
