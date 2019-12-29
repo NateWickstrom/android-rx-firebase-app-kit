@@ -96,8 +96,7 @@ dependencies {
     implementation deps.firebase.firebase_firestore
     implementation deps.firebase.firebase_functions
     implementation deps.firebase.firebase_messaging
-    //implementation deps.firebase.rx_firebase
-    implementation project(":rx-firebase")
+    implementation 'com.github.NateWickstrom:RxFirebase:master-SNAPSHOT'
 
     // reactiveX
     implementation deps.rxjava2
