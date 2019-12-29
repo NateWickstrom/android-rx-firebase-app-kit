@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain
+package media.pixi.appkit.domain.users
 
 import io.reactivex.Flowable
 import media.pixi.appkit.data.friends.FriendsProvider

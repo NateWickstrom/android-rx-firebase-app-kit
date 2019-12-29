@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.auth.AuthUserModel
-import media.pixi.appkit.domain.SignOut
+import media.pixi.appkit.domain.auth.SignOut
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import javax.inject.Inject

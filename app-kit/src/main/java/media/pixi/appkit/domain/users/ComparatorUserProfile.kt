@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain
+package media.pixi.appkit.domain.users
 
 import media.pixi.appkit.data.profile.UserProfile
 import java.util.Comparator

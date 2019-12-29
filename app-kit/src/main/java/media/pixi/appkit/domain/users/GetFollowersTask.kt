@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain
+package media.pixi.appkit.domain.users
 
 import io.reactivex.Single
 import media.pixi.appkit.data.followers.FollowersProvider

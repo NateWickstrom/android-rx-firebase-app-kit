@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain
+package media.pixi.appkit.domain.users
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

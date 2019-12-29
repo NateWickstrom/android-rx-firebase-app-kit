@@ -6,6 +6,7 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.files.FileProvider
+import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.MessageBus
 import media.pixi.appkit.domain.chats.models.*
@@ -20,6 +21,7 @@ class ChatPresenter @Inject constructor(
     private val chatsGetter: ChatGetter,
     private val draftHelper: DraftHelper,
     private val fileProvider: FileProvider,
+    private val cloudStorageRepo: CloudStorageRepo,
     private val messageBus: MessageBus
 ) : ChatContract.Presenter, MessageBus.MessageListener {
 

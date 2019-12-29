@@ -4,7 +4,7 @@ import android.app.Activity
 import io.reactivex.disposables.CompositeDisposable
 import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.profile.UserProfile
-import media.pixi.appkit.domain.GetFriends
+import media.pixi.appkit.domain.users.GetFriends
 import timber.log.Timber
 import javax.inject.Inject
 

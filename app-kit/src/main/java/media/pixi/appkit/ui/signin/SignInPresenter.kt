@@ -4,7 +4,7 @@ import android.app.Activity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import media.pixi.appkit.domain.SignIn
+import media.pixi.appkit.domain.auth.SignIn
 import javax.inject.Inject
 
 class SignInPresenter @Inject constructor(

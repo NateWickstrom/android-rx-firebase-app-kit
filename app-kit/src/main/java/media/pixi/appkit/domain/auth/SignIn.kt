@@ -1,4 +1,4 @@
-package media.pixi.appkit.domain
+package media.pixi.appkit.domain.auth
 
 import io.reactivex.Completable
 import media.pixi.appkit.data.auth.AuthProvider

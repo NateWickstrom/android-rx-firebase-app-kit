@@ -5,7 +5,7 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
-import media.pixi.appkit.domain.ComparatorUserProfile
+import media.pixi.appkit.domain.users.ComparatorUserProfile
 import javax.inject.Inject
 
 class ChatMembersGetter @Inject constructor(private val chatProvider: ChatProvider,
