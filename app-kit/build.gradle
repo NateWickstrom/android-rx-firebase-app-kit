@@ -6,19 +6,34 @@ apply plugin: 'kotlin-kapt'
 
 def getAlgoliaAppId() {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    File localProperties = project.rootProject.file('local.properties')
+    if (localProperties.exists()) {
+        properties.load(localProperties.newDataInputStream())
+    } else {
+        properties.setProperty("ALGOLIA_APP_ID", "")
+    }
     return properties.getProperty("ALGOLIA_APP_ID")
 }
 
 def getAlgoliaApiKey() {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    File localProperties = project.rootProject.file('local.properties')
+    if (localProperties.exists()) {
+        properties.load(localProperties.newDataInputStream())
+    } else {
+        properties.setProperty("ALGOLIA_API_KEY", "")
+    }
     return properties.getProperty("ALGOLIA_API_KEY")
 }
 
 def getGoogleMapsApiKey() {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    File localProperties = project.rootProject.file('local.properties')
+    if (localProperties.exists()) {
+        properties.load(localProperties.newDataInputStream())
+    } else {
+        properties.setProperty("GOOGLE_MAPS_API_KEY", "")
+    }
     return properties.getProperty("GOOGLE_MAPS_API_KEY")
 }
 
