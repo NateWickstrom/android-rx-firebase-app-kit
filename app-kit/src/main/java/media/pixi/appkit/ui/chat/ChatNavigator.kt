@@ -6,16 +6,18 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
-import media.pixi.appkit.ui.chatmembers.ChatMembersActivity
 import media.pixi.appkit.ui.chat.options.ChatOptionsBottomSheetFragment
 import media.pixi.appkit.ui.chat.options.ChatOptionsImagesBottomSheetFragment
 import media.pixi.appkit.ui.chat.options.ChatOptionsVideosBottomSheetFragment
+import media.pixi.appkit.ui.chatmembers.ChatMembersActivity
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
-class ChatNavigator @Inject constructor(): ChatContract.Navigator, ChatOptionsBottomSheetFragment.PrimaryOptionOnClickListener,
-    ChatOptionsImagesBottomSheetFragment.ChatOptionsForImagesOnClickListener, ChatOptionsVideosBottomSheetFragment.ChatOptionsOnVideoClickedListener {
+class ChatNavigator @Inject constructor() : ChatContract.Navigator,
+    ChatOptionsBottomSheetFragment.PrimaryOptionOnClickListener,
+    ChatOptionsImagesBottomSheetFragment.ChatOptionsForImagesOnClickListener,
+    ChatOptionsVideosBottomSheetFragment.ChatOptionsOnVideoClickedListener {
 
     override fun showImage(activity: Activity) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -55,7 +57,10 @@ class ChatNavigator @Inject constructor(): ChatContract.Navigator, ChatOptionsBo
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_IMAGE_REQUEST)
+        activity.startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            GALLERY_IMAGE_REQUEST
+        )
     }
 
     override fun onCameraImageClicked(activity: Activity) {
@@ -82,7 +87,8 @@ class ChatNavigator @Inject constructor(): ChatContract.Navigator, ChatOptionsBo
         val intent = Intent()
         intent.type = "video/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        activity.startActivityForResult(Intent.createChooser(intent, "Select Video"),
+        activity.startActivityForResult(
+            Intent.createChooser(intent, "Select Video"),
             GALLERY_VIDEO_REQUEST
         )
     }

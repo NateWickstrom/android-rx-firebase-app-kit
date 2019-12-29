@@ -167,10 +167,12 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun addAttachment(attachment: MessageAttachment) {
+        attachmentsRecyclerView?.visibility = View.VISIBLE
         attachmentsAdapter?.add(attachment)
     }
 
     override fun addAttachment(attachments: List<MessageAttachment>) {
+        attachmentsRecyclerView?.visibility = View.VISIBLE
         attachmentsAdapter?.add(attachments)
     }
 

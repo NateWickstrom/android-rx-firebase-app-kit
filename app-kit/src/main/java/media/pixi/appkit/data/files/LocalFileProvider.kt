@@ -65,8 +65,8 @@ class LocalFileProvider(private val context: Context): FileProvider {
     private fun createFile(directoryName: String, fileName: String): File {
         val dir = File(getFilesDir(), directoryName)
         val file = File(dir, fileName)
-        if (file.exists().not()) {
-            file.mkdirs()
+        if (dir.exists().not()) {
+            dir.mkdirs()
         }
         return file
     }

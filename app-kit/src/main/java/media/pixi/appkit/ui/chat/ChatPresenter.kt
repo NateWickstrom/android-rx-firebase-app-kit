@@ -1,8 +1,14 @@
 package media.pixi.appkit.ui.chat
 
 import android.app.Activity
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
+import android.provider.MediaStore
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import media.pixi.appkit.data.auth.AuthProvider
+import io.reactivex.schedulers.Schedulers
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
 import media.pixi.appkit.data.files.FileProvider
@@ -16,7 +22,6 @@ import javax.inject.Inject
 
 class ChatPresenter @Inject constructor(
     private val navigator: ChatContract.Navigator,
-    private val authProvider: AuthProvider,
     private var chatProvider: ChatProvider,
     private val chatsGetter: ChatGetter,
     private val draftHelper: DraftHelper,
@@ -58,6 +63,7 @@ class ChatPresenter @Inject constructor(
         view = null
         messageBus.removeListener(this)
         disposables.clear()
+        //todo save draft
     }
 
     override fun send(text: String, attachments: List<MessageAttachment>) {
@@ -127,19 +133,43 @@ class ChatPresenter @Inject constructor(
     }
 
     override fun onImageSelected(path: String) {
-//        ThumbnailUtils.createVideoThumbnail(
-//            path,
-//            MediaStore.Video.Thumbnails.MINI_KIND
-//        )
-        view?.addAttachment(MessageAttachment(
-            id = "1234",
-            type = MessageAttachmentType.MY_IMAGE,
-            imageUrl = path
-        ))
+        Timber.d("Image: $path")
+
+        Single.fromCallable {
+                createImageThumbnail(path)
+            }.flatMap {
+                fileProvider.add(chatId!!, "image1", it)
+            }.map { MessageAttachment(
+                id = "image",
+                type = MessageAttachmentType.MY_IMAGE,
+                imageUrl = it
+            )}
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { addAttachment(it) },
+                { onErrorSeen(it) }
+            )
     }
 
     override fun onVideoSelected(path: String) {
         Timber.d("Video: $path")
+
+        Single.fromCallable {
+            createVideoThumbnail(path)
+        }.flatMap {
+            fileProvider.add(chatId!!, "video", it)
+        }.map { MessageAttachment(
+            id = "video",
+            type = MessageAttachmentType.MY_IMAGE,
+            imageUrl = it
+        )}
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { addAttachment(it) },
+                { onErrorSeen(it) }
+            )
     }
 
     private fun onCompletedSeen() {
@@ -147,7 +177,7 @@ class ChatPresenter @Inject constructor(
     }
 
     private fun onErrorSeen(error: Throwable) {
-
+        Timber.e(error)
     }
 
     private fun onFoundChatId(chatId: String) {
@@ -194,8 +224,29 @@ class ChatPresenter @Inject constructor(
         results = mutableListOf()
         view?.loading = false
         view?.canSend = false
-        Timber.e(TAG, error)
+        Timber.e(error)
         view?.error = "Oops, something when wrong"
+    }
+
+    private fun addAttachment(attachment: MessageAttachment) {
+        view?.addAttachment(attachment)
+    }
+
+    private fun createVideoThumbnail(url: String): Bitmap {
+        return ThumbnailUtils.createVideoThumbnail(
+            url,
+            MediaStore.Video.Thumbnails.MICRO_KIND
+        )!!
+    }
+
+    private fun createImageThumbnail(url: String): Bitmap {
+        val THUMBSIZE = 96
+
+        return ThumbnailUtils.extractThumbnail(
+            BitmapFactory.decodeFile(url),
+            THUMBSIZE,
+            THUMBSIZE
+        )
     }
 
     companion object {
