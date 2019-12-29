@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/NateWickstrom/android-rx-firebase-app-kit.svg?style=svg)](https://circleci.com/gh/NateWickstrom/android-rx-firebase-app-kit)
+
 Work in progress for building a bunch of reusable app components for working with Firebase.
 
 BUGs:
