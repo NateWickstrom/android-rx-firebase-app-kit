@@ -9,20 +9,20 @@ import media.pixi.appkit.data.drafts.DraftsProvider
 class LocalDraftProvider(private val draftDataSource: DraftsDao) :
     DraftsProvider {
 
-    override fun getDraft(chatId: String): Maybe<Draft> {
-        return draftDataSource.getDraftAndAllAttachmentsById(chatId).map { toDraft(it) }
+    override fun getDraft(draftId: String): Maybe<Draft> {
+        return draftDataSource.getDraftAndAllAttachmentsById(draftId).map { toDraft(it) }
     }
 
-    override fun deleteDraft(chatId: String): Completable {
-        return draftDataSource.deleteDraft(chatId)
-            .andThen { draftDataSource.deleteAttachments(chatId) }
+    override fun deleteDraft(draftId: String): Completable {
+        return draftDataSource.deleteDraft(draftId)
+            .andThen(draftDataSource.deleteAttachments(draftId))
     }
 
-    override fun addToDraft(chatId: String, attachment: DraftAttachment): Completable {
+    override fun addToDraft(draftId: String, attachment: DraftAttachment): Completable {
         return draftDataSource.insertAttachment(
             AttachmentEntity(
                 id = attachment.id,
-                draftId = chatId,
+                draftId = draftId,
                 type = attachment.type,
                 thumbnailUrl = attachment.thumbnailUrl,
                 fileUrl = attachment.fileUrl
