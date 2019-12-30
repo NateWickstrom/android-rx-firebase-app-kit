@@ -5,15 +5,16 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.provider.MediaStore
-import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import media.pixi.appkit.data.chats.ChatMessageEntity
 import media.pixi.appkit.data.chats.ChatProvider
+import media.pixi.appkit.data.drafts.Draft
+import media.pixi.appkit.data.drafts.DraftAttachment
+import media.pixi.appkit.data.drafts.DraftAttachmentType
 import media.pixi.appkit.data.files.FileProvider
-import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.MessageBus
@@ -95,7 +96,6 @@ class ChatPresenter @Inject constructor(
         view = null
         messageBus.removeListener(this)
         disposables.clear()
-        //todo save draft
     }
 
     override fun send(text: String, attachments: List<MessageAttachment>) {
@@ -116,6 +116,22 @@ class ChatPresenter @Inject constructor(
                 )
             )
         }
+    }
+
+    override fun saveDraft(text: String, attachments: List<MessageAttachment>) {
+        chatId?.let {
+            draftHelper.saveDraft(
+                    Draft(
+                        id = it,
+                        text = text,
+                        attachments = toDraftAttachments(attachments)
+                    )
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        }
+
     }
 
     override fun onTextClicked(position: Int, item: MessageListItem) {
@@ -216,12 +232,27 @@ class ChatPresenter @Inject constructor(
 
     private fun onFoundChatId(chatId: String) {
         this.chatId = chatId
-        disposables.add(
-            chatsGetter.getChat(chatId).subscribe(
-                { onSubscribedToChat(it) },
-                { onError(it) }
-            )
+        disposables.addAll(
+            chatsGetter.getChat(chatId)
+                .subscribe(
+                    { onSubscribedToChat(it) },
+                    { onError(it) }
+                ),
+            draftHelper.getDraft(chatId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                    { onDraftLoaded(it) },
+                    { onError(it) }
+                )
         )
+    }
+
+    private fun onDraftLoaded(draft: Draft) {
+        draft.text?.let {
+            view?.text = it
+        }
+        view?.addAttachments(toMessageAttachments(draft.attachments))
     }
 
     private fun onMessageSent(message: MessageListItem) {
@@ -281,8 +312,43 @@ class ChatPresenter @Inject constructor(
         )
     }
 
+    private fun toDraftAttachments(attachments: List<MessageAttachment>): List<DraftAttachment>  {
+        return attachments.map {
+            DraftAttachment(
+                id = it.id,
+                type = toDraftAttachmentType(it.type),
+                thumbnailUrl = it.thumbnailUrl,
+                fileUrl = it.fileUrl
+            )
+        }
+    }
+
+    private fun toMessageAttachments(attachments: List<DraftAttachment>): List<MessageAttachment>  {
+        return attachments.map {
+            MessageAttachment(
+                id = it.id,
+                type = toMessageAttachmentType(it.type),
+                thumbnailUrl = it.thumbnailUrl,
+                fileUrl = it.fileUrl
+            )
+        }
+    }
+
+    private fun toMessageAttachmentType(type: DraftAttachmentType): MessageAttachmentType {
+        return when (type) {
+            DraftAttachmentType.IMAGE -> MessageAttachmentType.IMAGE
+            DraftAttachmentType.VIDEO -> MessageAttachmentType.VIDEO
+        }
+    }
+
+    private fun toDraftAttachmentType(type: MessageAttachmentType): DraftAttachmentType {
+        return when (type) {
+            MessageAttachmentType.IMAGE -> DraftAttachmentType.IMAGE
+            MessageAttachmentType.VIDEO -> DraftAttachmentType.VIDEO
+        }
+    }
+
     companion object {
-        const val TAG = "ChatPresenter"
         private const val THUMB_SIZE = 96
     }
 }

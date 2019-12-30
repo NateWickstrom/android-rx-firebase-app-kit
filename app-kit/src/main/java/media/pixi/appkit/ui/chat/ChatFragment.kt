@@ -53,6 +53,12 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
             activity?.title = value
         }
 
+    override var text: String
+        get() = etMessage?.text.toString()
+        set(value) {
+            etMessage?.setText(value)
+        }
+
     private var isSendEnabled = false
 
     private var messageAdapter: MessageAdapter? = null
@@ -146,6 +152,9 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val text = etMessage?.text.toString()
+        val attachments =  attachmentsAdapter?.get() ?: emptyList()
+        presenter.saveDraft(text, attachments)
         presenter.dropView()
         messageAdapter = null
     }
@@ -171,7 +180,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         attachmentsAdapter?.add(attachment)
     }
 
-    override fun addAttachment(attachments: List<MessageAttachment>) {
+    override fun addAttachments(attachments: List<MessageAttachment>) {
         attachmentsRecyclerView?.visibility = View.VISIBLE
         attachmentsAdapter?.add(attachments)
     }

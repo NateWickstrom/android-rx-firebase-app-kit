@@ -12,12 +12,13 @@ interface ChatContract {
         var loading: Boolean
         var canSend: Boolean
         var title: String
+        var text: String
 
         fun setResults(results: List<MessageListItem>)
         fun scrollToEnd()
 
         fun addAttachment(attachment: MessageAttachment)
-        fun addAttachment(attachments: List<MessageAttachment>)
+        fun addAttachments(attachments: List<MessageAttachment>)
 
         fun showTextSpeedDial(messageListItem: MessageListItem)
         fun showImageSpeedDial(messageListItem: MessageListItem)
@@ -27,6 +28,8 @@ interface ChatContract {
 
     interface Presenter: BasePresenter<View> {
         fun send(text: String, attachments: List<MessageAttachment>)
+
+        fun saveDraft(text: String, attachments: List<MessageAttachment>)
 
         fun onTextClicked(position: Int, item: MessageListItem)
 
