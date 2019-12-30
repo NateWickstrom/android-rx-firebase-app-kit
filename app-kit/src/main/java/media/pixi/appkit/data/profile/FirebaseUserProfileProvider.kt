@@ -79,7 +79,7 @@ class FirebaseUserProfileProvider: UserProfileProvider {
         private const val FIRST_NAME = "firstname"
         private const val LAST_NAME = "lastname"
         private const val USERNAME = "username"
-        private const val IMAGE_URL = "imageUrl"
+        private const val IMAGE_URL = "thumbnailUrl"
 
         private const val SOCIAL = "social"
         private const val FRIENDS = "friends"

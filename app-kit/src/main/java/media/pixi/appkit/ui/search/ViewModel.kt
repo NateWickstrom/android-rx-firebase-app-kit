@@ -31,7 +31,7 @@ class ViewModel : ViewModel() {
             firstname = hit.json.getPrimitive("firstname").content,
             lastname = hit.json.getPrimitive("lastname").content,
             username = hit.json.getPrimitive("username").content,
-            imageUrl = hit.json.getPrimitive("imageUrl").content,
+            imageUrl = hit.json.getPrimitive("thumbnailUrl").content,
             id = hit.json.getPrimitive("id").content,
             _highlightResult = hit.json.getObjectOrNull("_highlightResult")
         )

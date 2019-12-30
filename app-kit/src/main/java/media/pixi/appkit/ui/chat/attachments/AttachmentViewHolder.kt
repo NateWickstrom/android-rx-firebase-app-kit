@@ -17,6 +17,6 @@ class AttachmentViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
         deleteView = findViewById(R.id.attachment_delete)
         imageView = findViewById(R.id.attachment_image)
 
-        Glide.with(this).load(item.imageUrl).into(imageView!!)
+        Glide.with(this).load(item.thumbnailUrl).into(imageView!!)
     }
 }
