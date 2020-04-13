@@ -21,6 +21,7 @@ Messaging
 - chat admin(s) (later)
 - pagination (later)
 - threads/replies (later)
+- mentions (later)
 - send audio (later)
 - send file (later)
 - send location (later)
@@ -28,6 +29,7 @@ Messaging
 Notifications
 - fix bugs
 - ordering
+- compressed when multiple
 - images in notifications
 - >1 user images
 - better notification action handling
@@ -63,6 +65,7 @@ Utils
 - analytics
 
 Polish
+- disabled interaction when loading (ex: w/ signing in)
 - no network
 - better app icon
 - better notification icon
