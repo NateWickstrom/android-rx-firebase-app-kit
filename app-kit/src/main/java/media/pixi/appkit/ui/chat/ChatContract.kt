@@ -58,6 +58,8 @@ interface ChatContract {
 
         fun showImage(activity: Activity, url: String)
 
+        fun showVideo(activity: Activity, url: String)
+
         fun showChatMembers(activity: Activity, chatId: String)
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
-import android.net.Uri
 import android.provider.MediaStore
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +20,6 @@ import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.MessageBus
 import media.pixi.appkit.domain.chats.models.*
 import media.pixi.appkit.domain.drafs.DraftHelper
-import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -171,12 +169,13 @@ class ChatPresenter @Inject constructor(
     }
 
     override fun onMessageReceived(chatId: String, message: Message): Boolean {
-        return chatId.equals(this.chatId)
+        return this.chatId === chatId
     }
 
     override fun onAttachmentClicked(activity: Activity, attachment: MessageAttachment) {
         when (attachment.type) {
             MessageAttachmentType.IMAGE -> navigator.showImage(activity, "file://" + attachment.fileUrl)
+            MessageAttachmentType.VIDEO -> navigator.showVideo(activity, attachment.fileUrl)
         }
     }
 
