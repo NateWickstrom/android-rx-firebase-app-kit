@@ -151,7 +151,7 @@ class FirebaseAuthProvider: AuthProvider {
         private const val FIRSTNAME = "firstname"
         private const val LASTNAME = "lastname"
         private const val USERNAME = "username"
-        private const val IMAGE_URL = "thumbnailUrl"
+        private const val IMAGE_URL = "imageUrl"
 
         private const val SIGNIN_DELAY_SECONDS = 2L
     }
