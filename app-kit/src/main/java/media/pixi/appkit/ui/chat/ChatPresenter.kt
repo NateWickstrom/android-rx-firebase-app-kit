@@ -102,18 +102,20 @@ class ChatPresenter @Inject constructor(
         view?.loading = true
 
         if (chatId.isNullOrBlank()) {
-            disposables.add(
-                chatsGetter.createChat(text, userIds!!).subscribe(
-                    { onFoundChatId(it.chatId) },
-                    { onError(it) }
-                )
+            disposables.addAll(
+                chatsGetter.createChat(text, userIds!!)
+                    .subscribe(
+                        { onChatCreated(it.chatId) },
+                        { onError(it) }
+                    )
             )
         } else {
             disposables.add(
-                chatsGetter.sendMessage(text, chatId!!).subscribe(
-                    { onMessageSent(it) },
-                    { onError(it) }
-                )
+                chatsGetter.sendMessage(text, chatId!!)
+                    .subscribe(
+                        { onMessageSent(it) },
+                        { onError(it) }
+                    )
             )
         }
     }
@@ -247,6 +249,23 @@ class ChatPresenter @Inject constructor(
         Timber.e(error)
     }
 
+    private fun onChatCreated(chatId: String) {
+        this.chatId = chatId
+        view?.clearAttachments()
+
+        disposables.addAll(
+            chatsGetter.getChat(chatId)
+                .subscribe(
+                    { onSubscribedToChat(it) },
+                    { onError(it) }
+                ),
+            draftHelper.deleteDraft(chatId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+            )
+    }
+
     private fun onFoundChatId(chatId: String) {
         this.chatId = chatId
         disposables.addAll(
@@ -274,7 +293,15 @@ class ChatPresenter @Inject constructor(
 
     private fun onMessageSent(message: MessageListItem) {
         view?.scrollToEnd()
+        view?.clearAttachments()
         view?.loading = false
+
+        disposables.add(
+            draftHelper.deleteDraft(chatId!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        )
     }
 
     private fun onSubscribedToChat(chat: Chat) {

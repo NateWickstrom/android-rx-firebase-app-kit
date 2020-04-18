@@ -185,6 +185,11 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         attachmentsAdapter?.add(attachments)
     }
 
+    override fun clearAttachments() {
+        attachmentsRecyclerView?.visibility = View.GONE
+        attachmentsAdapter?.clear()
+    }
+
     override fun scrollToEnd() {
         messageAdapter?.items?.size?.let {
             messagesRecyclerView?.smoothScrollToPosition(it)

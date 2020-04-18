@@ -19,6 +19,7 @@ interface ChatContract {
 
         fun addAttachment(attachment: MessageAttachment)
         fun addAttachments(attachments: List<MessageAttachment>)
+        fun clearAttachments()
 
         fun showTextSpeedDial(messageListItem: MessageListItem)
         fun showImageSpeedDial(messageListItem: MessageListItem)
