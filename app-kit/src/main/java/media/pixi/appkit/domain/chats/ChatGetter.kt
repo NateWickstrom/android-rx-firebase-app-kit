@@ -49,7 +49,11 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         return chatProvider.hasChat(userIds.map { it.toString() }).map { it.id }
     }
 
-    fun sendMessage(message: String, chatId: String): Single<MessageListItem> {
+    fun sendMessage(message: String, attachments: List<MessageAttachment>, chatId: String): Single<MessageListItem> {
+        // upload files
+        // create attachments
+        // send message
+
         return chatProvider.sendMessage(chatId,
             ChatMessageRequest(
                 text = message,
@@ -58,7 +62,11 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         ).map { toMessageListItem(it) }
     }
 
-    fun createChat(message: String, userIds: List<CharSequence>): Single<ChatMessageEntity> {
+    fun createChat(message: String, attachments: List<MessageAttachment>, userIds: List<CharSequence>): Single<ChatMessageEntity> {
+        // upload files
+        // create attachments
+        // send message
+
         return chatProvider.createChat(
             ChatMessageRequest(
                 text = message,

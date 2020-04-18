@@ -99,11 +99,15 @@ class ChatPresenter @Inject constructor(
     }
 
     override fun send(text: String, attachments: List<MessageAttachment>) {
+        if (text.isBlank() && attachments.isEmpty()) {
+            return
+        }
+
         view?.loading = true
 
         if (chatId.isNullOrBlank()) {
             disposables.addAll(
-                chatsGetter.createChat(text, userIds!!)
+                chatsGetter.createChat(text, attachments, userIds!!)
                     .subscribe(
                         { onChatCreated(it.chatId) },
                         { onError(it) }
@@ -111,7 +115,7 @@ class ChatPresenter @Inject constructor(
             )
         } else {
             disposables.add(
-                chatsGetter.sendMessage(text, chatId!!)
+                chatsGetter.sendMessage(text, attachments, chatId!!)
                     .subscribe(
                         { onMessageSent(it) },
                         { onError(it) }
