@@ -7,7 +7,6 @@ check timestamp for most recent view
 timestamp with timezones
 
 Messaging
-- store draft with multiple attachments for chat
 - send image
 - send video
 - accurate send status

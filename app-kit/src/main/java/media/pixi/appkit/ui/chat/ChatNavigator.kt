@@ -10,6 +10,7 @@ import media.pixi.appkit.ui.chat.options.ChatOptionsBottomSheetFragment
 import media.pixi.appkit.ui.chat.options.ChatOptionsImagesBottomSheetFragment
 import media.pixi.appkit.ui.chat.options.ChatOptionsVideosBottomSheetFragment
 import media.pixi.appkit.ui.chatmembers.ChatMembersActivity
+import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -19,8 +20,8 @@ class ChatNavigator @Inject constructor() : ChatContract.Navigator,
     ChatOptionsImagesBottomSheetFragment.ChatOptionsForImagesOnClickListener,
     ChatOptionsVideosBottomSheetFragment.ChatOptionsOnVideoClickedListener {
 
-    override fun showImage(activity: Activity) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showImage(activity: Activity, url: String) {
+        ImageViewerActivity.launch(activity, url)
     }
 
     override fun showOptions(activity: Activity) {

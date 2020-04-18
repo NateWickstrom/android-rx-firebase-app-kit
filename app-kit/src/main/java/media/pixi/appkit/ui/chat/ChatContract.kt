@@ -39,7 +39,7 @@ interface ChatContract {
 
         fun onOptionsClicked(activity: Activity)
 
-        fun onAttachmentClicked(position: Int, attachment: MessageAttachment)
+        fun onAttachmentClicked(activity: Activity, attachment: MessageAttachment)
 
         fun onAttachmentDeleteClicked(position: Int, attachment: MessageAttachment)
 
@@ -56,7 +56,7 @@ interface ChatContract {
 
         fun showOptions(activity: Activity)
 
-        fun showImage(activity: Activity)
+        fun showImage(activity: Activity, url: String)
 
         fun showChatMembers(activity: Activity, chatId: String)
     }

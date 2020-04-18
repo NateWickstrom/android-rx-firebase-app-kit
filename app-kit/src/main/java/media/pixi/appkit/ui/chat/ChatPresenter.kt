@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
+import android.net.Uri
 import android.provider.MediaStore
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,6 +21,7 @@ import media.pixi.appkit.domain.chats.ChatGetter
 import media.pixi.appkit.domain.chats.MessageBus
 import media.pixi.appkit.domain.chats.models.*
 import media.pixi.appkit.domain.drafs.DraftHelper
+import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -172,12 +174,28 @@ class ChatPresenter @Inject constructor(
         return chatId.equals(this.chatId)
     }
 
-    override fun onAttachmentClicked(position: Int, attachment: MessageAttachment) {
-
+    override fun onAttachmentClicked(activity: Activity, attachment: MessageAttachment) {
+        when (attachment.type) {
+            MessageAttachmentType.IMAGE -> navigator.showImage(activity, "file://" + attachment.fileUrl)
+        }
     }
 
     override fun onAttachmentDeleteClicked(position: Int, attachment: MessageAttachment) {
-
+        disposables.addAll(
+            //TODO error handling
+            fileProvider.delete(attachment.fileUrl)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(),
+            fileProvider.delete(attachment.thumbnailUrl)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(),
+            draftHelper.removeAttachment(toDraftAttachment(attachment))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        )
     }
 
     override fun onImageSelected(path: String) {
@@ -314,12 +332,7 @@ class ChatPresenter @Inject constructor(
 
     private fun toDraftAttachments(attachments: List<MessageAttachment>): List<DraftAttachment>  {
         return attachments.map {
-            DraftAttachment(
-                id = it.id,
-                type = toDraftAttachmentType(it.type),
-                thumbnailUrl = it.thumbnailUrl,
-                fileUrl = it.fileUrl
-            )
+            toDraftAttachment(it)
         }
     }
 
@@ -346,6 +359,15 @@ class ChatPresenter @Inject constructor(
             MessageAttachmentType.IMAGE -> DraftAttachmentType.IMAGE
             MessageAttachmentType.VIDEO -> DraftAttachmentType.VIDEO
         }
+    }
+
+    private fun toDraftAttachment(attachment: MessageAttachment): DraftAttachment {
+        return DraftAttachment(
+            id = attachment.id,
+            type = toDraftAttachmentType(attachment.type),
+            thumbnailUrl = attachment.thumbnailUrl,
+            fileUrl = attachment.fileUrl
+        )
     }
 
     companion object {

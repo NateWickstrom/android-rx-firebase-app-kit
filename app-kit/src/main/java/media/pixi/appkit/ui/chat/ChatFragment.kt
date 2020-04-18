@@ -127,7 +127,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
             override fun afterTextChanged(editable: Editable) {}
         })
 
-        attachmentsRecyclerView = view.findViewById<RecyclerView>(R.id.attachments)
+        attachmentsRecyclerView = view.findViewById(R.id.attachments)
         attachmentsRecyclerView?.setLayoutManager(
             LinearLayoutManager(
                 context,
@@ -137,7 +137,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
         )
 
         attachmentsAdapter = AttachmentAdapter(
-            { position, attachment -> presenter.onAttachmentClicked(position, attachment) },
+            { position, attachment -> presenter.onAttachmentClicked(activity!!, attachment) },
             { position, attachment -> presenter.onAttachmentDeleteClicked(position, attachment) }
         )
         attachmentsRecyclerView?.adapter = attachmentsAdapter

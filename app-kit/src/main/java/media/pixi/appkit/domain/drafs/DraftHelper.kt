@@ -5,6 +5,7 @@ import io.reactivex.Maybe
 import media.pixi.appkit.data.drafts.Draft
 import media.pixi.appkit.data.drafts.DraftAttachment
 import media.pixi.appkit.data.drafts.DraftsProvider
+import media.pixi.appkit.domain.chats.models.MessageAttachment
 import java.io.File
 import javax.inject.Inject
 
@@ -21,6 +22,10 @@ class DraftHelper @Inject constructor(private val draftsProvider: DraftsProvider
 
     fun deleteDraft(draftId: String): Completable {
         return draftsProvider.deleteDraft(draftId)
+    }
+
+    fun removeAttachment(attachment: DraftAttachment): Completable {
+        return draftsProvider.deleteAttachment(attachment)
     }
 
     private fun filter(draft: Draft): Draft {
