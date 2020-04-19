@@ -41,7 +41,8 @@ class ChatPresenter @Inject constructor(
             t2: String
         ): MessageAttachment {
             return  MessageAttachment(
-                id = UUID.randomUUID().toString(),
+                fileId = UUID.randomUUID().toString(),
+                thumbnailId = UUID.randomUUID().toString(),
                 type = MessageAttachmentType.IMAGE,
                 thumbnailUrl = t1,
                 fileUrl = t2
@@ -55,7 +56,8 @@ class ChatPresenter @Inject constructor(
             t2: String
         ): MessageAttachment {
             return  MessageAttachment(
-                id = UUID.randomUUID().toString(),
+                fileId = UUID.randomUUID().toString(),
+                thumbnailId = UUID.randomUUID().toString(),
                 type = MessageAttachmentType.VIDEO,
                 thumbnailUrl = t1,
                 fileUrl = t2
@@ -369,7 +371,8 @@ class ChatPresenter @Inject constructor(
     private fun toMessageAttachments(attachments: List<DraftAttachment>): List<MessageAttachment>  {
         return attachments.map {
             MessageAttachment(
-                id = it.id,
+                fileId = it.id,
+                thumbnailId = UUID.randomUUID().toString(),
                 type = toMessageAttachmentType(it.type),
                 thumbnailUrl = it.thumbnailUrl,
                 fileUrl = it.fileUrl
@@ -393,7 +396,7 @@ class ChatPresenter @Inject constructor(
 
     private fun toDraftAttachment(attachment: MessageAttachment): DraftAttachment {
         return DraftAttachment(
-            id = attachment.id,
+            id = attachment.fileId,
             type = toDraftAttachmentType(attachment.type),
             thumbnailUrl = attachment.thumbnailUrl,
             fileUrl = attachment.fileUrl

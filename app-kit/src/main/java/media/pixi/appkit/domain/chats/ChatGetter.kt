@@ -1,5 +1,6 @@
 package media.pixi.appkit.domain.chats
 
+import android.net.Uri
 import com.google.firebase.Timestamp
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -8,12 +9,15 @@ import media.pixi.appkit.data.auth.AuthProvider
 import media.pixi.appkit.data.chats.*
 import media.pixi.appkit.data.profile.UserProfile
 import media.pixi.appkit.data.profile.UserProfileProvider
+import media.pixi.appkit.data.storage.CloudStorageRepo
 import media.pixi.appkit.domain.chats.models.*
 import media.pixi.appkit.utils.StringUtils
 import org.joda.time.DateTime
+import java.io.File
 import javax.inject.Inject
 
 class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
+                                     private val cloudStorageRepo: CloudStorageRepo,
                                      private val userProfileProvider: UserProfileProvider,
                                      private val authProvider: AuthProvider) {
 
@@ -26,6 +30,20 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             return toChat(t1, t2, t3)
         }
     }
+
+    private inner class UploadZipper: io.reactivex.functions.BiFunction<Uri, Uri, UploadMetadata> {
+        override fun apply(
+            t1: Uri,
+            t2: Uri
+        ): UploadMetadata {
+            return UploadMetadata(t1, t2)
+        }
+    }
+
+    private data class UploadMetadata(
+        val fileUrl: Uri,
+        val thumbnailUri: Uri
+        )
 
     fun getChat(chatId: String): Flowable<Chat> {
         return chatProvider.getChat(chatId)
@@ -50,16 +68,17 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
     }
 
     fun sendMessage(message: String, attachments: List<MessageAttachment>, chatId: String): Single<MessageListItem> {
-        // upload files
-        // create attachments
-        // send message
-
-        return chatProvider.sendMessage(chatId,
-            ChatMessageRequest(
-                text = message,
-                senderId = authProvider.getUserId()!!,
-                timestamp = Timestamp.now())
-        ).map { toMessageListItem(it) }
+        return sendAttachments(chatId, attachments)
+            .flatMap { attachmentRequests ->
+                chatProvider.sendMessage(chatId,
+                    ChatMessageRequest(
+                        text = message,
+                        senderId = authProvider.getUserId()!!,
+                        timestamp = Timestamp.now(),
+                        attachments = attachmentRequests)
+                )
+            }
+            .map { toMessageListItem(it) }
     }
 
     fun createChat(message: String, attachments: List<MessageAttachment>, userIds: List<CharSequence>): Single<ChatMessageEntity> {
@@ -83,6 +102,32 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             .map { toChatTitle(it) }
     }
 
+    private fun sendAttachments(chatId: String, attachments: List<MessageAttachment>): Single<List<ChatAttachmentRequest>> {
+        if (attachments.isEmpty()) {
+            return Single.just(emptyList())
+        } else {
+            val list = attachments.map { upload(chatId, it) }
+            return Single.zipArray({ requests -> requests.map { it as ChatAttachmentRequest }}, list.toTypedArray())
+        }
+    }
+
+    private fun upload(chatId: String, attachment: MessageAttachment): Single<ChatAttachmentRequest> {
+        val fileTask = cloudStorageRepo.addFile(chatId, attachment.fileId, File(attachment.fileUrl))
+            .flatMap { cloudStorageRepo.getFile(chatId, attachment.fileId) }
+
+        val thumbnailTask = cloudStorageRepo.addFile(chatId, attachment.thumbnailId, File(attachment.thumbnailUrl))
+            .flatMap { cloudStorageRepo.getFile(chatId, attachment.thumbnailId) }
+
+        return Single.zip(fileTask, thumbnailTask, UploadZipper())
+            .map { metadata -> ChatAttachmentRequest(
+                type = toChatAttachmentType(attachment.type),
+                senderId = authProvider.getUserId()!!,
+                timestamp = Timestamp.now(),
+                thumbnailUrl = metadata.thumbnailUri.toString(),
+                fileUrl = metadata.fileUrl.toString()
+            ) }
+    }
+
     private fun maybeGetChatMessageEntity(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
         val userId = authProvider.getUserId()!!
         return if (messageId.isBlank()) {
@@ -96,6 +141,13 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             ))
         } else {
             chatProvider.getMessage(chatId, messageId)
+        }
+    }
+
+    private fun toChatAttachmentType(attachments: MessageAttachmentType): ChatAttachmentType {
+        return when (attachments) {
+            MessageAttachmentType.IMAGE -> ChatAttachmentType.IMAGE
+            MessageAttachmentType.VIDEO -> ChatAttachmentType.VIDEO
         }
     }
 

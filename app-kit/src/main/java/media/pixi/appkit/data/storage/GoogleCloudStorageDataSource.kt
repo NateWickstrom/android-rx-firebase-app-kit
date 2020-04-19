@@ -33,14 +33,15 @@ class GoogleCloudStorageDataSource @Inject constructor(): CloudStorageRepo {
         throw Exception("No user found!")
     }
 
-    override fun addFile(id: String, file: File): Single<UploadTask.TaskSnapshot> {
+    override fun addFile(bucketId: String, fileId: String, file: File): Single<UploadTask.TaskSnapshot> {
         val uri = Uri.fromFile(file)
-        val bucket = storage.reference.child(CHAT_DOCUMENTS).child(id)
+        val bucket = storage.reference.child(CHAT_DOCUMENTS).child(bucketId).child(fileId)
         return RxFirebaseStorage.putFile(bucket, uri)
     }
 
-    override fun getFile(id: String): Maybe<Uri> {
-        return RxFirebaseStorage.getDownloadUrl(storage.reference.child(CHAT_DOCUMENTS).child(id))
+    override fun getFile(bucketId: String, fileId: String): Single<Uri> {
+        val uri = storage.reference.child(CHAT_DOCUMENTS).child(bucketId).child(fileId)
+        return RxFirebaseStorage.getDownloadUrl(uri).toSingle()
     }
 
     companion object {

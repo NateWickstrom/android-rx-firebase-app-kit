@@ -12,8 +12,8 @@ interface CloudStorageRepo {
 
     fun getUserProfileImageReference(): Maybe<Uri>
 
-    fun addFile(id: String, file: File): Single<UploadTask.TaskSnapshot>
+    fun addFile(bucketId: String, fileId: String, file: File): Single<UploadTask.TaskSnapshot>
 
-    fun getFile(id: String): Maybe<Uri>
+    fun getFile(bucketId: String, fileId: String): Single<Uri>
 
 }

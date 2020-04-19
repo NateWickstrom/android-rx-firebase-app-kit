@@ -7,4 +7,5 @@ data class ChatMessageEntity(
     val chatId: String,
     val text: String,
     val timestamp: Timestamp,
-    val senderId: String)
+    val senderId: String,
+    val attachmentIds: List<String> = emptyList())

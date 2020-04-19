@@ -15,13 +15,13 @@ interface ChatProvider {
 
     fun hasChat(userIds: List<String>): Maybe<ChatEntity>
 
+    fun markAsLastSeen(chatId: String, messageId: String): Completable
+
     fun observerMessages(chatId: String): Flowable<List<ChatMessageEntity>>
 
     fun sendMessage(chatId: String, message: ChatMessageRequest): Single<ChatMessageEntity>
 
     fun getMessage(chatId: String, messageId: String): Flowable<ChatMessageEntity>
-
-    fun markAsLastSeen(chatId: String, messageId: String): Completable
 
     fun getLatestMessage(chatId: String): Flowable<ChatMessageEntity>
 
