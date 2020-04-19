@@ -404,6 +404,6 @@ class ChatPresenter @Inject constructor(
     }
 
     companion object {
-        private const val THUMB_SIZE = 96
+        private const val THUMB_SIZE = 256
     }
 }

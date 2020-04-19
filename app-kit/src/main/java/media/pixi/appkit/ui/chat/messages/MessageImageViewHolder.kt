@@ -1,30 +1,32 @@
-package media.pixi.appkit.ui.chat
+package media.pixi.appkit.ui.chat.messages
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import media.pixi.appkit.R
 import media.pixi.appkit.data.profile.UserProfile
+import media.pixi.appkit.domain.chats.models.ImageMessage
 import media.pixi.appkit.domain.chats.models.Message
 import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.ui.ClusterLayout
 import media.pixi.appkit.ui.chats.ChatViewHolder
+import media.pixi.appkit.utils.ImageUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
+class MessageImageViewHolder (itemView: View): MessageViewHolder(itemView) {
 
     private var avatarImageView: ClusterLayout = itemView.findViewById(R.id.image_avatar)
     private var timeTextView: TextView = itemView.findViewById(R.id.text_time)
     private var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
-    private var messageTextView: TextView = itemView.findViewById(R.id.text_content)
+    private var imageView: ImageView = itemView.findViewById(R.id.image_message_image)
 
-    private lateinit var message: Message
+    private lateinit var message: ImageMessage
 
-    open fun bind(messageItem: MessageListItem, showTimeStamp: Boolean) {
-        this.message = messageItem.message
-        messageTextView.text = messageItem.message.message
+    override fun bind(messageItem: MessageListItem, showTimeStamp: Boolean) {
+        this.message = messageItem.message as ImageMessage
 
         if (showTimeStamp) {
             val time = getTimeFormat(message).format(message.date.toDate()).toString()
@@ -36,11 +38,13 @@ class MessageViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
 
         avatarImageView.setClusteredViews(toClusteredView(messageItem.senderProfile!!))
 
+        ImageUtils.setAttachmentThumbnail(imageView, message.thumbnailUrl)
+
         updateReadStatus()
     }
 
-    fun setOnClickListener(onClickListener: (View) -> Unit) {
-        messageTextView.setOnClickListener(onClickListener)
+    override fun setOnClickListener(onClickListener: (View) -> Unit) {
+        imageView.setOnClickListener(onClickListener)
     }
 
     private fun updateReadStatus() {

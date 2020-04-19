@@ -16,15 +16,13 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.appkit__fragment_list.*
 import kotlinx.android.synthetic.main.appkit__fragment_list.view.*
 import media.pixi.appkit.R
-import media.pixi.appkit.domain.chats.models.Message
-import media.pixi.appkit.domain.chats.models.MessageAttachment
-import media.pixi.appkit.domain.chats.models.MessageListItem
-import media.pixi.appkit.domain.chats.models.MessageType
+import media.pixi.appkit.domain.chats.models.*
 import media.pixi.appkit.ui.chat.actions.CopyMessageAction
 import media.pixi.appkit.ui.chat.actions.DeleteMessageAction
 import media.pixi.appkit.ui.chat.actions.ForwardMessageAction
 import media.pixi.appkit.ui.chat.actions.MessageAction
 import media.pixi.appkit.ui.chat.attachments.AttachmentAdapter
+import media.pixi.appkit.ui.chat.messages.MessageAdapter
 import media.pixi.appkit.ui.imageviewer.ImageViewerActivity
 import media.pixi.appkit.utils.ActivityUtils
 import java.util.*
@@ -220,7 +218,9 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     override fun onMessageListItemClicked(position: Int, item: MessageListItem) {
         when (item.message.type) {
             MessageType.IMAGE -> {
-                ImageViewerActivity.launch(activity!!, item.message.message)
+                val imageMessage = item.message as ImageMessage
+                val url = imageMessage.fileUrl
+                ImageViewerActivity.launch(activity!!, url)
             }
         }
     }

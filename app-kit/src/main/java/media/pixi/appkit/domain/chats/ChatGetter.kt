@@ -68,29 +68,51 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
     }
 
     fun sendMessage(message: String, attachments: List<MessageAttachment>, chatId: String): Single<MessageListItem> {
-        return sendAttachments(chatId, attachments)
-            .flatMap { attachmentRequests ->
-                chatProvider.sendMessage(chatId,
-                    ChatMessageRequest(
-                        text = message,
-                        senderId = authProvider.getUserId()!!,
-                        timestamp = Timestamp.now(),
-                        attachments = attachmentRequests)
-                )
+        val request = ChatMessageRequest(
+            type = ChatMessageType.TEXT,
+            text = message,
+            senderId = authProvider.getUserId()!!,
+            timestamp = Timestamp.now()
+        )
+        if (attachments.isNotEmpty()) {
+            val requests = createAttachmentRequests(chatId, attachments)
+            val allRequests = requests.toMutableList()
+            if (message.isNotBlank()) {
+                val messageRequest = chatProvider.sendMessage(chatId, request)
+                allRequests.add(messageRequest)
             }
+
+            return Single.zipArray({ list -> list.map { it as ChatMessageEntity }}, allRequests.toTypedArray())
+                .map { toSingItem(it) }
+        }
+        return chatProvider.sendMessage(chatId, request)
             .map { toMessageListItem(it) }
     }
 
+    private fun toSingItem(list: List<ChatMessageEntity>): MessageListItem {
+        return toMessageListItem(list[0])
+    }
+
     fun createChat(message: String, attachments: List<MessageAttachment>, userIds: List<CharSequence>): Single<ChatMessageEntity> {
-        // upload files
-        // create attachments
-        // send message
+        val request = ChatMessageRequest(
+            type = ChatMessageType.TEXT,
+            text = message,
+            senderId = authProvider.getUserId()!!,
+            timestamp = Timestamp.now()
+        )
+
+//        if (attachments.isNotEmpty()) {
+//            val messageRequest = chatProvider.sendMessage(chatId, request)
+//            val requests = createAttachmentRequests(chatId, attachments)
+//            val allRequests = requests.toMutableList()
+//            allRequests.add(messageRequest)
+//
+//            return Single.zipArray({ list -> list.map { it as ChatMessageEntity }}, allRequests.toTypedArray())
+//                .map { toSingItem(it) }
+//        }
 
         return chatProvider.createChat(
-            ChatMessageRequest(
-                text = message,
-                senderId = authProvider.getUserId()!!,
-                timestamp = Timestamp.now()),
+            request,
             userIds.map { it.toString() }
         )
     }
@@ -102,16 +124,11 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             .map { toChatTitle(it) }
     }
 
-    private fun sendAttachments(chatId: String, attachments: List<MessageAttachment>): Single<List<ChatAttachmentRequest>> {
-        if (attachments.isEmpty()) {
-            return Single.just(emptyList())
-        } else {
-            val list = attachments.map { upload(chatId, it) }
-            return Single.zipArray({ requests -> requests.map { it as ChatAttachmentRequest }}, list.toTypedArray())
-        }
+    private fun createAttachmentRequests(chatId: String, attachments: List<MessageAttachment>): List<Single<ChatMessageEntity>> {
+        return attachments.map { upload(chatId, it) }
     }
 
-    private fun upload(chatId: String, attachment: MessageAttachment): Single<ChatAttachmentRequest> {
+    private fun upload(chatId: String, attachment: MessageAttachment): Single<ChatMessageEntity> {
         val fileTask = cloudStorageRepo.addFile(chatId, attachment.fileId, File(attachment.fileUrl))
             .flatMap { cloudStorageRepo.getFile(chatId, attachment.fileId) }
 
@@ -119,13 +136,17 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             .flatMap { cloudStorageRepo.getFile(chatId, attachment.thumbnailId) }
 
         return Single.zip(fileTask, thumbnailTask, UploadZipper())
-            .map { metadata -> ChatAttachmentRequest(
+            .map { metadata -> ChatMessageRequest(
                 type = toChatAttachmentType(attachment.type),
+                text = "",
                 senderId = authProvider.getUserId()!!,
                 timestamp = Timestamp.now(),
                 thumbnailUrl = metadata.thumbnailUri.toString(),
                 fileUrl = metadata.fileUrl.toString()
             ) }
+            .flatMap {
+                chatProvider.sendMessage(chatId, it)
+            }
     }
 
     private fun maybeGetChatMessageEntity(chatId: String, messageId: String): Flowable<ChatMessageEntity> {
@@ -133,6 +154,7 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         return if (messageId.isBlank()) {
             // return a default message if missing
             Flowable.just(ChatMessageEntity(
+                type = ChatMessageType.UNKNOWN,
                 id = "",
                 chatId = chatId,
                 text = "",
@@ -144,10 +166,10 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         }
     }
 
-    private fun toChatAttachmentType(attachments: MessageAttachmentType): ChatAttachmentType {
+    private fun toChatAttachmentType(attachments: MessageAttachmentType): ChatMessageType {
         return when (attachments) {
-            MessageAttachmentType.IMAGE -> ChatAttachmentType.IMAGE
-            MessageAttachmentType.VIDEO -> ChatAttachmentType.VIDEO
+            MessageAttachmentType.IMAGE -> ChatMessageType.IMAGE
+            MessageAttachmentType.VIDEO -> ChatMessageType.VIDEO
         }
     }
 
@@ -191,14 +213,11 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
     }
 
     private fun toMessageListItem(message: ChatMessageEntity): MessageListItem {
-        val textMessage = TextMessage(
-            id = message.id,
-            message = message.text,
-            date = DateTime(message.timestamp.toDate()),
-            senderId = message.senderId,
-            messageSendStatus = MessageSendStatus.Sent,
-            messageReadStatus = MessageReadStatus.READ
-        )
+        val userMessage = when (message.type) {
+            ChatMessageType.TEXT -> toTextMessage(message)
+            ChatMessageType.IMAGE -> toImageMessage(message)
+            else -> toTextMessage(message)
+        }
 
         val sender = message.senderId
         val me = authProvider.getUserId()
@@ -206,11 +225,35 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
 
         return MessageListItem(
             id = message.id,
-            message = textMessage,
+            message = userMessage,
             sendIconUrl = "",
             senderId = message.senderId,
             senderProfile = null,
             isMe = isMe
+        )
+    }
+
+    private fun toImageMessage(message: ChatMessageEntity): ImageMessage {
+        return ImageMessage(
+            id = message.id,
+            message = "<image>",
+            date = DateTime(message.timestamp.toDate()),
+            senderId = message.senderId,
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ,
+            thumbnailUrl = message.thumbnailUrl!!,
+            fileUrl = message.fileUrl!!
+        )
+    }
+
+    private fun toTextMessage(message: ChatMessageEntity): TextMessage {
+        return TextMessage(
+            id = message.id,
+            message = message.text,
+            date = DateTime(message.timestamp.toDate()),
+            senderId = message.senderId,
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ
         )
     }
 

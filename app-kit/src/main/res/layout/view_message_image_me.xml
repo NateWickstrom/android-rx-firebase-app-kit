@@ -21,17 +21,12 @@
         android:text="Time"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <media.pixi.appkit.ui.ClusterLayout
         android:id="@+id/image_avatar"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:src="@drawable/ic_account_circle_24px"
-        fresco:roundAsCircle="true"
-        fresco:placeholderImage="@drawable/ic_account_circle_24px"
-        fresco:failureImage="@drawable/ic_account_circle_24px"
-        android:layout_alignParentEnd="true"
         android:layout_below="@id/text_time"
-        fresco:fadeDuration="0"/>
+        android:layout_alignParentEnd="true" />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_message_image"

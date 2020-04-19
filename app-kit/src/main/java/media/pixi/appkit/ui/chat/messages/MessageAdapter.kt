@@ -1,10 +1,12 @@
-package media.pixi.appkit.ui.chat
+package media.pixi.appkit.ui.chat.messages
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import media.pixi.appkit.R
+import media.pixi.appkit.domain.chats.models.ImageMessage
 import media.pixi.appkit.domain.chats.models.MessageListItem
+import media.pixi.appkit.domain.chats.models.TextMessage
 import java.util.concurrent.TimeUnit
 
 
@@ -19,12 +21,21 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val layoutId = when (viewType) {
-            VIEW_TYPE_ME -> R.layout.view_message_text_me
-            VIEW_TYPE_REPLY -> R.layout.view_message_text_reply
+            VIEW_TYPE_TEXT_ME -> R.layout.view_message_text_me
+            VIEW_TYPE_TEXT_REPLY -> R.layout.view_message_text_reply
+            VIEW_TYPE_IMAGE_ME -> R.layout.view_message_image_me
+            VIEW_TYPE_IMAGE_REPLY -> R.layout.view_message_image_reply
             else -> throw IllegalArgumentException("Unknown view type")
         }
         val view = inflater.inflate(layoutId, parent, false)
-        return MessageViewHolder(view)
+
+        return when (viewType) {
+            VIEW_TYPE_TEXT_ME,
+            VIEW_TYPE_TEXT_REPLY -> MessageTextViewHolder(view)
+            VIEW_TYPE_IMAGE_ME,
+            VIEW_TYPE_IMAGE_REPLY -> MessageImageViewHolder(view)
+            else -> throw IllegalArgumentException("Unknown view type")
+        }
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
@@ -38,7 +49,21 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (items[position].isMe) VIEW_TYPE_ME else VIEW_TYPE_REPLY
+        val item = items[position];
+        if (item.isMe) {
+            if (item.message is TextMessage) {
+                return VIEW_TYPE_TEXT_ME
+            } else if (item.message is ImageMessage) {
+                return VIEW_TYPE_IMAGE_ME
+            }
+        } else {
+            if (item.message is TextMessage) {
+                return VIEW_TYPE_TEXT_REPLY
+            } else if (item.message is ImageMessage) {
+                return VIEW_TYPE_IMAGE_REPLY
+            }
+        }
+        return VIEW_TYPE_UNKNOWN
     }
 
     override fun getItemId(position: Int): Long {
@@ -64,8 +89,12 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
 
     companion object {
         const val TIME_DIFF = 5
-        const val VIEW_TYPE_ME = 0
-        const val VIEW_TYPE_REPLY = 1
+
+        const val VIEW_TYPE_UNKNOWN = -1
+        const val VIEW_TYPE_TEXT_ME = 0
+        const val VIEW_TYPE_TEXT_REPLY = 1
+        const val VIEW_TYPE_IMAGE_ME = 2
+        const val VIEW_TYPE_IMAGE_REPLY = 3
     }
 
 }

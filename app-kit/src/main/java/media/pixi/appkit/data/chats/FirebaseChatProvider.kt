@@ -11,11 +11,6 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
-import media.pixi.appkit.data.chats.room.MessageDao
-import media.pixi.appkit.data.profile.UserProfile
-import media.pixi.appkit.domain.chats.models.Chat
-import media.pixi.appkit.domain.chats.models.MessageListItem
-import java.lang.IllegalArgumentException
 import java.util.*
 
 
@@ -102,8 +97,7 @@ class FirebaseChatProvider(): ChatProvider {
             .document(chatId)
             .collection(MESSAGES)
 
-        return sendAttachments(chatId, message.attachments)
-            .flatMap { attachmentIds -> RxFirestore.addDocument(ref, toMap(message, attachmentIds)) }
+        return RxFirestore.addDocument(ref, toMap(message))
             .flatMap { RxFirestore.getDocument(it).toSingle() }
             .map { toChatMessage(chatId, it) }
     }
@@ -146,21 +140,6 @@ class FirebaseChatProvider(): ChatProvider {
             .map { it.id }
             .flatMap { sendMessage(it, initialMessage) }
 
-    }
-
-    private fun sendAttachments(chatId: String, attachments: List<ChatAttachmentRequest>): Single<List<String>> {
-        if (attachments.isEmpty()) {
-            return Single.just(emptyList())
-        } else {
-            val ref = firestore
-                .collection(MESSAGING)
-                .document(chatId)
-                .collection(ATTACHMENTS)
-
-            val list =  attachments.map { RxFirestore.addDocument(ref, toMap(it)).map { ref -> ref.id } }
-
-            return Single.zipArray({ ids -> ids.map { it as String }}, list.toTypedArray())
-        }
     }
 
     private fun filter(chats: List<ChatEntity>, userIds: List<String>): Maybe<ChatEntity> {
@@ -215,25 +194,18 @@ class FirebaseChatProvider(): ChatProvider {
         return snapshot.documents.map { toChatMessage(threadId, it) }
     }
 
-    private fun toMap(message: ChatMessageRequest, attachments: List<String>): Map<String, Any> {
+    private fun toMap(message: ChatMessageRequest): Map<String, Any> {
         val map = hashMapOf<String, Any>()
+        map[MESSAGE_TYPE] = message.type.id
         map[MESSAGE_TEXT] = message.text
         map[MESSAGE_TIMESTAMP] = message.timestamp
         map[MESSAGE_SENDER_ID] = message.senderId
-        if (attachments.isNotEmpty()) {
-            map[MESSAGE_ATTACHMENT_IDS] = attachments
+        if (message.thumbnailUrl.isNullOrEmpty().not()) {
+            map[MESSAGE_THUMBNAIL_URL] = message.thumbnailUrl!!
         }
-
-        return map
-    }
-
-    private fun toMap(attachment: ChatAttachmentRequest): Map<String, Any> {
-        val map = hashMapOf<String, Any>()
-        map[ATTACHMENT_TYPE] =attachment.type
-        map[ATTACHMENT_THUMBNAIL_URL] = attachment.thumbnailUrl
-        map[ATTACHMENT_FILE_URL] = attachment.fileUrl
-        map[ATTACHMENT_SENDER_ID] = attachment.senderId
-        map[ATTACHMENT_TIMESTAMP] = attachment.timestamp
+        if (message.fileUrl.isNullOrEmpty().not()) {
+            map[MESSAGE_FILE_URL] = message.fileUrl!!
+        }
         return map
     }
 
@@ -243,12 +215,14 @@ class FirebaseChatProvider(): ChatProvider {
 
     private fun toChatMessage(chatId: String, snapshot: DocumentSnapshot): ChatMessageEntity {
         return ChatMessageEntity(
+            type = toType(snapshot.getLong(MESSAGE_TYPE) ?: ChatMessageType.UNKNOWN.id),
             id = snapshot.id,
             chatId = chatId,
             text = snapshot.getString(MESSAGE_TEXT)!!,
             timestamp = snapshot.getTimestamp(MESSAGE_TIMESTAMP)!!,
             senderId = snapshot.getString(MESSAGE_SENDER_ID)!!,
-            attachmentIds = (snapshot.get(MESSAGE_ATTACHMENT_IDS) ?: emptyList<String>()) as List<String>
+            thumbnailUrl = snapshot.getString(MESSAGE_THUMBNAIL_URL),
+            fileUrl = snapshot.getString(MESSAGE_FILE_URL)
         )
     }
 
@@ -266,27 +240,18 @@ class FirebaseChatProvider(): ChatProvider {
             userIds = snapshot.get(THREAD_USERS) as List<String> )
     }
 
-    private fun toAttachmentEntity(snapshot: DocumentSnapshot): ChatAttachmentEntity {
-        return ChatAttachmentEntity(
-            id = snapshot.id,
-            type = toAttachmentType(snapshot.getLong(ATTACHMENT_TYPE)!!),
-            thumbnailUrl = snapshot.getString(ATTACHMENT_THUMBNAIL_URL),
-            fileUrl = snapshot.getString(ATTACHMENT_FILE_URL),
-            timestamp = snapshot.getTimestamp(ATTACHMENT_TIMESTAMP) ?: Timestamp.now(),
-            senderId = snapshot.getString(ATTACHMENT_SENDER_ID)!!)
-    }
-
     private fun toMyChatStatus(snapshot: DocumentSnapshot): MyChatStatus {
         return MyChatStatus(
             lastSeenMessageId = snapshot.getString(THREAD_LATEST_SEEN_MESSAGE) ?: ""
         )
     }
 
-    private fun toAttachmentType(code: Long): ChatAttachmentType {
+    private fun toType(code: Long): ChatMessageType {
         return when (code) {
-            ChatAttachmentType.IMAGE.id -> ChatAttachmentType.IMAGE
-            ChatAttachmentType.VIDEO.id -> ChatAttachmentType.VIDEO
-            else -> ChatAttachmentType.UNKNOWN
+            ChatMessageType.TEXT.id -> ChatMessageType.TEXT
+            ChatMessageType.IMAGE.id -> ChatMessageType.IMAGE
+            ChatMessageType.VIDEO.id -> ChatMessageType.VIDEO
+            else -> ChatMessageType.UNKNOWN
         }
     }
 
@@ -306,12 +271,10 @@ class FirebaseChatProvider(): ChatProvider {
         // COLLECTION   // DOC_IDS      // COLLECTIONS  // DOC_IDS
         // messaging    // threadIds    // messages     // messageIds
                                         // users        // userIds
-                                        // attachments  // attachmentIds
 
         // Collections
         private const val MESSAGING = "messaging"
         private const val MESSAGES = "messages"
-        private const val ATTACHMENTS = "attachments"
 
         // Thread Metadata
         private const val THREAD_TITLE = "title"
@@ -322,17 +285,11 @@ class FirebaseChatProvider(): ChatProvider {
         private const val THREAD_LATEST_SEEN_MESSAGE = "last_seen_message_id"
 
         // Message Metadata
+        private const val MESSAGE_TYPE = "type"
         private const val MESSAGE_TEXT = "title"
         private const val MESSAGE_TIMESTAMP = "timestamp"
         private const val MESSAGE_SENDER_ID = "sender_id"
-        private const val MESSAGE_ATTACHMENT_IDS = "attachments"
-
-        // Attachment Metadata
-        private const val ATTACHMENT_TYPE = "type"
-        private const val ATTACHMENT_THUMBNAIL_URL = "thumbnail"
-        private const val ATTACHMENT_FILE_URL = "file"
-        private const val ATTACHMENT_SENDER_ID = "sender_id"
-        private const val ATTACHMENT_TIMESTAMP = "timestamp"
-
+        private const val MESSAGE_THUMBNAIL_URL = "thumbnail"
+        private const val MESSAGE_FILE_URL = "file"
     }
 }

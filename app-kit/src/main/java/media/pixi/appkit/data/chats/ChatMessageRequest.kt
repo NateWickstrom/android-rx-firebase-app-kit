@@ -3,8 +3,10 @@ package media.pixi.appkit.data.chats
 import com.google.firebase.Timestamp
 
 data class ChatMessageRequest(
+    val type: ChatMessageType,
     val text: String,
     val senderId: String,
     val timestamp: Timestamp,
-    val attachments: List<ChatAttachmentRequest> = emptyList()
+    val thumbnailUrl: String? = null,
+    val fileUrl: String? = null
 )

@@ -10,5 +10,7 @@ data class ImageMessage(
     override val senderId: String,
     override val type: MessageType = MessageType.IMAGE,
     override val messageSendStatus: MessageSendStatus,
-    override val messageReadStatus: MessageReadStatus
+    override val messageReadStatus: MessageReadStatus,
+    val thumbnailUrl: String,
+    val fileUrl: String
 ) : Message
