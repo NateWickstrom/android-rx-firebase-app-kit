@@ -32,6 +32,8 @@ interface ChatContract {
 
         fun saveDraft(text: String, attachments: List<MessageAttachment>)
 
+        fun onMessageListItemClicked(activity: Activity, item: MessageListItem, position: Int)
+
         fun onTextClicked(position: Int, item: MessageListItem)
 
         fun onImageClicked(position: Int, item: MessageListItem)
@@ -59,7 +61,9 @@ interface ChatContract {
 
         fun showImage(activity: Activity, url: String)
 
-        fun showVideo(activity: Activity, url: String)
+        fun showLocalVideo(activity: Activity, url: String)
+
+        fun showRemoteVideo(activity: Activity, url: String)
 
         fun showChatMembers(activity: Activity, chatId: String)
     }

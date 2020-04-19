@@ -142,6 +142,21 @@ class ChatPresenter @Inject constructor(
 
     }
 
+    override fun onMessageListItemClicked(activity: Activity, item: MessageListItem, position: Int) {
+        when (item.message.type) {
+            MessageType.IMAGE -> {
+                val message = item.message as ImageMessage
+                val url = message.fileUrl
+                navigator.showImage(activity, url)
+            }
+            MessageType.VIDEO -> {
+                val message = item.message as VideoMessage
+                val url = message.fileUrl
+                navigator.showRemoteVideo(activity, url)
+            }
+        }
+    }
+
     override fun onTextClicked(position: Int, item: MessageListItem) {
         view?.showTextSpeedDial(item)
     }
@@ -183,7 +198,7 @@ class ChatPresenter @Inject constructor(
     override fun onAttachmentClicked(activity: Activity, attachment: MessageAttachment) {
         when (attachment.type) {
             MessageAttachmentType.IMAGE -> navigator.showImage(activity, "file://" + attachment.fileUrl)
-            MessageAttachmentType.VIDEO -> navigator.showVideo(activity, attachment.fileUrl)
+            MessageAttachmentType.VIDEO -> navigator.showLocalVideo(activity, attachment.fileUrl)
         }
     }
 

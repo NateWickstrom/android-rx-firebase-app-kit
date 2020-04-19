@@ -25,12 +25,19 @@ class ChatNavigator @Inject constructor() : ChatContract.Navigator,
         ImageViewerActivity.launch(activity, url)
     }
 
-    override fun showVideo(activity: Activity, url: String) {
+    override fun showLocalVideo(activity: Activity, url: String) {
         val file = File(url)
         val authority = "${activity.packageName}.fileprovider"
         val fileUri = FileProvider.getUriForFile(activity, authority, file)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(fileUri, "video/*")
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        activity.startActivity(intent)
+    }
+
+    override fun showRemoteVideo(activity: Activity, url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(Uri.parse(url), "video/*")
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         activity.startActivity(intent)
     }

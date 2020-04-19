@@ -216,13 +216,7 @@ class ChatFragment @Inject constructor(): DaggerFragment(), ChatContract.View, T
     }
 
     override fun onMessageListItemClicked(position: Int, item: MessageListItem) {
-        when (item.message.type) {
-            MessageType.IMAGE -> {
-                val imageMessage = item.message as ImageMessage
-                val url = imageMessage.fileUrl
-                ImageViewerActivity.launch(activity!!, url)
-            }
-        }
+        presenter.onMessageListItemClicked(activity!!, item, position)
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {

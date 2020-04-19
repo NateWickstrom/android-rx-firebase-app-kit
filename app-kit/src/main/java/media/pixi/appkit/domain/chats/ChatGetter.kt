@@ -216,6 +216,7 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
         val userMessage = when (message.type) {
             ChatMessageType.TEXT -> toTextMessage(message)
             ChatMessageType.IMAGE -> toImageMessage(message)
+            ChatMessageType.VIDEO -> toVideoMessage(message)
             else -> toTextMessage(message)
         }
 
@@ -230,6 +231,19 @@ class ChatGetter @Inject constructor(private val chatProvider: ChatProvider,
             senderId = message.senderId,
             senderProfile = null,
             isMe = isMe
+        )
+    }
+
+    private fun toVideoMessage(message: ChatMessageEntity): VideoMessage {
+        return VideoMessage(
+            id = message.id,
+            message = "<video>",
+            date = DateTime(message.timestamp.toDate()),
+            senderId = message.senderId,
+            messageSendStatus = MessageSendStatus.Sent,
+            messageReadStatus = MessageReadStatus.READ,
+            thumbnailUrl = message.thumbnailUrl!!,
+            fileUrl = message.fileUrl!!
         )
     }
 

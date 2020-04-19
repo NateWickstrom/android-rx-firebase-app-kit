@@ -7,6 +7,7 @@ import media.pixi.appkit.R
 import media.pixi.appkit.domain.chats.models.ImageMessage
 import media.pixi.appkit.domain.chats.models.MessageListItem
 import media.pixi.appkit.domain.chats.models.TextMessage
+import media.pixi.appkit.domain.chats.models.VideoMessage
 import java.util.concurrent.TimeUnit
 
 
@@ -25,6 +26,8 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
             VIEW_TYPE_TEXT_REPLY -> R.layout.view_message_text_reply
             VIEW_TYPE_IMAGE_ME -> R.layout.view_message_image_me
             VIEW_TYPE_IMAGE_REPLY -> R.layout.view_message_image_reply
+            VIEW_TYPE_VIDEO_ME -> R.layout.view_message_video_me
+            VIEW_TYPE_VIDEO_REPLY -> R.layout.view_message_video_reply
             else -> throw IllegalArgumentException("Unknown view type")
         }
         val view = inflater.inflate(layoutId, parent, false)
@@ -34,6 +37,8 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
             VIEW_TYPE_TEXT_REPLY -> MessageTextViewHolder(view)
             VIEW_TYPE_IMAGE_ME,
             VIEW_TYPE_IMAGE_REPLY -> MessageImageViewHolder(view)
+            VIEW_TYPE_VIDEO_ME,
+            VIEW_TYPE_VIDEO_REPLY -> MessageVideoViewHolder(view)
             else -> throw IllegalArgumentException("Unknown view type")
         }
     }
@@ -55,12 +60,16 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
                 return VIEW_TYPE_TEXT_ME
             } else if (item.message is ImageMessage) {
                 return VIEW_TYPE_IMAGE_ME
+            } else if (item.message is VideoMessage) {
+                return VIEW_TYPE_VIDEO_ME
             }
         } else {
             if (item.message is TextMessage) {
                 return VIEW_TYPE_TEXT_REPLY
             } else if (item.message is ImageMessage) {
                 return VIEW_TYPE_IMAGE_REPLY
+            } else if (item.message is VideoMessage) {
+                return VIEW_TYPE_VIDEO_REPLY
             }
         }
         return VIEW_TYPE_UNKNOWN
@@ -95,6 +104,8 @@ class MessageAdapter(private val onMessageListItemClicked: OnMessageListItemClic
         const val VIEW_TYPE_TEXT_REPLY = 1
         const val VIEW_TYPE_IMAGE_ME = 2
         const val VIEW_TYPE_IMAGE_REPLY = 3
+        const val VIEW_TYPE_VIDEO_ME = 4
+        const val VIEW_TYPE_VIDEO_REPLY = 5
     }
 
 }
